@@ -1,13 +1,13 @@
-
+// pages/auth/register.js
 import { Box } from "@chakra-ui/react";
-import LoginForm from "../components/LoginForm";
+import RegisterForm from "../components/RegisterForm";
 
-const Login = () => {
+const Register = () => {
   return (
     <Box minH="100vh" display="flex" alignItems="center" justifyContent="center">
-      <LoginForm />
+      <RegisterForm />
     </Box>
   );
 };
 
-export default Login;
+export default Register;
