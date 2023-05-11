@@ -1,6 +1,6 @@
 import NextAuth from "next-auth";
-import Providers from "next-auth/providers";
-import { connectToDatabase } from "../../../utils/mongodb";
+
+import { connectToDatabase } from "../../../utils/db";
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import User from "../../../models/User";
 import { verifyPassword } from "../../../utils/auth";
