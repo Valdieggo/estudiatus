@@ -14,6 +14,8 @@ const RegisterForm = () => {
 
     try {
       await axios.post("/api/auth/register", {
+        username: data.username,
+        birthday: data.birthday,
         email: data.email,
         password: hashedPassword,
       });
@@ -27,6 +29,14 @@ const RegisterForm = () => {
   return (
     <Box width="100%" maxWidth="500px" margin="auto">
       <VStack as="form" onSubmit={handleSubmit(onSubmit)} spacing={6}>
+      <FormControl>
+            <FormLabel>Username</FormLabel>
+            <Input type="username" {...register("username", { required: true })} />
+        </FormControl>
+        <FormControl>
+            <FormLabel>Birthday</FormLabel>
+            <Input type="date" {...register("birthday", { required: true })} />
+        </FormControl>
         <FormControl>
             <FormLabel>Email</FormLabel>
             <Input type="email" {...register("email", { required: true })} />
