@@ -1,13 +1,17 @@
-import mongoose from "mongoose";
+
 
 export async function connectToDatabase() {
-    if (mongoose.connection.readyState >= 1) {
-        return;
+    const mongoose = require('mongoose');
+
+    const MONGODB_URI = process.env.MONGODB_URI;
+
+    if (!MONGODB_URI) {
+        throw new Error("Please define the MONGODB_URI environment variable inside .env.local");
     }
 
-    return mongoose.connect(process.env.MONGODB_URI, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-    });
+    return mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+    
+
+
 }
 
