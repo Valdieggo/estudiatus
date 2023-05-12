@@ -2,13 +2,9 @@ import { connectToDatabase } from "../../../utils/db";
 import User from "../../../models/User";
 
 export default async function handler(req, res) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ message: "Method not allowed" });
-  }
+  const {username,birthday,email,password} = req.body;
+  
 
-  await connectToDatabase();
-
-  const { email, password } = req.body;
 
   if (!email || !password) {
     return res.status(422).json({ message: "Invalid input" });
@@ -20,12 +16,19 @@ export default async function handler(req, res) {
     return res.status(409).json({ message: "User already exists" });
   }
 
-  const newUser = new User({ email, password });
-
-  try {
+  
+  
+  if (req.method == "POST") {
+    await connectToDatabase();
+    const newUser = new User({ username,birthday,email,password });
     await newUser.save();
-    res.status(201).json({ message: "User created successfully" });
-  } catch (error) {
-    res.status(500).json({ message: "Unable to create user" });
+    if (newUser) {
+      return res.status(201).json({ message: "User created" });
+    }
+    else {
+      return res.status(500).json({ message: "User not created" });
+    }
+
   }
+
 }
