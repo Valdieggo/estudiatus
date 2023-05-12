@@ -6,7 +6,7 @@ import User from "../../../models/User";
 import { verifyPassword } from "../../../utils/auth";
 
 export default  async function auth(req, res) {
-    await connectToDatabase();
+   
 
     return NextAuth(req, res, {
         session: {
@@ -16,14 +16,6 @@ export default  async function auth(req, res) {
             Providers.Credentials({
                 name: "Credentials",
                 credentials: {
-                    username: {
-                        label: "Username",
-                        type: "text",
-                    },
-                    birthday: {
-                        label: "Birthday",
-                        type: "date",
-                    },
                     email: {
                         label: "Email",
                         type: "email",
@@ -35,6 +27,7 @@ export default  async function auth(req, res) {
                     },
                 },
                 async authorize(credentials) {
+                    await connectToDatabase();
                     const user = await User.findOne({ email: credentials.email });
 
                     if (!user) {
