@@ -16,6 +16,14 @@ export default  async function auth(req, res) {
             Providers.Credentials({
                 name: "Credentials",
                 credentials: {
+                    username: {
+                        label: "Username",
+                        type: "text",
+                    },
+                    birthday: {
+                        label: "Birthday",
+                        type: "date",
+                    },
                     email: {
                         label: "Email",
                         type: "email",
