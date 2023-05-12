@@ -2,6 +2,7 @@ import { connectToDatabase } from "../../../utils/db";
 import User from "../../../models/User";
 
 export default async function handler(req, res) {
+
   const {username,birthday,email,password} = req.body;
   
 
@@ -9,17 +10,17 @@ export default async function handler(req, res) {
   if (!email || !password) {
     return res.status(422).json({ message: "Invalid input" });
   }
-
+  await connectToDatabase();
   const existingUser = await User.findOne({ email });
 
   if (existingUser) {
-    return res.status(409).json({ message: "User already exists" });
+    return res.status(409).json(console.log("User already exists"));
   }
 
   
   
   if (req.method == "POST") {
-    await connectToDatabase();
+    
     const newUser = new User({ username,birthday,email,password });
     await newUser.save();
     if (newUser) {
