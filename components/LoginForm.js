@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { signIn } from "next-auth/react";
 
 const LoginForm = () => {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, formState: { errors } } = useForm();
 
   const onSubmit = async (data) => {
     await signIn("credentials", {
@@ -20,13 +20,14 @@ const LoginForm = () => {
         <FormControl>
           <FormLabel>Email</FormLabel>
           <Input type="email" {...register("email", { required: true })} />
+          {errors.email && <span>This field is required</span>}
         </FormControl>
         <FormControl>
           <FormLabel>Password</FormLabel>
           <Input type="password" {...register("password", { required: true })} />
         </FormControl>
         <Button type="submit" colorScheme="blue" width="100%">
-          Sign In
+          Iniciar sesión
         </Button>
       </VStack>
     </Box>
