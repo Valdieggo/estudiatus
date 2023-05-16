@@ -13,7 +13,7 @@ export default  async function auth(req, res) {
             jwt: true,
         },
         providers: [
-            Providers.Credentials({
+            Credentials({
                 name: "Credentials",
                 credentials: {
                     email: {
