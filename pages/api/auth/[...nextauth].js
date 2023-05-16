@@ -1,5 +1,5 @@
 import NextAuth from "next-auth";
-
+import Credentials from "next-auth/providers/credentials";
 import { connectToDatabase } from "../../../utils/db";
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import User from "../../../models/User";
