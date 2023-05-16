@@ -44,10 +44,7 @@ export default  async function auth(req, res) {
                 },
             }),
         ],
-        adapter: MongoDBAdapter({
-            db: process.env.MONGODB_URI,
-            clientPromise: connectToDatabase(),
-        }),
+       
         pages: {
             signIn: "/auth/signin",
             signOut: "/auth/signout",
