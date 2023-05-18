@@ -10,8 +10,11 @@ import {
   MenuGroup,
   MenuDivider,
 } from "@chakra-ui/react";
+import { useSession } from "next-auth/react";
 
 const Navbar = () => {
+  const { data: session } = useSession();
+  
   return (
     <Flex bg="teal.500" p="4" color="white">
       <Box p="2">Nombre de la aplicación</Box>
@@ -30,7 +33,7 @@ const Navbar = () => {
       <Spacer />
       <Box>
         <Menu>
-          <MenuButton as="button">Usuario</MenuButton>
+          <MenuButton as="button">user</MenuButton>
           <MenuList color="#67686B">
             <MenuGroup title="Perfil" color="#000">
               <MenuItem>Perfil</MenuItem>
