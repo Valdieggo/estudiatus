@@ -4,27 +4,27 @@ const publicacionQuery = {
     publicaciones: async () => {
         return await Publicacion.find()
     },
-    buscarPublicacionId : async (root, args) => {
+    buscarPublicacionId : async (args) => {
         const publicacion = await Publicacion.findById(args.id);
         return publicacion;
     },
-    buscarPublicacionTitulo : async (root, args) => {
+    buscarPublicacionTitulo : async (args) => {
         const publicacion = await Publicacion.findOne({titulo: args.titulo});
         return publicacion;
     },
-    buscarPublicacionUser: async (root,args) => {
+    buscarPublicacionUser: async (args) => {
         const publicacion = await Publicacion.findOne({titulo: args.User});
         return publicacion;
     },
-    buscarPublicacionCollege: async (root,args) => {
+    buscarPublicacionCollege: async (args) => {
         const publicacion = await Publicacion.findOne({titulo: args.collage});
         return publicacion;
     },
-    buscarPublicacionFecha: async (root,args) => {
+    buscarPublicacionFecha: async (args) => {
         const publicacion = await Publicacion.findOne({titulo: args.id});
         return publicacion;
     },
-    buscarPublicacionScore: async (root,args) => {
+    buscarPublicacionScore: async (args) => {
         const publicacion = await Publicacion.findOne({titulo: args.id});
         return publicacion;
     },
