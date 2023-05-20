@@ -10,14 +10,15 @@ import {
   MenuGroup,
   MenuDivider,
 } from "@chakra-ui/react";
-import { useSession } from "next-auth/react";
+import {User} from "./User";
 
-const Navbar = () => {
-  const { data: session } = useSession();
-  
+
+export default function Navbar() {
+ 
+
   return (
     <Flex bg="teal.500" p="4" color="white">
-      <Box p="2">Nombre de la aplicación</Box>
+      
       <Spacer />
       <Box>
         <Link px="4" href="/">
@@ -50,4 +51,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+
