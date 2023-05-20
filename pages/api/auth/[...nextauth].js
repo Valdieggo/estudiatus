@@ -1,17 +1,14 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { connectToDatabase } from "../../../utils/db";
-import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import User from "../../../models/User";
 import { verifyPassword } from "../../../utils/auth";
-import clientPromise from "../../../lib/mongodb";
+
+
 
 export const authOptions = {
+
     // Configure one or more authentication providers
-    secret: 'chakalito',
-    session: {
-        strategy: "jwt",
-    },
     providers: [
         CredentialsProvider({
             name: "Credentials",
@@ -40,33 +37,27 @@ export const authOptions = {
                 if (!isValid) {
                     throw new Error("Could not log you in");
                 }
-                console.log(user);
-                return new Promise ({ email: user.email, username: user.username, birthday: user.birthday, id: user._id.toString()});
+               
+                return user;
+
             },
         }),
     ],
-    pages: {
-        signIn: "/auth/signin",
-        signOut: "/auth/signout",
-        error: "/auth/error",
+    secret: process.env.SECRET,
+    session: {
+        jwt: true,
     },
     callbacks: {
-        async jwt(token, user) {
-            console.log('jwt', user);
-            if (user) {
-                token.id = user.id;
-                token.username = user.username;
-            }
-            return token;
-        },
-        async session(session, token, user) {
-            session.user.id = token.id;
-            session.user.username = token.username;
+        async session(session ) {
+            console.log(session);
             return session;
-        }, 
+        }
 
-    }
+    },
 
-  }
+  
+    
+
+  };
 
 export default (req, res) => NextAuth(req, res, authOptions);
