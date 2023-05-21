@@ -46,6 +46,8 @@ export const authOptions = {
     secret: process.env.SECRET,
     session: {
         jwt: true,
+        //1min  
+        maxAge: 60,
     },
     callbacks: {
         async jwt({ token,user }) {
@@ -57,6 +59,7 @@ export const authOptions = {
            if(user){
             token.name = user.username;
             token.role= user.role;
+            token.id = user._id;
            }
 
             return token;
@@ -71,6 +74,7 @@ export const authOptions = {
         // add info user to session
         session.user.name = token.name;
         session.user.role = token.role;
+        session.user.id = token.id;
         return session
        
       }
