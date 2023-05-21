@@ -38,7 +38,7 @@ export const authOptions = {
                     throw new Error("Could not log you in");
                 }
                
-                return user;
+                return   user ;
 
             },
         }),
@@ -48,14 +48,33 @@ export const authOptions = {
         jwt: true,
     },
     callbacks: {
-        async session(session ) {
-            console.log(session);
-            return session;
-        }
+        async jwt({ token,user }) {
+            console.log("jwt");
+            console.log("user",user);
+           console.log("token",token);
+           console.log("jwt");
+           // add info user to token
+           if(user){
+            token.name = user.username;
+            token.role= user.role;
+           }
 
+            return token;
+          },
+
+
+      async session({session, token}) {
+        console.log("session");
+        console.log("session",session);
+        console.log("token",token);
+        console.log("session");
+        // add info user to session
+        session.user.name = token.name;
+        session.user.role = token.role;
+        return session
+       
+      }
     },
-
-  
     
 
   };
