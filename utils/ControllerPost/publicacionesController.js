@@ -16,16 +16,16 @@ const publicacionQuery = {
         const publicacion = await Publicacion.findOne({titulo: args.User});
         return publicacion;
     },
-    buscarPublicacionCollege: async (args) => {
-        const publicacion = await Publicacion.findOne({titulo: args.collage});
+    buscarPublicacionSubject: async (args) => {
+        const publicacion = await Publicacion.findOne({titulo: args.subject});
         return publicacion;
     },
     buscarPublicacionFecha: async (args) => {
-        const publicacion = await Publicacion.findOne({titulo: args.id});
+        const publicacion = await Publicacion.findOne({titulo: args.createDate});
         return publicacion;
     },
     buscarPublicacionScore: async (args) => {
-        const publicacion = await Publicacion.findOne({titulo: args.id});
+        const publicacion = await Publicacion.findOne({titulo: args.score});
         return publicacion;
     },
     all_publicaciones : async () => {
