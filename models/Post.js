@@ -4,11 +4,16 @@ const PostSchema = new mongoose.Schema({
     titulo: {
         type: String,
         required: [true, "Titulo obligatorio"],
-        unique: true,
+        minLenght:1,
+        maxLenght: 50,
     },
     score: {
         type: Number,
         default: 0,
+        validate:{
+            validator: Number.isInteger,
+            message: "{VALUE} no es un valor entero",
+        }
     },
     view :{
         type: Number,
