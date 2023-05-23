@@ -13,9 +13,9 @@ const CollegeSchema = new mongoose.Schema({
     },
     careers: {
         type: [mongoose.Schema.Types.ObjectId],
-        ref: "Career"
+        ref: "Career",
     }
 
 })
 
-module.exports =  mongoose.model("College", CollegeSchema);
+module.exports = mongoose.models.College || mongoose.model("College", CollegeSchema);
