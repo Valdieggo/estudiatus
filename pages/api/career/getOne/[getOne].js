@@ -14,8 +14,8 @@ export default async function handler(req, res) {
     switch (method) {
         case "GET":
             try {
-                const college = await Career.findById(getOne);
-                return res.status(200).json(college);
+                const career = await Career.findById(getOne);
+                return res.status(200).json(career);
             }
             catch (error) {
                 return res.status(400).json({ success: false });
