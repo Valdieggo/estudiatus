@@ -18,7 +18,8 @@ const CareerSchema = new mongoose.Schema({
     },
     college: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "College"
+        ref: "College",
+        required: [true, "Please provide a college"],
     },
     subjects: {
         type: [mongoose.Schema.Types.ObjectId],
@@ -31,4 +32,4 @@ const CareerSchema = new mongoose.Schema({
 
 })
 
-module.exports =  mongoose.model("Career", CareerSchema);
+module.exports = mongoose.models.Career || mongoose.model("Career", CareerSchema);

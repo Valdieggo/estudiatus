@@ -1,4 +1,4 @@
-import Sidebar from "./Sidebar"
+import Sidebar from "./SideBar"
 import Navbar from "./Navbar";
 import { Box, Flex, useColorModeValue } from "@chakra-ui/react";
 
