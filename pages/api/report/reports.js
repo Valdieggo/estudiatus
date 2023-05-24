@@ -1,14 +1,18 @@
 // create reports 
-import { connectToDatabase } from "../../../../utils/db";
+import { connectToDatabase } from "../../../utils/db";
+import Report from "../../../models/Report";
+import User from "../../../models/User";
 
-import Report, { findByIdAndDelete } from "../../../../models/Report";
+
 
 export default async function handler(req, res) {
-    const { reportUserId , reportedUserId, reason, description, postId } = req.body;
     await connectToDatabase();
+    const {reportUserId ,reportedUserId, reason, description, id} = req.body;
     switch (req.method) {
         case "POST":
-            const newReport = new Report({ reportUserId, reportedUserId, reason, description, postId });
+            // Se crea el reporte OK
+            
+            const newReport = new Report({ reportUser: reportUserId, reportedUser:reportedUserId, reason, description });
             await newReport.save();
             if (newReport) {
                 return res.status(201).json({ message: "Report created" });
@@ -17,7 +21,8 @@ export default async function handler(req, res) {
                 return res.status(500).json({ message: "Report not created" });
             }
         case "GET":
-            const reports = await Report.find({}).populate("reportUserId").populate("reportedUserId").populate("postId");
+            //Se lisstna los reportes OK
+            const reports = await Report.find({}).populate("reportUser").populate("reportedUser").populate("post");
             if (reports) {
                 return res.status(200).json({ reports });
                 // si report es igual a 0 entonces no hay reportes
@@ -27,8 +32,14 @@ export default async function handler(req, res) {
                 return res.status(500).json({ message: "Error al obtener los reportes" });
             }
         case "PUT":
-            // se actualiza el reporte segun lo que se le pase en el body
-            const updateReport= await findByIdAndUpdate(req.body.id, req.body, { new: true });
+            // se actualiza el reporte segun lo que se le pase en el body OK
+            
+            const updateReport= await Report.findByIdAndUpdate(id, {
+                reportUser:reportUserId,
+                reportedUser:reportedUserId,
+                reason,
+                description},
+                  { new: true });
             if (updateReport) {
                 return res.status(200).json({ message: "Report updated" });
             }
@@ -37,17 +48,15 @@ export default async function handler(req, res) {
             }
         case "DELETE":
             // se elimina el reporte segun lo que se le pase en el body
-            const deletRepor=await findByIdAndDelete(req.body.id);
-            if (deletRepor) {
+            const deleteReport = await Report.findByIdAndDelete(id);
+            if (deleteReport) {
                 return res.status(200).json({ message: "Report deleted" });
             }
-            else if(deletRepor == 0){
-                return res.status(200).json({ message: "El reporte no existe" });
-            }else {
+            else {
                 return res.status(500).json({ message: "Report not deleted" });
             }
         default:
-            res.status(400).json({ success: false });
+            res.status(400).json({ success: false});
             break;
     }
 
