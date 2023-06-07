@@ -6,37 +6,45 @@ import Post from "../../../models/Post";
 export default async function handler(req, res) {
     connectToDatabase();
     const { method } = req;
-    const { id } = req.query; // id
-
-    if (!id) {
-        return res.status(400).json({ success: false, message: "No id provideed" });
-    }
 
     switch (method) {
-        case "GET":
-            return
         case "POST":
             try {
                 const { creator, text, postId, parent } = req.body;
+
+                if (!creator || !text || !postId) {
+                    return res.status(400).json({ success: false, message: "Missing fields" });
+                }
+
+                const postDocument = await Post.findById(postId);
+                if (!postDocument) {
+                    return res.status(400).json({ success: false, message: "Post not found" });
+                }
+
+                const userDocument = await User.findById(creator);
+
+                if (!userDocument) {
+                    return res.status(400).json({ success: false, message: "User not found" });
+                }
+
                 const comment = await Comment.create({
-                    creatorId: creator,
+                    creator,
                     text,
-                    postId,
-                    parent
+                    post: postId,
+                    //parent
                 });
-                const user = await User.findById(creator);
-                const post = await Post.findById(post);
-                user.comments.push(comment);
-                post.comments.push(comment);
-                await user.save();
-                await post.save();
-                return res.status(200).json({ success: true, data: comment });
+
+                //user.comments.push(comment);
+                postDocument.comments.push(comment);
+                //await user.save();
+                await postDocument.save();
+
+                return res.status(201).json({ success: true, data: comment });
             }
             catch (error) {
                 return res.status(400).json({ success: false, message: error });
             }
         default:
             return res.status(400).json({ success: false });
-            //break;
     }
 }
