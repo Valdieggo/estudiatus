@@ -43,7 +43,7 @@ export const authOptions = {
             },
         }),
     ],
-    secret: process.env.SECRET,
+    secret: process.env.NEXTAUTH_SECRET,
     session: {
         jwt: true,
         //1min  
@@ -51,10 +51,6 @@ export const authOptions = {
     },
     callbacks: {
         async jwt({ token,user }) {
-            console.log("jwt");
-            console.log("user",user);
-            console.log("token",token);
-            console.log("jwt");
             // add info user to token
             if(user){
                 token.username = user.username;
@@ -67,10 +63,6 @@ export const authOptions = {
 
 
       async session({session, token}) {
-        console.log("session");
-        console.log("session",session);
-        console.log("token",token);
-        console.log("session");
         // add info user to session
         session.user.username = token.username;
         session.user.role = token.role;
@@ -79,7 +71,9 @@ export const authOptions = {
        
       }
     },
-    
+    pages: {
+        signIn: "/login",
+    },
 
   };
 
