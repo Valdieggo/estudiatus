@@ -1,68 +1,86 @@
 import NextAuth from "next-auth";
-import Credentials from "next-auth/providers/credentials";
+import CredentialsProvider from "next-auth/providers/credentials";
 import { connectToDatabase } from "../../../utils/db";
-import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import User from "../../../models/User";
 import { verifyPassword } from "../../../utils/auth";
 
-export default  async function auth(req, res) {
-   
 
-    return NextAuth(req, res, {
-        session: {
-            jwt: true,
-        },
-        providers: [
-            Credentials({
-                name: "Credentials",
-                credentials: {
-                    email: {
-                        label: "Email",
-                        type: "email",
-                        placeholder: "alumno@universidad.com",
-                    },
-                    password: {
-                        label: "Password",
-                        type: "password",
-                    },
+
+export const authOptions = {
+
+    // Configure one or more authentication providers
+    providers: [
+        CredentialsProvider({
+            name: "Credentials",
+            credentials: {
+                email: {
+                    label: "Email",
+                    type: "email",
+                    placeholder: "alumno@universidad.com",
                 },
-                async authorize(credentials) {
-                    await connectToDatabase();
-                    const user = await User.findOne({ email: credentials.email });
-
-                    if (!user) {
-                        throw new Error("No user found");
-                    }
-
-                    const isValid = await verifyPassword(credentials.password, user.password);
-
-                    if (!isValid) {
-                        throw new Error("Could not log you in");
-                    }
-
-                    return { email: user.email, username: user.username, id: user._id };
+                password: {
+                    label: "Password",
+                    type: "password",
+                    placeholder: "********",
                 },
-            }),
-        ],
-       
-        pages: {
-            signIn: "/auth/signin",
-            signOut: "/auth/signout",
-            error: "/auth/error",
-        },
-        callbacks: {
-            async jwt(token, user) {
-                if (user) {
-                    token.id = user._id;
-                    token.username = user.username;
-                }
-                return token;
             },
-            async session(session, token) {
-                session.user.id = token.id;
-                session.user.username = token.username;
-                return session;
+            async authorize(credentials) {
+                await connectToDatabase();
+                const user = await User.findOne({ email: credentials.email });
+
+                if (!user) {
+                    throw new Error("No user found");
+                }
+
+                const isValid = await verifyPassword(credentials.password, user.password);
+
+                if (!isValid) {
+                    throw new Error("Could not log you in");
+                }
+               
+                return   user ;
+
+            },
+        }),
+    ],
+    secret: process.env.SECRET,
+    session: {
+        jwt: true,
+        //1min  
+        maxAge: 6000,
+    },
+    callbacks: {
+        async jwt({ token,user }) {
+            console.log("jwt");
+            console.log("user",user);
+            console.log("token",token);
+            console.log("jwt");
+            // add info user to token
+            if(user){
+                token.username = user.username;
+                token.role= user.role;
+                token.id = user._id;
             }
-        }
-    });
-}
+
+            return token;
+          },
+
+
+      async session({session, token}) {
+        console.log("session");
+        console.log("session",session);
+        console.log("token",token);
+        console.log("session");
+        // add info user to session
+        session.user.username = token.username;
+        session.user.role = token.role;
+        session.user.id = token.id;
+        return session
+       
+      }
+    },
+    
+
+  };
+
+export default (req, res) => NextAuth(req, res, authOptions);
