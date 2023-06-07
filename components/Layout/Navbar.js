@@ -10,7 +10,7 @@ import {
   MenuGroup,
   MenuDivider,
 } from "@chakra-ui/react";
-import {User} from "./User";
+import User from "./User";
 
 
 export default function Navbar() {
@@ -32,21 +32,7 @@ export default function Navbar() {
         </Link>
       </Box>
       <Spacer />
-      <Box>
-        <Menu>
-          <MenuButton as="button">user</MenuButton>
-          <MenuList color="#67686B">
-            <MenuGroup title="Perfil" color="#000">
-              <MenuItem>Perfil</MenuItem>
-              <MenuItem>Configuración</MenuItem>
-            </MenuGroup>
-            <MenuDivider />
-            <MenuGroup title="Auth" color="#000">
-              <MenuItem>Salir</MenuItem>
-            </MenuGroup>
-          </MenuList>
-        </Menu>
-      </Box>
+      <User />
     </Flex>
   );
 };
