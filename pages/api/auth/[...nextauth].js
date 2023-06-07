@@ -47,20 +47,20 @@ export const authOptions = {
     session: {
         jwt: true,
         //1min  
-        maxAge: 60,
+        maxAge: 6000,
     },
     callbacks: {
         async jwt({ token,user }) {
             console.log("jwt");
             console.log("user",user);
-           console.log("token",token);
-           console.log("jwt");
-           // add info user to token
-           if(user){
-            token.name = user.username;
-            token.role= user.role;
-            token.id = user._id;
-           }
+            console.log("token",token);
+            console.log("jwt");
+            // add info user to token
+            if(user){
+                token.username = user.username;
+                token.role= user.role;
+                token.id = user._id;
+            }
 
             return token;
           },
@@ -72,7 +72,7 @@ export const authOptions = {
         console.log("token",token);
         console.log("session");
         // add info user to session
-        session.user.name = token.name;
+        session.user.username = token.username;
         session.user.role = token.role;
         session.user.id = token.id;
         return session
