@@ -22,13 +22,13 @@ export default function Navbar() {
       <Spacer />
       <Box>
         <Link px="4" href="/">
-          Inicio
+          Foro
         </Link>
         <Link px="4" href="/about">
-          Acerca de
+          Repositorio
         </Link>
         <Link px="4" href="/contact">
-          Contacto
+          Eventos
         </Link>
       </Box>
       <Spacer />
