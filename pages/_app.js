@@ -1,6 +1,6 @@
-// pages/_app.js
 import { ChakraProvider } from '@chakra-ui/react'
 import {extendTheme} from '@chakra-ui/react'
+import { SessionProvider } from 'next-auth/react'
 
 const colors = {
   brand: {
@@ -12,11 +12,13 @@ const colors = {
 
 const theme = extendTheme({ colors })
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   return (
-    <ChakraProvider theme={theme}>
-      <Component {...pageProps} />
-    </ChakraProvider>
+    <SessionProvider session={session}>
+      <ChakraProvider theme={theme}>
+        <Component {...pageProps} />
+      </ChakraProvider>
+    </SessionProvider>
   )
 }
 

@@ -5,7 +5,7 @@ export default  function  Home() {
   return (
     <>
     <Layout>
-      Hola hola
+      PROFILE
     </Layout>
     </>
 
