@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const PostSchema = new mongoose.Schema({
-    titulo: {
+    title: {
         type: String,
         required: [true, "Titulo obligatorio"],
         minLenght:1,
@@ -33,7 +33,7 @@ const PostSchema = new mongoose.Schema({
     },
     subject:{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Asignatura",
+        ref: "Collage",
     },
     createDate: {
         type: Date.now
