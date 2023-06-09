@@ -1,0 +1,54 @@
+import { connectToDatabase } from "../../../utils/db";
+import Subject from "../../../models/Subject";
+import Career from "../../../models/Career";
+
+export default async function handler(req, res) {
+    const { method } = req;
+    const { subjectName, career, description } = req.body;
+
+    if (!subjectName || !career || !description) {
+        return res.status(400).json({ success: false, message: "Empty fields" });
+    }
+
+    await connectToDatabase();
+
+    // verifica si existe career
+    if (!await Career.findById(career)) {
+        return res.status(409).json({ success: false, message: "Career not exists" });
+    }
+
+
+    //consulta todas las carreras que pertenecen a career y verifica si tiene el mismo nombre
+    const SubjectsQ = await Subject.find({ career: career });
+
+    for (let i = 0; i < SubjectsQ.length; i++) {
+        if (SubjectsQ[i].subjectName == subjectName) {
+            return res.status(409).json({ success: false, message: "Subject already exists" });
+        }
+    }
+
+
+    switch (method) {
+        case "POST":
+            try {
+
+                const subject = await Subject.create({
+                    subjectName,
+                    description,
+                    career
+                });
+                await Career.findByIdAndUpdate(career, {
+                    $push: { Subjects: Subject._id }
+                });
+
+                return res.status(200).json({ success: true, data: subject });
+            } catch (error) {
+                return res.status(400).json({ success: false, message: error });
+            }
+        default:
+            return res.status(400).json({ success: false });
+    }
+
+}
+
+
