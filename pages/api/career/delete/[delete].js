@@ -16,12 +16,12 @@ export default async function handler(req, res) {
         case "DELETE":
             try {
                 const career = await Career.findByIdAndRemove(id);
-                
+
                 // lo elimina de college
                 await College.findByIdAndUpdate(career.college, {
                     $pull: { careers: career._id }
                 });
-                
+
                 return res.status(200).json({ success: true, data: career });
             }
             catch (error) {
@@ -31,5 +31,3 @@ export default async function handler(req, res) {
             return res.status(400).json({ success: false });
     }
 }
-
-
