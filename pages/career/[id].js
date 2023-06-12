@@ -48,12 +48,12 @@ export default function Home() {
                 <p>{career.careerName}</p>
             </Head>
             <Layout>
-            <h1>{career.collegeName}</h1>
+            <h1>{career.careerName}</h1>
                 <img src={`/photo.svg`} alt={`logo`} />
                 <ul>
                     {subjects.map((subject) => (
                         <li key={subject._id}>
-                            <Link href={`/career/${subject._id}`}>
+                            <Link href={`/subject/${subject._id}`}>
                                 {subject.subjectName}
                             </Link>
                         </li>
