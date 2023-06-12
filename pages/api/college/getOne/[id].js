@@ -6,7 +6,7 @@ export default async function handler(req, res) {
     const { id } = req.query; // id
 
     if (!id) {
-        return res.status(400).json({ success: false, message: "No id provideed" });
+        return res.status(400).json({ success: false, message: "No ID provideed" });
     }
 
     connectToDatabase();
