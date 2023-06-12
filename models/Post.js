@@ -33,7 +33,7 @@ const PostSchema = new mongoose.Schema({
     },
     subject:{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Collage",
+        ref: "Subject",
     },
     createDate: {
         type: Date.now
