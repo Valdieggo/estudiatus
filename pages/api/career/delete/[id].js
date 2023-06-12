@@ -4,7 +4,7 @@ import College from "../../../../models/College";
 
 export default async function handler(req, res) {
     const { method } = req;
-    const  id  = req.query.delete;
+    const { id } = req.query;
 
     if (!id) {
         return res.status(400).json({ success: false, message: "No id provideed" });
