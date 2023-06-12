@@ -32,19 +32,7 @@ export default async function handler(req, res) {
                     description,
                     college
                 });
-                //crea los campos de la carrera en la tabla de la universidad creando el json de req para luego usar la funcion
-                //consume la api de college/update/addCareer
-                // o al menos esa es la idea
-                /* 
-                const sol = {
-                    method: "PUT",
-                    body: JSON.stringify({
-                        id: college,
-                        career: career._id
-                    })
-                }
-                await addCareer(sol, res)
-                */
+                
                 await College.findByIdAndUpdate(college, {
                     $push: { careers: career._id }
                 });
