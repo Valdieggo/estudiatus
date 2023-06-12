@@ -4,10 +4,18 @@ import College from "../../../models/College";
 
 export default async function handler(req, res) {
     const { method } = req;
-    const { careerName, college, description } = req.body;
+    const { careerName, college, description, img } = req.body;
 
-    if (!careerName || !college || !description) {
+    if (!careerName) {
         return res.status(400).json({ success: false, message: "Empty fields" });
+    }
+
+    if(!college){
+        return res.status(400).json({ success: false, message: "No college provideed" });
+    }
+
+    if(!description){
+        return res.status(400).json({ success: false, message: "No description provideed" });
     }
 
     await connectToDatabase();
@@ -15,10 +23,11 @@ export default async function handler(req, res) {
     //consulta todas las carreras que pertenecen a college y verifica si tiene el mismo nombre
     const careers = await Career.find({ college: college });
     for (let i = 0; i < careers.length; i++) {
-        if (careers[i].careerName == careerName) {
+        if (careers[i].careerName === careerName) {
             return res.status(409).json({ success: false, message: "Career already exists" });
         }
     }
+    
     // verifica si existe college
     if(!await College.findById(college)){
         return res.status(409).json({ success: false, message: "College not exists" });
@@ -30,21 +39,10 @@ export default async function handler(req, res) {
                 const career = await Career.create({
                     careerName,
                     description,
-                    college
+                    college,
+                    img,
                 });
-                //crea los campos de la carrera en la tabla de la universidad creando el json de req para luego usar la funcion
-                //consume la api de college/update/addCareer
-                // o al menos esa es la idea
-                /* 
-                const sol = {
-                    method: "PUT",
-                    body: JSON.stringify({
-                        id: college,
-                        career: career._id
-                    })
-                }
-                await addCareer(sol, res)
-                */
+                
                 await College.findByIdAndUpdate(college, {
                     $push: { careers: career._id }
                 });
