@@ -6,7 +6,8 @@ import {deleteReport} from "../../../controllers/reportController";
 
 export default async function handler(req, res) {
     const {method}=req;
-    
+    console.log("req",req.method);
+    console.log("req",req.body);
     switch (method) {
         case "POST":
             await createReport(req,res);

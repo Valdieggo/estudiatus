@@ -58,7 +58,7 @@ export async function updateReport(req,res){
 }
 export async function deleteReport(req,res){
     connectToDatabase();
-    const { reportUserId, reportedUserId,reportId } = req.body;
+    const {reportId } = req.body;
     
     console.log(reportId);
     try {
