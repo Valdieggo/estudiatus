@@ -5,6 +5,7 @@ const CommentSchema = new mongoose.Schema({
     creator:{
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
+        required: [true, "Usuario obligatorio"],
     },
     text:{
         type: String,
@@ -12,10 +13,25 @@ const CommentSchema = new mongoose.Schema({
     },
     score:{
         type: Number,
+        default: 0,
     },
-    crateDate:{
-        type: Date.now
+    createDate:{
+        type: Date,
+        default: Date.now
     },
+    post:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Post",
+        required: [true, "Post obligatorio"],
+    },
+    parent:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Comment",
+    },
+    children:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Comment",
+    }]
 });
 
 module.exports = mongoose.models.Comment || mongoose.model("Comment", CommentSchema);
