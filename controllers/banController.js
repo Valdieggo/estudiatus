@@ -11,7 +11,8 @@ export async function createBan(req, res){
         const newBan = new Ban({ user,type,time,status,report });
         await newBan.save();
         if (newBan) {
-            return res.status(201).json({ message: "Ban created" });
+            // se retorna el ban creado
+            return res.status(201).json({ message: "Ban created", ban: newBan} );
         }
         else {
             return res.status(500).json({ message: "Ban not created" });
@@ -24,9 +25,10 @@ export async function createBan(req, res){
 
 export async function getOneBan(req, res){
     connectToDatabase();
-    const {id} = req.body;
+    const {idBan} = req.body;
+    console.log(idBan);
     try {
-        const ban = await Ban.findById(id).populate("user").populate("report");
+        const ban = await Ban.find({}).populate("user").populate("report");
         if (ban) {
             return res.status(200).json({ ban });
             // si ban es igual a 0 entonces no hay bans
@@ -64,9 +66,9 @@ export async function updateBan(req, res){
 
 export async function deleteBan(req, res){
     connectToDatabase();
-    const {id} = req.body;
+    const {idBan} = req.body;
     try {
-        const ban = await Ban.findByIdAndDelete(id);
+        const ban = await Ban.findByIdAndDelete(idBan);
         if (ban) {
             return res.status(200).json({ message: "Ban deleted" });
         }
@@ -74,6 +76,6 @@ export async function deleteBan(req, res){
             return res.status(500).json({ message: "Ban not deleted" });
         }
     } catch (error) {
-        return res.status(500).json({ message: "Error al eliminar el ban" + error});
+        return res.status(500).json({ message: "Error al eliminar el ban"});
     }
-}
+};

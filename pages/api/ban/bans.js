@@ -4,8 +4,8 @@ import { updateBan } from "../../../controllers/banController";
 import { deleteBan } from "../../../controllers/banController";
 
 export default async function handler(req, res) {
-    await connectToDatabase();
-    switch (req.method) {
+    const {method}=req;
+    switch (method) {
         case "POST":
            await createBan(req,res);
             break;
@@ -14,9 +14,10 @@ export default async function handler(req, res) {
             break;
         case "PUT":
             await updateBan(req,res);
-           
+            break;
         case "DELETE":
            await deleteBan(req,res);
+            break;
         default:
             res.status(400).json({ success: false});
             break;
