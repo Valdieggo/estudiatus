@@ -19,13 +19,13 @@ const Sidebar = () => {
         <Link href="/">Inicio</Link>
         <Link href="/about">Acerca de</Link>
         <Link href="/contact">Contacto</Link>
+        <Link href="/college">College</Link>
       </Stack>
 
       <Text fontSize="2xl" mt="5">
         Admin
       </Text>
       <Stack spacing="3">
-        <Link href="/college">College</Link>
         </Stack>
     </Box>
   )
