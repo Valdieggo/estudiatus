@@ -1,31 +1,33 @@
 import { connectToDatabase } from "../../../utils/db";
 
 import Post from "../../../models/Post";
+import Subject from "../../../models/Subject";
+import User from "../../../models/User";
 
 export default async function handler(req, res) {
     const { method } =req;
 
-    const { title, score, view, creator, subject } = req.body;
-
     await connectToDatabase();
+
 
     switch (method) {
         case "PUT":
             try {
-                const post = await Post.findByIdAndUpdate({
-                    title: req.body.title,
-                    score: req.body.score,
-                    view: req.body.view,
-                    creator: req.body.creator,
-                    comments: req.body.comments,
-                    subscribers: req.body.subscribers,
-                    subject: req.body.subject,
-                })
+                const { id } = req.query;
+                const { title, score, view, creator, subject } = req.body;
+                const post = await Post.findByIdAndUpdate(id, {
+                    title,
+                    score,
+                    view,
+                    creator,
+                    subject,
+                });
+                if (!post) {
+                    return res.status(400).json({ success: false, message: "Post not found" });
+                }
                 return res.status(200).json({ success: true, data: post });
-            } catch(error){
-                return res.status(400).json({ success: false, message: error });
+            }catch{
+
             }
-        default:
-            return res.status(400).json({ success: false, message: error});
-        }
+    }
 }
