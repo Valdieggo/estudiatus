@@ -34,8 +34,7 @@ export default function Home() {
     };
 
     const getCareers = async () => {
-        //OBTIENE TODAS LAS CARRERAS Y LUEGO FILTRA POR LA IDE OBTENIDA
-        console.log("college:", college)
+        //OBTIENE TODAS LAS CARRERAS Y LUEGO FILTRA POR LA ID OBTENIDA
         const response = await axios.get(`/api/career/getAll`).then((res) => {
             const careers = res.data.data.filter((career) => career.college === college._id);
             setCareers(careers);

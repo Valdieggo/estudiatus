@@ -25,26 +25,25 @@ export default async function handler(req, res) {
 
 
     //consulta todas las carreras que pertenecen a career y verifica si tiene el mismo nombre
-    const SubjectsQ = await Subject.find({ career: career });
 
-    for (let i = 0; i < SubjectsQ.length; i++) {
-        if (SubjectsQ[i].subjectName == subjectName) {
+    const subjects = await Subject.find({ career: career });
+
+    for (let i = 0; i < subjects.length; i++) {
+        if (subjects[i].subjectName == subjectName) {
             return res.status(409).json({ success: false, message: "Subject already exists" });
         }
     }
-
-
+    
     switch (method) {
         case "POST":
             try {
-
                 const subject = await Subject.create({
                     subjectName,
                     description,
                     career
                 });
                 await Career.findByIdAndUpdate(career, {
-                    $push: { Subjects: Subject._id }
+                    $push: { subjects: subject._id }
                 });
 
                 return res.status(200).json({ success: true, data: subject });
