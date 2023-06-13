@@ -1,6 +1,6 @@
 import { connectToDatabase } from "../../../utils/db";
 
-import Disscus from "../../../models/Disscus";
+import Discuss from "../../../models/Discuss";
 
 export default async function handler(req, res) {
     const { method } = req;
@@ -15,15 +15,15 @@ export default async function handler(req, res) {
     switch (method) {
         case "POST":
             try {
-                    const discus = await Disscus.create({
+                    const discuss = await Discuss.create({
                         post
                     });
-                    return res.status(200).json({ success: true, data: discus });
+                    return res.status(200).json({ success: true, data: discuss });
                 }
                 catch (error) {
                     return res.status(400).json({ success: false, message: error });
                 }
         default:
-            return res.status(400).json({ success: false });
+            return res.status(400).json({ success: false, message: error });
     }
 }

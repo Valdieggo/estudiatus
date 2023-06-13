@@ -38,23 +38,24 @@ export default function Home() {
         const response = await axios.get(`/api/subject/getAll`).then((res) => {
             const subjects = res.data.data.filter((subject) => subject.career === career._id);
             setSubjects(subjects);
+            setLoading(false);
         });
-        setLoading(false);
     };
 
     return (
         <>
             <Head>
-                <p>{career.careerName}</p>
+                <title>{career.careerName}</title>
             </Head>
             <Layout>
-            <h1>{career.careerName}</h1>
+                <h1>{career.careerName}</h1>
                 <img src={`/photo.svg`} alt={`logo`} />
                 <ul>
                     {subjects.map((subject) => (
                         <li key={subject._id}>
                             <Link href={`/subject/${subject._id}`}>
-                                {subject.subjectName}
+                                <p>Nombre: {subject.subjectName}</p>
+                                <p>Descripcion: {subject.description}</p>
                             </Link>
                         </li>
                     ))}
