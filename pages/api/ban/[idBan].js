@@ -6,13 +6,13 @@ export default async function handler(req, res) {
    try {
    connectToDatabase();
     const { method } = req;
-    const { BanDeleteId } = req.query;
-    console.log(BanDeleteId);
+    const { idBan } = req.query;
+    console.log(idBan);
 
 
     switch (method) {
         case "DELETE":
-            const report = await Ban.findByIdAndDelete(BanDeleteId);
+            const report = await Ban.findByIdAndDelete(idBan);
             if (report) {
                 return res.status(200).json({ message: "Ban deleted" });
             }
