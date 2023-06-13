@@ -14,15 +14,10 @@ export default function Navbar() {
         <Link px="4" href="/">
           Foro
         </Link>
-<<<<<<< HEAD
-        <Link px="4" href="/about">
-          Repositorio
-=======
-        <Link px="4" href="/">
+        <Link px="4" href="/repository">
           Apuntes
->>>>>>> origin/profile
         </Link>
-        <Link px="4" href="/contact">
+        <Link px="4" href="/events">
           Eventos
         </Link>
       </Box>
