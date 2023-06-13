@@ -4,7 +4,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { count } from "../../models/Post";
 
 
 export default function Home() {
@@ -52,7 +51,7 @@ export default function Home() {
                             <Link href={`/post/${post._id}`}>
                                 <p>Nombre: {post.title}</p>
                                 <p>Puntaje: {post.score}</p>
-                                <p>Likes: {count(post.likes)}</p>
+                                <p>Likes: {}</p>
                                 <p>Vistas: {post.view}</p>
                                 <p>Creador: {post.creator}</p>
                             </Link>
