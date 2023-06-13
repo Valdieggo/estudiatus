@@ -1,6 +1,9 @@
-import { Box } from "@chakra-ui/react";
+import { Box, Grid, Container,Stack,Button,Textarea } from "@chakra-ui/react";
 import Head from "next/head";
 import Layout from "../components/Layout/Layout";
+
+import styled from "../styles/post.css";
+
 const Post = () => {
     return (
         <>
@@ -18,6 +21,4 @@ const Post = () => {
 
 export default Post;
 
-export const getServerSideProp = async(context)=>{
-const res = await fecth ("http://localhost:3000/api/Discuss/")
-}
+
