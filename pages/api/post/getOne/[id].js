@@ -1,6 +1,6 @@
-import { connectToDatabase } from "../../../utils/db";
+import { connectToDatabase } from "../../../../utils/db";
 
-import Post from "../../../models/Post";
+import Post from "../../../../models/Post";
 
 export default async function handler(req, res) {
     const { method } = req;
