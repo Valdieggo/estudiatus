@@ -17,7 +17,11 @@ export default function User() {
     const { data: session, status } = useSession()
     console.log(status)
     return (
-      <Box>
+      <Box bg="post.100" px="6" py="3" borderRadius="full" _hover={
+        {
+          bg: "post.200",
+        }
+      }>
         {
           status === "authenticated" ? 
           (
