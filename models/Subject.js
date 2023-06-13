@@ -23,6 +23,7 @@ const SubjectSchema = new mongoose.Schema({
     posts: {
         type: [mongoose.Schema.Types.ObjectId],
         ref: "Post",
+        required:false
     },
     career: {
         type: mongoose.Schema.Types.ObjectId,
