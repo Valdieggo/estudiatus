@@ -17,7 +17,7 @@ export async function createReport(req,res){
         } catch (error) {
             return res.status(500).json({ message: "Error al crear el reporte" + error});
         }
-}
+};
 export async function getReports(req,res){
 // se listan todos los reportes
     connectToDatabase();
@@ -35,7 +35,7 @@ export async function getReports(req,res){
     catch (error) {
         return res.status(500).json({ message: "Error al obtener los reportes" + error});
     }
-}
+};
 export async function updateReport(req,res){
    connectToDatabase();
     const {reportUserId ,reportedUserId, reason, description, id} = req.body;
@@ -55,21 +55,4 @@ export async function updateReport(req,res){
     } catch (error) {
         return res.status(500).json({ message: "Error al actualizar el reporte" + error});
     }
-}
-export async function deleteReport(req,res){
-    connectToDatabase();
-    const {reportId } = req.body;
-    
-    console.log(reportId);
-    try {
-        const deleteReport = await Report.findByIdAndDelete(reportId);
-        if (deleteReport) {
-            return res.status(200).json({ message: "Report deleted" });
-        }
-        else {
-            return res.status(500).json({ message: "Report not deleted" });
-        }
-    } catch (error) {
-        return res.status(500).json({ message: "Error al eliminar el reporte" + error});
-    }
-}
+};
