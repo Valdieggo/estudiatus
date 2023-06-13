@@ -1,7 +1,6 @@
 import { createBan } from "../../../controllers/banController";
 import { getBans } from "../../../controllers/banController";
 import { updateBan } from "../../../controllers/banController";
-import { deleteBan } from "../../../controllers/banController";
 
 export default async function handler(req, res) {
     const {method}=req;
