@@ -4,6 +4,7 @@ import Post from "../../../models/Post";
 
 export default async function handler(req, res) {
     const { method } =req;
+
     await connectToDatabase();
 
     switch (method) {
@@ -16,6 +17,6 @@ export default async function handler(req, res) {
                 return res.status(400).json({ success: false, message: error });
             }
         default:
-            return res.status(400).json({ success: false });
+            return res.status(400).json({ success: false,message: error });
         }
 }

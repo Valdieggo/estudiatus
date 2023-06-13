@@ -8,6 +8,17 @@ const colors = {
     800: "#153e75",
     700: "#2a69ac",
   },
+  post: {
+    200: "#19304e", // hover
+    100: "#18273f", // active
+  }, 
+  button: {
+    200: "#22c2f5", // hover
+    100: "#2d6bb7", // active
+  },
+  bg: {
+    100: "#151f32",
+  }
 }
 
 const theme = extendTheme({ colors })
@@ -22,4 +33,4 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   )
 }
 
-export default MyApp;
+export default MyApp; 
