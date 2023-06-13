@@ -6,11 +6,11 @@ export default async function handler(req, res) {
    try {
    connectToDatabase();
     const { method } = req;
-    const { deleteId } = req.query;
+    const { reportDeleteId } = req.query;
 
     switch (method) {
         case "DELETE":
-            const report = await Report.findByIdAndDelete(deleteId);
+            const report = await Report.findByIdAndDelete(reportDeleteId);
             if (report) {
                 return res.status(200).json({ message: "Report deleted" });
             }
