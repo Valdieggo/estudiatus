@@ -1,4 +1,3 @@
-
 import {
   Box,
   Button,
@@ -12,76 +11,61 @@ import {
   Input,
   Stack,
   Text,
+  Flex,
 } from '@chakra-ui/react'
 
-import LoginForm from "../components/LoginForm";
+import LoginForm from "../components/Auth/LoginForm";
 import { Link } from '@chakra-ui/next-js'
+import Layout from '../components/Auth/Layout';
 
 const Login = () => {
   return (
-    <Container
-    maxW="lg"
-    py={{
-      base: '12',
-      md: '24',
-    }}
-    px={{
-      base: '0',
-      sm: '8',
-    }}
-  >
-    <Stack spacing="8">
-      <Stack spacing="6">
-        <Stack
-          spacing={{
-            base: '2',
-            md: '3',
-          }}
-          textAlign="center"
-        >
-          <Heading
-            size={{
-              base: 'xs',
-              md: 'sm',
+    <Layout>
+      <Flex direction="column" align="center" justify="center" minH="100vh">
+        <Stack spacing="6" mt={8} maxWidth="450px" width="100%">
+          <Stack
+            spacing={{
+              base: '2',
+              md: '3',
+            }}
+            textAlign="center"
+          >
+            <Heading
+              color="white"
+              size={{
+                base: 'xl',
+                md: 'sm',
+              }}
+            >
+              Bienvenido, inicia sesión.
+            </Heading>
+            <HStack spacing="1" justify="center">
+              <Text color="white">No tienes una cuenta?</Text>
+              <Link href='/register' color="button.100">
+                Registrate
+              </Link>
+            </HStack>
+          </Stack>
+          <Box
+            py={{
+              base: '0',
+              sm: '8',
+            }}
+            px={{
+              base: '4',
+              sm: '10',
+            }}
+            bg="post.100"
+            borderRadius={{
+              base: 'none',
+              sm: 'xl',
             }}
           >
-            Bienvenido, inicia sesión.
-          </Heading>
-          <HStack spacing="1" justify="center">
-            <Text color="muted">No tienes una cuenta?</Text>
-            <Link href='/register' colorScheme="blue">
-              Registrate
-            </Link>
-          </HStack>
+            <LoginForm />
+          </Box>
         </Stack>
-      </Stack>
-      <Box
-        py={{
-          base: '0',
-          sm: '8',
-        }}
-        px={{
-          base: '4',
-          sm: '10',
-        }}
-        bg={{
-          base: 'transparent',
-          sm: 'bg-surface',
-        }}
-        boxShadow={{
-          base: 'none',
-          sm: 'md',
-        }}
-        borderRadius={{
-          base: 'none',
-          sm: 'xl',
-        }}
-      >
-        <LoginForm />
-      
-      </Box>
-    </Stack>
-  </Container>
+      </Flex>
+    </Layout>
   );
 };
 
