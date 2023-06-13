@@ -3,7 +3,7 @@ import College from "../../../models/College";
 
 export default async function handler(req, res) {
     const { method } = req;
-    const { collegeName } = req.body;
+    const { collegeName, img } = req.body;
 
     if (!collegeName) {
         return res.status(400).json({ success: false, message: "Empty college name" });
@@ -20,6 +20,7 @@ export default async function handler(req, res) {
             try {
                 const college = await College.create({
                     collegeName,
+                    img,
                 });
                 return res.status(200).json({ success: true, data: college });
             } catch (error) {
