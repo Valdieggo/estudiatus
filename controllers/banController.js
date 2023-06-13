@@ -23,7 +23,7 @@ export async function createBan(req, res){
     }
 };
 
-export async function getOneBan(req, res){
+export async function getBans(req, res){
     connectToDatabase();
     const {idBan} = req.body;
     console.log(idBan);
