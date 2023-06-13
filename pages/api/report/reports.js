@@ -6,7 +6,6 @@ import { updateReport } from "../../../controllers/reportController";
 
 export default async function handler(req, res) {
     const {method}=req;
-    console.log("req",req.method);
     switch (method) {
         case "POST":
             await createReport(req,res);
