@@ -2,23 +2,28 @@ import { connectToDatabase } from "../../../utils/db";
 import Report from "../../../models/Report";
 
 
-export default async function DELETE(req, res) {
+export default async function handler(req, res) {
    try {
    connectToDatabase();
-    const { daleteId } = req.query;
-    const report = await Report.findByIdAndDelete(daleteId);
-    if (report) {
-            
-            return res.status(200).json({ message: "Report deleted" });
-        }
-        else {
-            return res.status(500).json({ message: "Report not deleted" });
-        }
+    const { method } = req;
+    const { deleteId } = req.query;
 
+    switch (method) {
+        case "DELETE":
+            const report = await Report.findByIdAndDelete(deleteId);
+            if (report) {
+                return res.status(200).json({ message: "Report deleted" });
+            }
+            else {
+                return res.status(500).json({ message: "Report not deleted" });
+            }
 
-   } catch (error) {
-
-    return res.status(500).json({ message: "Error al eliminar el reporte" + error});
+        default:
+            res.status(400).json({ success: false });
+            break;
+    }
+    } catch (error) {
+        return res.status(500).json({ message: "Error al eliminar el reporte" + error });
     }
 
 };
