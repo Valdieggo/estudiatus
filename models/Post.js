@@ -15,6 +15,10 @@ const PostSchema = new mongoose.Schema({
             message: "{VALUE} no es un valor entero",
         }
     },
+    likes:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+    }],
     view :{
         type: Number,
         default: 0,
@@ -23,14 +27,14 @@ const PostSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
     },
-    comments:{
-        type: [mongoose.Schema.Types.ObjectId],
+    comments:[{
+        type: mongoose.Schema.Types.ObjectId,
         ref: "Comment",
-    },
-    subscribers:{
-        type: [mongoose.Schema.Types.ObjectId],
+    }],
+    subs: [{
+        type: mongoose.Schema.Types.ObjectId,
         ref: "User",
-    },
+    }],
     subject:{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Subject",
