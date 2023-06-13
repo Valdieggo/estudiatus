@@ -4,9 +4,9 @@ import Post from "../../../models/Post";
 
 export default async function handler(req, res) {
     const { method } = req;
-    const { title, score, view, creator, comments, subscribers, subject, createDate } = req.body;
+    const { title, score, view, creator, subject } = req.body;
 
-    if (!title || !score || !view || !creator || !comments || !subscribers || !subject || !createDate) {
+    if (!title) {
         return res.status(400).json({ success: false, message: "Empty fields" });
     }
 
@@ -20,10 +20,7 @@ export default async function handler(req, res) {
                         score,
                         view,
                         creator,
-                        comments,
-                        subscribers,
                         subject,
-                        createDate
                     });
                     return res.status(200).json({ success: true, data: post });
                 }
@@ -31,7 +28,6 @@ export default async function handler(req, res) {
                     return res.status(400).json({ success: false, message: error });
                 }
         default:
-            return res.status(400).json({ success: false });
+            return res.status(400).json({ success: false, message:error });
     }
-
 }
