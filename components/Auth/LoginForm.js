@@ -15,7 +15,7 @@ const LoginForm = () => {
   };
 
   return (
-    <Box width="100%" maxWidth="500px" margin="auto">
+    <Box color="white" width="100%" maxWidth="500px" margin="auto">
       <VStack as="form" onSubmit={handleSubmit(onSubmit)} spacing={6}>
         <FormControl>
           <FormLabel>Email</FormLabel>
@@ -26,7 +26,16 @@ const LoginForm = () => {
           <FormLabel>Password</FormLabel>
           <Input type="password" {...register("password", { required: true })} />
         </FormControl>
-        <Button type="submit" colorScheme="blue" width="100%">
+        <Button 
+          type="submit" 
+          bg="button.100" 
+          width="100%"
+          _hover={
+            {
+              bg: "button.200",
+            }
+          }
+          >
           Iniciar sesión
         </Button>
       </VStack>
