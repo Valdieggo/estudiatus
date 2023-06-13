@@ -1,12 +1,12 @@
 import { connectToDatabase } from "../../../../utils/db";
-import College from "../../../../models/College";
+import Career from "../../../../models/Career";
 
 export default async function handler(req, res) {
     const { method } = req;
-    const { getOne } = req.query; // id
+    const { id } = req.query; // id
 
-    if (!getOne) {
-        return res.status(400).json({ success: false, message: "No id provideed" });
+    if (!id) {
+        return res.status(400).json({ success: false, message: "No ID provideed" });
     }
 
     connectToDatabase();
@@ -14,8 +14,8 @@ export default async function handler(req, res) {
     switch (method) {
         case "GET":
             try {
-                const college = await College.findById(getOne);
-                return res.status(200).json({success: true, data: college});
+                const career = await Career.findById(id);
+                return res.status(200).json({success: true, data: career});
             }
             catch (error) {
                 return res.status(400).json({ success: false, message: error });

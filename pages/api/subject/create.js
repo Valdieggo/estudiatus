@@ -5,9 +5,15 @@ import Career from "../../../models/Career";
 export default async function handler(req, res) {
     const { method } = req;
     const { subjectName, career, description } = req.body;
+    if (!subjectName) {
+        return res.status(400).json({ success: false, message: "Empty subjectName" });
+    }
+    if (!career) {
+        return res.status(400).json({ success: false, message: "Empty career" });
+    }
 
-    if (!subjectName || !career || !description) {
-        return res.status(400).json({ success: false, message: "Empty fields" });
+    if (!description) {
+        return res.status(400).json({ success: false, message: "Empty description" });
     }
 
     await connectToDatabase();
