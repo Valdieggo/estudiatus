@@ -16,13 +16,14 @@ import {
   export default function Layout({ children }) {
 
     return (
-        <Container
+        <Box
             bg="bg.100"
-            maxW="100%"
+            maxW="100vw"
             minH="100vh"
+            p="0"
         >
             {children}
-        </Container>
+        </Box>
     )
 }
 
