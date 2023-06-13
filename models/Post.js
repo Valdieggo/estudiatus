@@ -24,11 +24,11 @@ const PostSchema = new mongoose.Schema({
         ref: "User",
     },
     comments:{
-        type: mongoose.Schema.Types.ObjectId,
+        type: [mongoose.Schema.Types.ObjectId],
         ref: "Comment",
     },
     subscribers:{
-        type: mongoose.Schema.Types.ObjectId,
+        type: [mongoose.Schema.Types.ObjectId],
         ref: "User",
     },
     subject:{
@@ -36,8 +36,9 @@ const PostSchema = new mongoose.Schema({
         ref: "Subject",
     },
     createDate: {
-        type: Date.now
+        type: Date,
+        default: Date.now,
     },
 });
 
-module.exports = mongoose.models.Post || mongoose.model("Publicacion", PostSchema);
+module.exports = mongoose.models.Post || mongoose.model("Post", PostSchema);
