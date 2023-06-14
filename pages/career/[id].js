@@ -49,7 +49,7 @@ export default function Home() {
             </Head>
             <Layout>
                 <h1>{career.careerName}</h1>
-                <img src={`/photo.svg`} alt={`logo`} />
+                <img src={`/photo.svg`} alt={`logo`} width="20px" height="20px" />
                 <ul>
                     {subjects.map((subject) => (
                         <li key={subject._id}>
