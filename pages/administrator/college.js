@@ -1,8 +1,11 @@
-
 import Head from "next/head";
 import Layout from "../../components/Layout/Layout";
+import verifyAdmin from "../../utils/verifyAdmin";
 
 export default function Home() {
+    if(!verifyAdmin()){
+        return null
+    }
 
     return (
         <>
@@ -10,7 +13,7 @@ export default function Home() {
                 <title>Prueba</title>
             </Head>
             <Layout>
-                Hola hola
+                subject
             </Layout>
         </>
     )
