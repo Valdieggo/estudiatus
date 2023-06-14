@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const banShecma = new mongoose.Schema({
+const banShema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
@@ -26,5 +26,5 @@ const banShecma = new mongoose.Schema({
 
 });
 
-module.exports = mongoose.models.Ban || mongoose.model("Ban", banShecma);
+module.exports = mongoose.models.Ban || mongoose.model("Ban", banShema);
 
