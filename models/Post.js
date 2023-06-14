@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const PostSchema = new mongoose.Schema({
-    titulo: {
+    title: {
         type: String,
         required: [true, "Titulo obligatorio"],
         minLenght:1,
@@ -15,6 +15,10 @@ const PostSchema = new mongoose.Schema({
             message: "{VALUE} no es un valor entero",
         }
     },
+    likes:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+    }],
     view :{
         type: Number,
         default: 0,
@@ -23,21 +27,22 @@ const PostSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
     },
-    comments:{
+    comments:[{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Comment",
-    },
-    subscribers:{
+    }],
+    subs: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
-    },
+    }],
     subject:{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Asignatura",
+        ref: "Subject",
     },
     createDate: {
-        type: Date.now
+        type: Date,
+        default: Date.now,
     },
 });
 
-module.exports = mongoose.models.Post || mongoose.model("Publicacion", PostSchema);
+module.exports = mongoose.models.Post || mongoose.model("Post", PostSchema);

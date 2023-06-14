@@ -23,6 +23,7 @@ const SubjectSchema = new mongoose.Schema({
     posts: {
         type: [mongoose.Schema.Types.ObjectId],
         ref: "Post",
+        required:false
     },
     career: {
         type: mongoose.Schema.Types.ObjectId,
@@ -30,4 +31,4 @@ const SubjectSchema = new mongoose.Schema({
     }
 })
 
-module.exports =  mongoose.model("Subject", SubjectSchema);
+module.exports =  mongoose.models.Subject || mongoose.model("Subject", SubjectSchema);

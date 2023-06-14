@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
-
-const UserSchema = new mongoose.Schema({
+import mongoose from 'mongoose';
+var Schema = mongoose.Schema;
+var user = new Schema({
     username: {
         type: String,
         required: [true, "Please provide a username"],
@@ -16,7 +16,7 @@ const UserSchema = new mongoose.Schema({
         required: [true, "Please provide a password"],
     },
     role: {
-        enum: ["user", "moderator"],
+        enum: ["user", "admin"],
         type: String,
         default: "user",
     },
@@ -50,6 +50,9 @@ const UserSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "College",
     },
-});
 
-module.exports = mongoose.models.User || mongoose.model("User", UserSchema);
+});
+mongoose.models = {};
+global.User = global.User || mongoose.model("User", user);
+
+export default global.User;

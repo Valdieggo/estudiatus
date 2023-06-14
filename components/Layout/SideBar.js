@@ -1,4 +1,5 @@
 import { Box, Stack, Link, Text } from '@chakra-ui/react'
+import Administrator from '../Admin/Administrator'
 
 const Sidebar = () => {
   return (
@@ -19,6 +20,11 @@ const Sidebar = () => {
         <Link href="/">Inicio</Link>
         <Link href="/about">Acerca de</Link>
         <Link href="/contact">Contacto</Link>
+        <Link href="/college">Universidades con un titulo largo para ver que pasa</Link>
+
+      </Stack>
+      <Stack spacing="3">
+      {Administrator()}
       </Stack>
     </Box>
   )
