@@ -65,6 +65,7 @@ function Layout({ children }) {
                 h="100vh"
                 gap='1'
                 fontWeight='bold'
+                minChildWidth="100%"
             >
                 <GridItem pl='2'  area={'header'}>
                     <Navbar />
