@@ -1,6 +1,6 @@
-import { connectToDatabase } from "../../../utils/db";
+import { connectToDatabase } from "../../../../utils/db";
 import Report from "../../../models/Report";
-
+import User from "../../../models/User";
 
 export default async function handler(req, res) {
    try {
@@ -10,7 +10,7 @@ export default async function handler(req, res) {
 
     switch (method) {
         case "DELETE":
-            const report = await Report.findByIdAndDelete(reportDeleteId);
+            const report = await Report.findByIdAndDelete(reportDeleteId).populate("user");
             if (report) {
                 return res.status(200).json({ message: "Report deleted" });
             }
