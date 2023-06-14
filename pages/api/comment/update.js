@@ -1,4 +1,4 @@
-import { connectToDatabase } from "../../../util/mongodb";
+import { connectToDatabase } from "../../../utils/db";
 import Comment from "../../../models/Comment";
 
 export default async function handler(req, res) {
