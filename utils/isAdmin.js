@@ -4,7 +4,7 @@ import { useSession } from "next-auth/react"
 export default function isAdmin() {
     const { data: session, status } = useSession();
     if (status === "authenticated") {
-        if (session.user.role === "admin") {
+        if (["admin","moderator"].includes(session.user.role)) {
             return true;
         }
     }

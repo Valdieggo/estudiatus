@@ -3,7 +3,7 @@ import Layout from "../../components/Layout/Layout";
 import verifyAdmin from "../../utils/verifyAdmin";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import {Box} from "@chakra-ui/react";
+import { Box, Link } from "@chakra-ui/react";
 
 import {
     Table,
@@ -23,6 +23,7 @@ export default function Home() {
         return null
     }
  */
+    const moment = require('moment');
     const [subjects, setSubjects] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -35,6 +36,7 @@ export default function Home() {
     const getSubject = async () => {
         const response = await axios.get(`/api/subject/getAll`).then((res) => {
             setSubjects(res.data.data);
+
             setLoading(false);
         })
     };
@@ -57,38 +59,39 @@ export default function Home() {
                 <title>Prueba</title>
             </Head>
             <Layout>
-              <Box>
-              {loading ? <p>Cargando...</p> :
-                    <>
-                        <Table variant="simple" border={{ color: { sm: "red", lg: "green" } }}>
-                            <TableCaption> Subject management</TableCaption>
-                            <Thead>
-                                <Tr>
-                                    <Th>Name</Th>
-                                    <Th>Description</Th>
-                                    <Th>date</Th>
-                                    <Th>career</Th>
-                                    <Th>Eliminar</Th>
-                                    <Th>Editar</Th>
-                                </Tr>
-                            </Thead>
-                            <Tbody>
-                                {subjects.map((subject) => (
-                                    <Tr key={subject._id}>
-                                        <Td>{subject.subjectName}</Td>
-                                        <Td>{subject.description}</Td>
-                                        <Td>{subject.date}</Td>
-                                        <Td>{subject.career}</Td>
-                                        <Td><button onClick={() => deleteSubject(subject._id)}>Eliminar</button></Td>
-                                        <Td><button>Editar</button></Td>
+                <Box>
+                    {loading ? <p>Cargando...</p> :
+                        <>
+                            <Table variant="simple" border={{ color: { sm: "red", lg: "green" } }}>
+                                <TableCaption> Subject management</TableCaption>
+                                <Thead>
+                                    <Tr>
+                                        <Th>Name</Th>
+                                        <Th>Description</Th>
+                                        <Th>date</Th>
+                                        <Th>career</Th>
+                                        <Th>Eliminar</Th>
+                                        <Th>Editar</Th>
                                     </Tr>
-                                ))}
-                            </Tbody>
-                        </Table>
-
-                    </>
-                }
-              </Box>
+                                </Thead>
+                                <Tbody>
+                                    {subjects.map((subject) => (
+                                        <Tr key={subject._id}>
+                                            <Link href={`/subject/${subject._id}`}>
+                                            <Td>{subject.subjectName}</Td>
+                                            </Link>
+                                            <Td>{subject.description}</Td>
+                                            <Td>{moment(subject.date).format('DD/MM/YYYY')}</Td>
+                                            <Td>{subject.career}</Td>
+                                            <Td><button onClick={() => deleteSubject(subject._id)}>Eliminar</button></Td>
+                                            <Td><button>Editar</button></Td>
+                                        </Tr>
+                                    ))}
+                                </Tbody>
+                            </Table>
+                        </>
+                    }
+                </Box>
             </Layout>
         </>
     )
