@@ -16,6 +16,23 @@ export default async function handler(req, res) {
         return res.status(409).json({ success: false, message: "Subject already exists" });
     }
 
+    if (subjectName) {
+        if (subjectName.length > 100) {
+            return res.status(400).json({ success: false, message: "Subject name cannot be more than 100 characters" });
+        } else if (subjectName.length < 5) {
+            return res.status(400).json({ success: false, message: "Subject name cannot be less than 5 characters" });
+        }
+    }
+
+    if(description){
+        if (description.length > 300) {
+            return res.status(400).json({ success: false, message: "Subject description cannot be more than 300 characters" });
+        } else if (description.length < 10) {
+            return res.status(400).json({ success: false, message: "Subject description cannot be less than 10 characters" });
+        }
+    }
+
+
     switch (method) {
         case "PUT":
             try {
