@@ -39,6 +39,18 @@ export default function Home() {
         })
     };
 
+    const deleteSubject = async (id) => {
+        const response = await axios.delete(`/api/subject/delete/${id}`).then((res) => {
+            getSubject();
+        })
+    };
+
+    const editSubject = async (id) => {
+        const response = await axios.put(`/api/subject/update/${id}`).then((res) => {
+            getSubject();
+        })
+    };
+
     return (
         <>
             <Head>
@@ -56,6 +68,8 @@ export default function Home() {
                                     <Th>Description</Th>
                                     <Th>date</Th>
                                     <Th>career</Th>
+                                    <Th>Eliminar</Th>
+                                    <Th>Editar</Th>
                                 </Tr>
                             </Thead>
                             <Tbody>
@@ -65,6 +79,8 @@ export default function Home() {
                                         <Td>{subject.description}</Td>
                                         <Td>{subject.date}</Td>
                                         <Td>{subject.career}</Td>
+                                        <Td><button onClick={() => deleteSubject(subject._id)}>Eliminar</button></Td>
+                                        <Td><button>Editar</button></Td>
                                     </Tr>
                                 ))}
                             </Tbody>
