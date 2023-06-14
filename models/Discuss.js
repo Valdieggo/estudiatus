@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const DiscussSchema = new mongoose.Schema({
 
     post: {
-        type: [mongoose.Schema.Types.ObjectId],
+        type: mongoose.Schema.Types.ObjectId,
         ref: "Post",
     },
 });
