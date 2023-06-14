@@ -16,7 +16,7 @@ var user = new Schema({
         required: [true, "Please provide a password"],
     },
     role: {
-        enum: ["user", "moderator"],
+        enum: ["user", "admin", "moderator"],
         type: String,
         default: "user",
     },
