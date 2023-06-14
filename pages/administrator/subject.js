@@ -36,12 +36,8 @@ import { useDisclosure } from '@chakra-ui/react'
 
 
 export default function Home() {
-    /*
-    if (!verifyAdmin()) {
-        return null
-    }
- */
-
+    verifyAdmin();
+    
     const moment = require('moment');
     const [id, setId] = useState("");
 

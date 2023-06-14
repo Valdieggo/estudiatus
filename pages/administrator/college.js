@@ -3,9 +3,8 @@ import Layout from "../../components/Layout/Layout";
 import verifyAdmin from "../../utils/verifyAdmin";
 
 export default function Home() {
-    if(!verifyAdmin()){
-        return null
-    }
+    verifyAdmin();
+
 
     return (
         <>
