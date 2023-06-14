@@ -4,7 +4,7 @@ import { Grid, GridItem } from "@chakra-ui/layout";
 import { Box, Drawer, Flex, Heading, Text } from '@chakra-ui/react';
 
 function Layout({ children }) {
-    /*
+    /*original
     return (
         <Container
             bg="bg.100"
@@ -24,34 +24,7 @@ function Layout({ children }) {
         </Container>
     ); 
 
-    return (
-        <Grid
-            templateAreas={`"header header"
-                  "nav main"
-                  "nav footer"`}
-            gridTemplateRows={'50px 1fr 30px'}
-            gridTemplateColumns={'150px 1fr'}
-            h='200px'
-            gap='1'
-            color="white"
-            fontWeight='bold'
-            bg ="bg.100"
-        >
-            <GridItem pl='' area={'header'}>
-                <Navbar />
-            </GridItem>
-            <GridItem pl='2'  area={'nav'}>
-                <Sidebar />
-            </GridItem>
-            <GridItem pl='2'  area={'main'}>
-                {children}
-            </GridItem>
-            <GridItem pl='2' area={'footer'}>
-                Footer
-            </GridItem>
-        </Grid>
-
-    )*/
+  */
 
     return (
         <Box bg="bg.100"
@@ -65,7 +38,7 @@ function Layout({ children }) {
                 h="100vh"
                 gap='1'
                 fontWeight='bold'
-                minChildWidth="100%"
+                minchildwidth="100%"
             >
                 <GridItem pl='2'  area={'header'}>
                     <Navbar />
@@ -77,7 +50,7 @@ function Layout({ children }) {
                     {children}
                 </GridItem>
                 <GridItem pl='2'  area={'footer'}>
-                    Footer
+                    Aqui va el Footer blablabla bla bla Todos los derechos reservados
                 </GridItem>
             </Grid>
         </Box>

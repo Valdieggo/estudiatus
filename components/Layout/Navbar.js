@@ -26,23 +26,3 @@ export default function Navbar() {
     </Flex>
   );
 };
-
-/*
-
-import React, { useState } from 'react';
-import { Navbar, NavLink } from '@chakra-ui/react';
-
-const Nav = () => {
-  const [activeItem, setActiveItem] = useState('home');
-
-  return (
-    <Navbar brand="My App">
-      <NavLink href="/" active={activeItem === 'home'}>Foro</NavLink>
-      <NavLink href="/repository" active={activeItem === 'Apuntes'}>Apuntes</NavLink>
-      <NavLink href="/events" active={activeItem === 'events'}>events</NavLink>
-    </Navbar>
-  );
-};
-
-export default Nav;
-*/
