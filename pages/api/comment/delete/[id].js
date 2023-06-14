@@ -1,6 +1,6 @@
-import { connectToDatabase } from "../../../utils/db";
-import Comment from "../../../models/Comment";
-import Post from "../../../models/Post";
+import { connectToDatabase } from "../../../../utils/db";
+import Comment from "../../../../models/Comment";
+import Post from "../../../../models/Post";
 
 export default async function handler(req, res) {
     const { method } = req;
@@ -10,8 +10,7 @@ export default async function handler(req, res) {
     switch (method) {
         case "DELETE":
             try {
-                const { id } = req.body;
-
+                const { id } = req.query;
                 if (!id) {
                     return res.status(400).json({ success: false, message: "Missing fields" });
                 }
@@ -21,7 +20,7 @@ export default async function handler(req, res) {
                 if (!comment) {
                     return res.status(400).json({ success: false, message: "Comment not found" });
                 }
-
+                //console.log(comment.post.toString());
                 const post = await Post.findById(comment.post);
 
                 if (!post) {
@@ -29,6 +28,7 @@ export default async function handler(req, res) {
                 }
 
                 post.comments.pull(id);
+                
                 await post.save();
 
 
@@ -46,4 +46,3 @@ export default async function handler(req, res) {
 
     }
 }
-
