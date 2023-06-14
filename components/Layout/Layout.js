@@ -38,7 +38,7 @@ function Layout({ children }) {
                 h="100vh"
                 gap='1'
                 fontWeight='bold'
-                minchildwidth="100%"
+                minchildwidth="100vh"
             >
                 <GridItem pl='2'  area={'header'}>
                     <Navbar />
