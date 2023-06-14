@@ -34,7 +34,7 @@ function Layout({ children }) {
                   "nav main"
                   "nav footer"`}
                 gridTemplateRows={'50px 1fr 30px'}
-                gridTemplateColumns={'200px 1fr'}
+                gridTemplateColumns={'188px 1fr'}
                 h="100vh"
                 gap='1'
                 fontWeight='bold'
