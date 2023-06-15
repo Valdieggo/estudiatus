@@ -3,6 +3,8 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Layout from "../components/Layout/Layout";
+
 
 //import styled from "../styles/post.css";
 //import ShowInfo from "../components/ShowInfo";
@@ -15,20 +17,22 @@ const PostAdm = () => {
     const router = useRouter()
 
     const getPosts = async () => {
-        const {response} = await axios.get("/api/posts/getAll").then((response) => {
-            setPosts(response.data)
+        const response = await axios.get("/api/post/getAll").then((response) => {
+            setPosts(response.data.data)
             setLoading(false)
         })
     }
 
-    const getPost = async () => {
+    const getPostFind = async (title) => {
         setPost(null)
         posts.map(post => {
-            if (post._id === _id) {
-                setPosts(post)
-                return _id
+            if (post.title === title) {
+                setPost(post)
+                console.log("dentro del if")
             }
+            console.log("map")
         })
+        console.log("dentro de funcion")
     }
 
     useEffect(() => {
@@ -50,6 +54,7 @@ const PostAdm = () => {
             })
         }
         else {
+            console.log("dentro del else")
             return (
                 <Tr key={postFind._id}>
                     <Td>{postFind.title}</Td>
@@ -69,27 +74,29 @@ const PostAdm = () => {
                 {
                     loading ? <h1>Cargando...</h1> :
                         <>
-                            <Container minH='92vh' minW='74vw' maxW='74vw' centerContent overflow='hidden'>
-                                <Heading textAlign={"center"} my={10}>Publicaciones</Heading>
-                                <Button colorScheme="teal" /* onClick={() => router.push('/posts/create')} */ >Nueva Publicacion</Button>
-                                <FormControl>
-                                    <FormLabel>Buscar Publicacion</FormLabel>
-                                    <Input onChange={(e) => getPost(e.target.value)} placeholder=" ingrese el Tema a buscar " type='text' />
-                                </FormControl>
+                            <Layout>
+                                <Container minH='92vh' minW='74vw' maxW='74vw' centerContent overflow='hidden'>
+                                    <Heading textAlign={"center"} my={10}>Publicaciones</Heading>
+                                    <Button colorScheme="teal" /* onClick={() => router.push('/posts/create')} */ >Nueva Publicacion</Button>
+                                    <FormControl>
+                                        <FormLabel>Buscar Publicacion</FormLabel>
+                                        <Input onChange={(e) => getPostFind(e.target.value)} placeholder=" ingrese el Tema a buscar " type='text' />
+                                    </FormControl>
 
-                                <Table variant="simple">
-                                    <Thead>
-                                        <Tr>
-                                            <Td>Tema</Td>
-                                            <Td>Creador</Td>
-                                            <Td>Fecha de creacion</Td>
-                                        </Tr>
-                                    </Thead>
-                                    <Tbody>
-                                        {showPosts()}
-                                    </Tbody>
-                                </Table>
-                            </Container>
+                                    <Table variant="simple">
+                                        <Thead>
+                                            <Tr>
+                                                <Td>Tema</Td>
+                                                <Td>Creador</Td>
+                                                <Td>Fecha de creacion</Td>
+                                            </Tr>
+                                        </Thead>
+                                        <Tbody>
+                                            {showPosts()}
+                                        </Tbody>
+                                    </Table>
+                                </Container>
+                            </Layout>
                         </>
                 }
             </Box>
