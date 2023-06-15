@@ -7,7 +7,7 @@ import {
 } from "@chakra-ui/react";
 import User from "./User";
 
-export default function () {
+export default function Navbar() {
   /**
    * return (
     <Grid templateColumns="repeat(3, 1fr)" gap={6}>
@@ -54,6 +54,5 @@ export default function () {
         </GridItem>
       </Grid>
     </Box>
-
   )
 };
