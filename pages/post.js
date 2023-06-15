@@ -11,11 +11,14 @@ const PostAdm = () => {
 
     const [posts, setPosts] = useState([]);
     const [postFind, setPost] = useState();
+    const [loading, setLoading] = useState(true);
     const router = useRouter()
 
     const getPosts = async () => {
-        const response = await fetch('http://localhost:3000/api/posts/getAll');
-        setPosts(response.data)
+        const {response} = await axios.get("/api/posts/getAll").then((response) => {
+            setPosts(response.data)
+            setLoading(false)
+        })
     }
 
     const getPost = async () => {
@@ -30,7 +33,7 @@ const PostAdm = () => {
 
     useEffect(() => {
         getPosts()
-    }, [])
+    }, [!loading])
 
     const showPosts = () => {
         if (!postFind) {
@@ -41,7 +44,7 @@ const PostAdm = () => {
                         <Td>{post.subject}</Td>
                         <Td>{post.creator}</Td>
                         <Td><Button onClick={() => router.push(`/post/view/${post._id}`)}>Ver mas</Button></Td>
-                        <Td><Button colorScheme="teal" onClick={() => router.push(`/post/edit/${user._id}`)}>Edit Post</Button></Td>
+                        <Td><Button colorScheme="teal" onClick={() => router.push(`/post/edit/${postFind._id}`)}>Edit Post</Button></Td>
                     </Tr>
                 )
             })
@@ -62,27 +65,34 @@ const PostAdm = () => {
 
     return (
         <>
-            <Container minH='92vh' minW='74vw' maxW='74vw' centerContent overflow='hidden'>
-                <Heading textAlign={"center"} my={10}>Publicaciones</Heading>
-                <Button colorScheme="teal" /* onClick={() => router.push('/posts/create')} */ >Nueva Publicacion</Button>
-                <FormControl>
-                    <FormLabel>Buscar Publicacion</FormLabel>
-                    <Input onChange={(e) => getPost(e.target.value)} placeholder=" ingrese el Tema a buscar " type='text' />
-                </FormControl>
+            <Box>
+                {
+                    loading ? <h1>Cargando...</h1> :
+                        <>
+                            <Container minH='92vh' minW='74vw' maxW='74vw' centerContent overflow='hidden'>
+                                <Heading textAlign={"center"} my={10}>Publicaciones</Heading>
+                                <Button colorScheme="teal" /* onClick={() => router.push('/posts/create')} */ >Nueva Publicacion</Button>
+                                <FormControl>
+                                    <FormLabel>Buscar Publicacion</FormLabel>
+                                    <Input onChange={(e) => getPost(e.target.value)} placeholder=" ingrese el Tema a buscar " type='text' />
+                                </FormControl>
 
-                <Table variant="simple">
-                    <Thead>
-                        <Tr>
-                            <Td>Tema</Td>
-                            <Td>Creador</Td>
-                            <Td>Fecha de creacion</Td>
-                        </Tr>
-                    </Thead>
-                    <Tbody>
-                        {showPosts()}
-                    </Tbody>
-                </Table>
-            </Container>
+                                <Table variant="simple">
+                                    <Thead>
+                                        <Tr>
+                                            <Td>Tema</Td>
+                                            <Td>Creador</Td>
+                                            <Td>Fecha de creacion</Td>
+                                        </Tr>
+                                    </Thead>
+                                    <Tbody>
+                                        {showPosts()}
+                                    </Tbody>
+                                </Table>
+                            </Container>
+                        </>
+                }
+            </Box>
         </>
     );
 };
