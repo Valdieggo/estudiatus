@@ -6,18 +6,6 @@ import axios from "axios";
 import { Box, Link } from "@chakra-ui/react";
 import Swal from "sweetalert2";
 
-
-import {
-    Table,
-    Thead,
-    Tbody,
-    Tr,
-    Th,
-    Td,
-    TableCaption,
-    Button,
-} from '@chakra-ui/react'
-
 import {
     Modal,
     ModalOverlay,
@@ -29,7 +17,16 @@ import {
     FormControl,
     FormLabel,
     Input,
-    Image
+    Image,
+    Select,
+    Table,
+    Thead,
+    Tbody,
+    Tr,
+    Th,
+    Td,
+    TableCaption,
+    Button,
 } from '@chakra-ui/react'
 
 import { useDisclosure } from '@chakra-ui/react'
@@ -37,32 +34,38 @@ import { useDisclosure } from '@chakra-ui/react'
 
 export default function Home() {
     verifyAdmin();
-    
+
+    //cambio formato fecha
     const moment = require('moment');
-    const [id, setId] = useState("");
 
-    const [name, setName] = useState("");
-    const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
-
-    const [careers, setCareers] = useState([]);
+    // ajustes iniciales
     const [subjects, setSubjects] = useState([]);
+    const [careers, setCareers] = useState([]);
+
+    // para editar
+    const [id, setId] = useState("");
+    const [name, setName] = useState("");
+    const [description, setDescription] = useState("");
+    const [career, setCareer] = useState("");
+
+    // modal
     const [loading, setLoading] = useState(true);
     const { isOpen, onOpen, onClose } = useDisclosure()
+    const {
+        isOpen: isOpenCreate,
+        onOpen: onOpenCreate,
+        onClose: onCloseCreate
+    } = useDisclosure()
     const initialRef = useRef(null)
 
-    const handleOpen = (key, title) => {
-        setId(key);
-        setTitle(title);
-        onOpen();
-    }
-
+    // *****************************************************
     useEffect(() => {
         getSubject();
     }, [
         !loading
     ]);
 
+    // *****************************************************
     const getSubject = async () => {
         const response = await axios.get(`/api/subject/getAll`).then((res) => {
             setSubjects(res.data.data);
@@ -98,7 +101,18 @@ export default function Home() {
     const handleDescriptionChange = (e) => {
         setDescription(e.target.value);
     }
+    const handleCareerChange = (e) => {
 
+        setCareer(e.target.value);
+        console.log(career);
+    }
+
+    const handleOpenEdit = (key, name, description) => {
+        setId(key);
+        setName(name);
+        setDescription(description);
+        onOpen();
+    }
 
     const handleUpdate = async () => {
         const response = await axios.put(`/api/subject/update`, {
@@ -118,9 +132,30 @@ export default function Home() {
                 icon: "error",
             });
         })
-
         onClose();
     }
+
+    const handleCreate = async () => {
+        const response = await axios.post(`/api/subject/create`, {
+            subjectName: name,
+            description: description,
+            career: career
+        }).then((res) => {
+            getSubject();
+            Swal.fire({
+                title: "Sucess",
+                icon: "success",
+            });
+        }).catch((err) => {
+            Swal.fire({
+                title: "Error",
+                html: err.response.data.message,
+                icon: "error",
+            });
+        })
+        onCloseCreate();
+    }
+
 
     return (
         <>
@@ -134,6 +169,61 @@ export default function Home() {
                             <Box>
                                 Subject management system
                             </Box>
+                            <Box>
+                                <Button onClick={() => {
+                                    onOpenCreate();
+                                }}
+                                colorScheme="blue" size="sm"
+                                >
+                                Create new subject
+
+                                    <Image src={`/document-plus.svg`} alt={`Edit`} width="20px" height="20px" />
+
+                                </Button>
+                                <Modal
+                                    initialFocusRef={initialRef}
+                                    isOpen={isOpenCreate}
+                                    onClose={onCloseCreate}
+                                >
+                                    <ModalOverlay />
+                                    <ModalContent>
+                                        <ModalHeader>Create subject</ModalHeader>
+                                        <ModalCloseButton />
+                                        <ModalBody pb={6}>
+                                            <FormControl>
+                                                <FormLabel>Name</FormLabel>
+                                                <Input ref={initialRef} placeholder="Name" onChange={handleNameChange} />
+                                            </FormControl>
+
+                                            <FormControl mt={4}>
+                                                <FormLabel>Description</FormLabel>
+                                                <Input placeholder="Description" onChange={handleDescriptionChange} />
+                                            </FormControl>
+
+                                            <FormControl onChange={handleCareerChange}>
+                                                <FormLabel>Career</FormLabel>
+                                                <Select placeholder="Select a career" >
+                                                    {careers.map((career) => (
+                                                        <option key={career._id} value={career._id} >{career.careerName}</option>
+                                                    ))}
+                                                </Select>
+                                            </FormControl>
+                                        </ModalBody>
+
+                                        <ModalFooter>
+                                            <Button colorScheme='blue' mr={3}
+                                                onClick={() => {
+                                                    handleCreate();
+                                                }}>
+                                                Create
+                                            </Button>
+                                            <Button onClick={onCloseCreate}>Cancel</Button>
+                                        </ModalFooter>
+                                    </ModalContent>
+                                </Modal>
+                            </Box>
+
+
 
                             <Table variant="simple" border={{ color: { sm: "red", lg: "green" } }}>
                                 <TableCaption> Subject management</TableCaption>
@@ -157,8 +247,7 @@ export default function Home() {
                                             <Td><button onClick={() => deleteSubject(subject._id)}>Eliminar</button></Td>
                                             <Td>
                                                 <Button onClick={() => {
-                                                    console.log(subject._id, subject.subjectName);
-                                                    handleOpen(subject._id, subject.subjectName);
+                                                    handleOpenEdit(subject._id, subject.subjectName, subject.description);
                                                 }}>
                                                     <Image src={`/edit.svg`} alt={`Edit`} width="20px" height="20px" />
 
@@ -170,17 +259,17 @@ export default function Home() {
                                                 >
                                                     <ModalOverlay />
                                                     <ModalContent>
-                                                        <ModalHeader>Edit {title}</ModalHeader>
+                                                        <ModalHeader>Edit subject</ModalHeader>
                                                         <ModalCloseButton />
                                                         <ModalBody pb={6}>
                                                             <FormControl>
                                                                 <FormLabel>Name</FormLabel>
-                                                                <Input ref={initialRef} placeholder={subject._id} onChange={handleNameChange} />
+                                                                <Input ref={initialRef} placeholder="Name" onChange={handleNameChange} />
                                                             </FormControl>
 
                                                             <FormControl mt={4}>
                                                                 <FormLabel>Description</FormLabel>
-                                                                <Input placeholder={subject.description} onChange={handleDescriptionChange} />
+                                                                <Input placeholder="Description" onChange={handleDescriptionChange} />
                                                             </FormControl>
                                                         </ModalBody>
 
