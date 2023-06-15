@@ -69,6 +69,7 @@ return (
     bg="gray.800"
     p="5"
     h="100vh"
+    minW="20vh"
   >
     <Stack spacing="3">
       <Link href="/">Inicio</Link>
