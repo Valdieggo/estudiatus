@@ -1,20 +1,33 @@
-import { Box, Grid, Container,Stack,Button,Textarea } from "@chakra-ui/react";
+import { Box, Grid, Container,Stack,Button,Textarea, Heading, FormControl,Input,Tbody,Td,Tr,Thead,Table,FormLabel } from "@chakra-ui/react";
 import Head from "next/head";
-import Layout from "../components/Layout/Layout";
 
-import styled from "../styles/post.css";
+//import styled from "../styles/post.css";
+//import ShowInfo from "../components/ShowInfo";
 
 const Post = () => {
     return (
         <>
-            <Head>
-                <title>Post PRUEBA</title>
-            </Head>
-            <Layout>
-                <Box>
-                    <h1>Post</h1>
-                </Box>
-            </Layout>
+            <Container minH='92vh' minW='74vw' maxW='74vw' centerContent overflow='hidden'>
+                <Heading textAlign={"center"} my={10}>Usuarios</Heading>
+                <Button colorScheme="teal" /* onClick={() => router.push('/posts/create')} */ >Nueva Publicacion</Button>
+                <FormControl>
+                <FormLabel>Buscar usuario</FormLabel>
+                <Input /* onChange={(e)=>getAll(e.target.value)} */ placeholder=" ingrese el Tema a buscar " type='text' />
+                </FormControl>
+
+                <Table variant="simple">
+                    <Thead>
+                        <Tr>
+                            <Td>Tema</Td>
+                            <Td>Creador</Td>
+                            <Td>Fecha de creacion</Td>
+                        </Tr>
+                    </Thead>
+                    <Tbody>
+                        {/* {showPosts()} */}
+                    </Tbody>
+                </Table>
+            </Container>
         </>
     );
 };
