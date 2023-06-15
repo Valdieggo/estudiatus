@@ -122,7 +122,7 @@ export default function Home() {
         }).then((res) => {
             getSubject();
             Swal.fire({
-                title: "Sucess",
+                title: "Success",
                 icon: "success",
             });
         }).catch((err) => {
@@ -143,7 +143,7 @@ export default function Home() {
         }).then((res) => {
             getSubject();
             Swal.fire({
-                title: "Sucess",
+                title: "Success",
                 icon: "success",
             });
         }).catch((err) => {
@@ -160,7 +160,7 @@ export default function Home() {
     return (
         <>
             <Head>
-                <title>Prueba</title>
+                <title>Subject management</title>
             </Head>
             <Layout>
                 <Box>
@@ -233,18 +233,18 @@ export default function Home() {
                                         <Th>Description</Th>
                                         <Th>Creation date</Th>
                                         <Th>career</Th>
-                                        <Th>Eliminar</Th>
-                                        <Th>Editar</Th>
+                                        <Th>Delete</Th>
+                                        <Th>Edit</Th>
                                     </Tr>
                                 </Thead>
                                 <Tbody>
                                     {subjects.map((subject) => (
-                                        <Tr key={subject._id} id="keyprueba" color="white">
+                                        <Tr key={subject._id} color="white">
                                             <Td><Link href={`/subject/${subject._id}`}>{subject.subjectName}</Link></Td>
                                             <Td>{subject.description}</Td>
                                             <Td>{moment(subject.date).format('DD/MM/YYYY')}</Td>
                                             <Td><Link href={`/career/${subject.career}`}>{subject.careerName}</Link></Td>
-                                            <Td><button onClick={() => deleteSubject(subject._id)}>Eliminar</button></Td>
+                                            <Td><button onClick={() => deleteSubject(subject._id)}>Delete</button></Td>
                                             <Td>
                                                 <Button onClick={() => {
                                                     handleOpenEdit(subject._id, subject.subjectName, subject.description);
