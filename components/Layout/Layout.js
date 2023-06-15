@@ -35,7 +35,6 @@ function Layout({ children }) {
     return (
         <Flex bg="bg.100"
             color="white"
-            w="100"
         >
             <Grid
                 templateAreas={`"nav header"
@@ -50,7 +49,7 @@ function Layout({ children }) {
                 <GridItem pl='1' area={'header'}>
                     <Navbar />
                 </GridItem>
-                <GridItem pl='1' area={'nav'} width="20vh">
+                <GridItem pl='1' area={'nav'}>
                     <Sidebar />
                 </GridItem>
                 <GridItem pl='1' area={'main'} >

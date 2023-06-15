@@ -12,7 +12,7 @@ export default function Home() {
                 <title>Prueba</title>
             </Head>
             <Layout>
-                subject
+                TO DO
             </Layout>
         </>
     )
