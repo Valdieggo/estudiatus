@@ -1,7 +1,7 @@
 import Sidebar from "./SideBar"
 import Navbar from "./Navbar";
-import { Grid, GridItem } from "@chakra-ui/layout";
-import { Box, Drawer, Flex, Heading, Text } from '@chakra-ui/react';
+import { Grid, GridItem,Flex } from '@chakra-ui/react';
+import { useEffect } from "react";
 
 function Layout({ children }) {
     /*original
@@ -26,34 +26,41 @@ function Layout({ children }) {
 
   */
 
+    //construye un layout a la derecha del sidebar
+
+    useEffect(() => {
+        document.body.style.backgroundColor = "#151f32";
+    }, []);
+
     return (
-        <Box bg="bg.100"
-            color="white">
+        <Flex bg="bg.100"
+            color="white"
+            w="100"
+        >
             <Grid
-                templateAreas={`"header header"
-                  "nav main"
-                  "nav footer"`}
-                gridTemplateRows={'50px 1fr 30px'}
-                gridTemplateColumns={'188px 1fr'}
-                h="100vh"
-                gap='1'
+                templateAreas={`"nav header"
+      "nav main"
+      "nav footer"`}
+                gridTemplateRows={'60px 1fr 30px'}
+                gridAutoColumns={'min-content auto'}
+                gap='5'
                 fontWeight='bold'
-                minchildwidth="100vh"
+                flexGrow="1"
             >
-                <GridItem pl='2'  area={'header'}>
+                <GridItem pl='1' area={'header'}>
                     <Navbar />
                 </GridItem>
-                <GridItem pl='2' area={'nav'}>
+                <GridItem pl='1' area={'nav'} width="20vh">
                     <Sidebar />
                 </GridItem>
-                <GridItem pl='2'  area={'main'} display="block">
+                <GridItem pl='1' area={'main'} >
                     {children}
                 </GridItem>
-                <GridItem pl='2'  area={'footer'}>
-                    Aqui va el Footer blablabla bla bla Todos los derechos reservados
+                <GridItem pl='1' area={'footer'}>
+                    footer
                 </GridItem>
             </Grid>
-        </Box>
+        </Flex>
     )
 }
 
