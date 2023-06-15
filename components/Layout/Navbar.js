@@ -54,6 +54,5 @@ export default function Navbar() {
         </GridItem>
       </Grid>
     </Box>
-
   )
 };
