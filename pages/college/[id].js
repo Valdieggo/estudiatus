@@ -4,6 +4,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { Box } from "@chakra-ui/layout";
 
 //obtiene la informacion de un determinado college
 export default function Home() {
@@ -44,22 +45,24 @@ export default function Home() {
 
     return (
         <>
-            <Head>
-                <title>{college.collegeName}</title>
-            </Head>
-            <Layout>
-                <h1>{college.collegeName}</h1>
-                <img src={`/photo.svg`} alt={`logo`} />
-                <ul>
-                    {careers.map((career) => (
-                        <li key={career._id}>
-                            <Link href={`/career/${career._id}`}>
-                                {career.careerName}
-                            </Link>
-                        </li>
-                    ))}
-                </ul>
-            </Layout>
+            <Box>
+                <Head>
+                    <title>{college.collegeName}</title>
+                </Head>
+                <Layout>
+                    <h1>{college.collegeName}</h1>
+                    <img src={`/photo.svg`} alt={`logo`} width="20px" height="20px" />
+                    <ul>
+                        {careers.map((career) => (
+                            <li key={career._id}>
+                                <Link href={`/career/${career._id}`}>
+                                    {career.careerName}
+                                </Link>
+                            </li>
+                        ))}
+                    </ul>
+                </Layout>
+            </Box>
         </>
     )
 }
