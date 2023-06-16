@@ -1,7 +1,8 @@
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, ModalFooter, Text, Stack, Grid, Button, Spinner, Center } from "@chakra-ui/react";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { ConfirmationPopover } from "./PopBan"
+import { ConfirmationPopover } from "./PopBan";
+
 
 
 export default function ModalReport({ isOpen, onClose, reportId }) {
