@@ -29,9 +29,9 @@ export default function ModalReport({ isOpen, onClose, reportId }) {
     onClose();
   };
 
-  const handleConfirmBan = () => {
+  const handleConfirmBan = (sancionData) => {
     console.log("Sancionado");
-    setShowPopover(false);
+    console.log(sancionData);
   };
 
   return (

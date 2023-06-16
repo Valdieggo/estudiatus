@@ -1,6 +1,6 @@
 import { Popover, PopoverTrigger, PopoverContent, PopoverHeader,
 PopoverBody, PopoverCloseButton, Button, PopoverFooter,
- FormControl, RadioGroup, Input , Text } from "@chakra-ui/react";
+ FormControl, RadioGroup, Input , Text, useFormControl } from "@chakra-ui/react";
 import { useState } from "react";
 import {
   Box,
@@ -10,22 +10,28 @@ import {
   FormLabel,
 } from "@chakra-ui/react";
 
+
 export function ConfirmationPopover({ message, onConfirm }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [sancionType, setSancionType] = useState("ban");
-  const [sancionTime, setSancionTime] = useState("");
   
-
+  const [value, setValue] = useState("ban")
+  const [sancionTime, setSancionTime] = useState(null);
+  
+  const getCurrentDate = () => {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, "0");
+    const day = String(now.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
   const handleConfirm = () => {
-
     
-
-    setIsOpen(false);
     const sancionData = {
-      type: sancionType,
+      type: value,
       time: sancionTime,
     }
-    onConfirm();
+    onConfirm(sancionData);
+    setIsOpen(false);
   };
 
   const handleCancel = () => {
@@ -36,6 +42,7 @@ export function ConfirmationPopover({ message, onConfirm }) {
     setIsOpen(true);
   };
  
+
 
 
   return (
@@ -49,39 +56,43 @@ export function ConfirmationPopover({ message, onConfirm }) {
         <PopoverHeader>Crecion de sancion</PopoverHeader>
         <PopoverCloseButton />
         <PopoverBody>
-          <Stack spacing={1}>
+          <Stack spacing={4}>
             <Box>
-              <FormControl isRequired>
-                <FormLabel>Tipo de reporte</FormLabel>
-                <RadioGroup onChange={(e) => setSancionType(e.target.value)} value={sancionType}>
-                  <HStack spacing="24px">
-                    <Radio value="ban">ban</Radio>
-                    <Radio value="mute">mute</Radio>
+              <FormControl as="fieldset" isRequired>
+                <FormLabel as="legend">Tipo de sancion</FormLabel>
+                <RadioGroup defaultValue="ban" onChange={setValue}>
+                  <Stack spacing={4} direction="row">
+                    <Radio value="ban">Ban</Radio>
+                    <Radio value="mute">Mute</Radio>
                     <Radio value="shadowban">shadowban</Radio>
-                  </HStack>
+                  </Stack>
                 </RadioGroup>
               </FormControl>
-            </Box>
-            <Box>
-              <FormControl isRequired>
-                <FormLabel>Tiempo de sancion</FormLabel>
-                <Input type="date" onChange={(e) => setSancionTime(e.target.value)} value={sancionTime}/>
+              <FormControl isRequired   >
+                <FormLabel>Duracion</FormLabel>
+                <Input type="date" min={getCurrentDate()} onChange={(e) => setSancionTime(e.target.value)} />
               </FormControl>
             </Box>
           </Stack>
-
         </PopoverBody>
         <PopoverFooter >
         {message}
-          <Button colorScheme="green" onClick={handleConfirm} ml={4}>
-            Confirmar
-          </Button>
+          {
+            sancionTime ? (
+              <Button colorScheme="green" onClick={handleConfirm} ml={4}>
+                Confirmar
+              </Button>
+            ) : (
+              <Button isLoading colorScheme="green" >
+
+              </Button>
+            )
+
+          }
           <Button colorScheme="red" onClick={handleCancel} ml={4}>
             Cancelar
           </Button>
-
         </PopoverFooter>
-
       </PopoverContent>
     </Popover>
   );
