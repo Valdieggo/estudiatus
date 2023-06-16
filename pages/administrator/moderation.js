@@ -3,7 +3,6 @@ import {
   Table,
   Thead,
   Tbody,
-  Tfoot,
   Tr,
   Th,
   Td,
@@ -15,7 +14,7 @@ import {
 import { useSession } from "next-auth/react"
 import { useEffect, useState } from "react";
 import axios from "axios";
-import ModalReport from "../../components/Admin/modalReport";
+import ModalReport  from "../../components/Admin/ModalReport";
 
 export default function Moderation() {
   const { data: session, status } = useSession()
