@@ -4,7 +4,6 @@ import verifyAdmin from "../../utils/verifyAdmin";
 import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { Box, Link } from "@chakra-ui/react";
-import Swal from "sweetalert2";
 
 import {
     Modal,
@@ -29,6 +28,8 @@ import {
     Button,
 } from '@chakra-ui/react'
 
+import { useToast } from '@chakra-ui/react'
+
 import { useDisclosure } from '@chakra-ui/react'
 
 
@@ -37,6 +38,8 @@ export default function Home() {
 
     //cambio formato fecha
     const moment = require('moment');
+    const toast = useToast();
+    const toastIdRef = useRef();
 
     // ajustes iniciales
     const [subjects, setSubjects] = useState([]);
@@ -75,9 +78,15 @@ export default function Home() {
     };
 
     const deleteSubject = async (id) => {
+        const messageSuccess = "Subject deleted successfully";
+        const messageError = "Error deleting the subject";
+
         const response = await axios.delete(`/api/subject/delete/${id}`).then((res) => {
-            getSubject();
+            showSuccessToast(messageSuccess);
+        }).catch((err) => {
+            showErrorToast(messageError);
         })
+        getSubject();
     };
 
     //obtiene el nombre de todas las carreras con las id  que aparecieron en subjects y luego se las agrega a subject
@@ -115,45 +124,75 @@ export default function Home() {
         onOpen();
     }
 
+
+    const showLoadingToast = () => {
+        // si no esta activo el toast lo activa
+        if (!toast.isActive(toastIdRef.current)) {
+            toastIdRef.current = toast({
+                position: 'bottom-right',
+                title: "Loading...",
+                status: "info",
+                duration: 2000,
+                isClosable: true,
+            })
+        }
+
+    }
+    //constante para el toast
+    const showSuccessToast = (message) => {
+        toast({
+            position: 'bottom-right',
+            title: "Success.",
+            description: message,
+            status: "success",
+            duration: 2000,
+            isClosable: true,
+        })
+    }
+
+    const showErrorToast = (message) => {
+        toast({
+            position: 'bottom-right',
+            title: "Error.",
+            description: message,
+            status: "error",
+            duration: 2000,
+            isClosable: true,
+        })
+    }
+
     const handleUpdate = async () => {
+        const messageSuccess = "Subject updated successfully";
+        const messageError = "Error updating the subject";
+
         const response = await axios.put(`/api/subject/update`, {
             id: id,
             subjectName: name,
             description: description
         }).then((res) => {
-            getSubject();
-            Swal.fire({
-                title: "Success",
-                icon: "success",
-            });
+            showSuccessToast(messageSuccess);
         }).catch((err) => {
-            Swal.fire({
-                title: "Error",
-                html: err.response.data.message,
-                icon: "error",
-            });
+            showErrorToast(messageError);
+            //html: err.response.data.message,
         })
+        getSubject();
         onClose();
     }
 
     const handleCreate = async () => {
+        const messageSuccess = "Subject created successfully";
+        const messageError = "Error creating subject";
+
         const response = await axios.post(`/api/subject/create`, {
             subjectName: name,
             description: description,
             career: career
         }).then((res) => {
-            getSubject();
-            Swal.fire({
-                title: "Success",
-                icon: "success",
-            });
+            showSuccessToast(messageSuccess);
         }).catch((err) => {
-            Swal.fire({
-                title: "Error",
-                html: err.response.data.message,
-                icon: "error",
-            });
+            showErrorToast(messageError);
         })
+        getSubject();
         onCloseCreate();
     }
 
@@ -296,7 +335,9 @@ export default function Home() {
             </Head>
             <Layout>
                 <Box width="99%">
-                    {loading ? "Loading" :
+                    {loading ?
+                        showLoadingToast()
+                        :
                         <>
                             <Box>
                                 Subject management system
@@ -309,7 +350,7 @@ export default function Home() {
                                 {showModalCreate()}
                             </Box>
                             <Box>
-                            {searchBar()}
+                                {searchBar()}
                                 <Table variant="simple" border={{ color: { sm: "red", lg: "green" } }}>
                                     <TableCaption> Subject management</TableCaption>
                                     <Thead>

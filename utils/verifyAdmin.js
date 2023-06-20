@@ -20,7 +20,6 @@ export default function verifyAdmin() {
     }
 
     useEffect(() => {
-        console.log("estado: ", status)
         if(status !== "loading"){
             verify();
         }
