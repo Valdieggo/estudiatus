@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 // If the user is not an admin, it will redirect to the home page
 export default function verifyAdmin() {
     const { data: session, status } = useSession();
-    const rolesAdmin = ["admin","moderator"];
+    const rolesAdmin = ["admin"];
     
     const verify = () => {
         if (typeof window !== 'undefined') {

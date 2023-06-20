@@ -4,7 +4,7 @@ import { useSession } from "next-auth/react"
 // para components/admin
 export default function isAdmin() {
     const { data: session, status } = useSession();
-    const rolesAdmin = ["admin","moderator"];
+    const rolesAdmin = ["admin"];
 
     if (status === "authenticated") {
         if (rolesAdmin.includes(session.user.role)) {
