@@ -16,7 +16,7 @@ var UserSchema = new mongoose.Schema({
         required: [true, "Please provide a password"],
     },
     role: {
-        enum: ["user", "admin", "moderator"],
+        enum: ["user", "admin"],
         type: String,
         default: "user",
     },
