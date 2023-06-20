@@ -1,5 +1,5 @@
 import { connectToDatabase } from "../../../utils/db";
-import Comment from "../../../models/Comment";
+import Post from "../../../models/Post";
 import User from "../../../models/User";
 
 export default async function handler(req, res) {
@@ -10,44 +10,40 @@ export default async function handler(req, res) {
     switch (method) {
         case "PUT":
             try {
-                const { commentId, userId } = req.body;
+                const { postId, userId } = req.body;
 
-                if (!commentId || !userId) {
+                if (!postId || !userId) {
                     return res.status(400).json({ success: false, message: "Missing fields" });
                 }
 
-                const comment = await Comment.findById(commentId);
-
+                const post = await Post.findById(postId);
+                
                 const user = await User.findById(userId);
 
                 if (!user) {
                     return res.status(400).json({ success: false, message: "User not found" });
                 }
 
-                if (!comment) {
-                    return res.status(400).json({ success: false, message: "Comment not found" });
+                if (!post) {
+                    return res.status(400).json({ success: false, message: "Post not found" });
                 }
 
-                const likesSet = new Set(comment.likes.map(id => id.toString()));
+                const likesSet = new Set(post.likes.map(id => id.toString()));
 
                 if (likesSet.has(userId)) {
                     likesSet.delete(userId);
-                }
-                else {
+                } else {
                     likesSet.add(userId);
                 }
 
-                comment.likes = Array.from(likesSet);
-                comment.score = comment.likes.length;
-                
-                await comment.save();
+                post.likes = Array.from(likesSet);
+                post.score = post.likes.length;
 
-                return res.status(200).json({ success: true, data: comment.likes });
+                await post.save();
 
-            }
-            catch (error) {
+                return res.status(200).json({ success: true, data: post.likes });
+            } catch (error) {
                 return res.status(400).json({ success: false, message: error });
-
             }
         default:
             return res.status(400).json({ success: false });
