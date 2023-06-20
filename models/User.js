@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
-var Schema = mongoose.Schema;
-var user = new Schema({
+const mongoose = require("mongoose");
+
+var UserSchema = new mongoose.Schema({
     username: {
         type: String,
         required: [true, "Please provide a username"],
@@ -34,6 +34,12 @@ var user = new Schema({
             ref: "Post",
         },
     ],
+    favs: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Post",
+        },
+    ],
     isBanned: {
         type: Boolean,
         default: false,
@@ -52,7 +58,5 @@ var user = new Schema({
     },
 
 });
-mongoose.models = {};
-global.User = global.User || mongoose.model("User", user);
 
-export default global.User;
+export default mongoose.models.User || mongoose.model("User", UserSchema);

@@ -1,6 +1,5 @@
 import { connectToDatabase } from "../../../utils/db";
 import Comment from "../../../models/Comment";
-import Post from "../../../models/Post";
 
 export default async function handler(req, res) {
     const { method } = req;
@@ -8,42 +7,32 @@ export default async function handler(req, res) {
     connectToDatabase();
 
     switch (method) {
-        case "DELETE":
+        case "POST":
             try {
-                const { id } = req.body;
+                const { commentId, userId } = req.body;
 
-                if (!id) {
+                if (!commentId || !userId) {
                     return res.status(400).json({ success: false, message: "Missing fields" });
                 }
-                
-                const comment = await Comment.findById(id);
+
+                const comment = await Comment.findById(commentId);
 
                 if (!comment) {
                     return res.status(400).json({ success: false, message: "Comment not found" });
                 }
 
-                const post = await Post.findById(comment.post);
-
-                if (!post) {
-                    return res.status(400).json({ success: false, message: "Post not found" });
+                if (!comment.likes) {
+                    comment.likes = [];
                 }
 
-                post.comments.pull(id);
-                await post.save();
+                const isLiked = comment.likes.includes(userId);
 
+                return res.status(200).json({ success: true, data: isLiked });
 
-                await Comment.findByIdAndDelete(id);
-
-                return res.status(200).json({ success: true, data: id });
-
-            }
-            catch (error) {
+            } catch (error) {
                 return res.status(400).json({ success: false, message: error });
             }
-
         default:
             return res.status(400).json({ success: false });
-
     }
 }
-
