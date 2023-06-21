@@ -3,7 +3,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Layout from "../components/Layout/Layout";
+import Layout from "../../components/Layout/Layout";
 
 
 //import styled from "../styles/post.css";
@@ -14,26 +14,69 @@ const PostAdm = () => {
     const [posts, setPosts] = useState([]);
     const [postFind, setPost] = useState();
     const [loading, setLoading] = useState(true);
+    const [subjects, setSubject] = useState([]);
+    const [users, setUsers] = useState([]);
     const router = useRouter()
 
     const getPosts = async () => {
         const response = await axios.get("/api/post/getAll").then((response) => {
             setPosts(response.data.data)
+            getSubjetc(response.data.data)
+            getUser(response.data.data)
             setLoading(false)
         })
     }
 
     const getPostFind = async (title) => {
-        setPost(null)
+        setPost(null);
         posts.map(post => {
-            if (post.title === title) {
-                setPost(post)
-                console.log("dentro del if")
+            let found = true;
+            if (post.title.length === title.length) {
+                for (let i = 0; i < post.title.length; i++) {
+                    if (post.title[i] !== title[i]) {
+                        found = false;
+                        break;
+                    }
+                }
+            } else {
+                found = false;
             }
-            console.log("map")
-        })
-        console.log("dentro de funcion")
+            if (found) {
+                setPost(post);
+                console.log("dentro del if");
+            }
+            console.log("map");
+        });
+        console.log("dentro de la función");
     }
+
+    const getSubjetc = async (post) => {
+        const response = await axios.get(`/api/subject/getAll`).then((res) => {
+            setSubject(res.data.data);
+            for (let i = 0; i < post.length; i++) {
+                for (let j = 0; j < subjects.length; j++) {
+                    if (post[i].subject == subjects[j]._id) {
+                        post[i].subjectName = subjects[j].subjectName;
+                    }
+                }
+            }
+            setLoading(false);
+        })
+    };
+
+    const getUser = async (post) => {
+        const response = await axios.get(`/api/user/getAll`).then((res) => {
+            setUsers(res.data.data);
+            for (let i = 0; i < post.length; i++) {
+                for (let j = 0; j < users.length; j++) {
+                    if (post[i].creator == users[j]._id) {
+                        post[i].username = users[j].username;
+                    }
+                }
+            }
+            setLoading(false);
+        })
+    };
 
     useEffect(() => {
         getPosts()
@@ -45,8 +88,9 @@ const PostAdm = () => {
                 return (
                     <Tr key={post._id}>
                         <Td>{post.title}</Td>
-                        <Td>{post.subject}</Td>
-                        <Td>{post.creator}</Td>
+                        <Td>{post.username}</Td>
+                        <Td>{post.subjectName}</Td>
+                        <Td>{post.createDate}</Td>
                         <Td><Button onClick={() => router.push(`/post/view/${post._id}`)}>Ver mas</Button></Td>
                         <Td><Button colorScheme="teal" onClick={() => router.push(`/post/edit/${postFind._id}`)}>Edit Post</Button></Td>
                     </Tr>
@@ -58,8 +102,9 @@ const PostAdm = () => {
             return (
                 <Tr key={postFind._id}>
                     <Td>{postFind.title}</Td>
-                    <Td>{postFind.subject}</Td>
-                    <Td>{postFind.creator}</Td>
+                    <Td>{postFind.subjectName}</Td>
+                    <Td>{postFind.username}</Td>
+                    <Td>{postFind.createDate}</Td>
                     <Td><Button onClick={() => router.push(`/post/view/${post._id}`)}>Ver mas</Button></Td>
                     <Td><Button colorScheme="teal" onClick={() => router.push(`/post/edit/${postFind._id}`)}>Edit Post</Button></Td>
                 </Tr>
@@ -88,6 +133,7 @@ const PostAdm = () => {
                                             <Tr>
                                                 <Td>Tema</Td>
                                                 <Td>Creador</Td>
+                                                <Td>Materia</Td>
                                                 <Td>Fecha de creacion</Td>
                                             </Tr>
                                         </Thead>
