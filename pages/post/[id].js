@@ -19,7 +19,7 @@ export default function Post({ post }) {
             <VStack spacing={4} align="center">
                 <AddCommentCard post={post} setComments={setComments} comments={comments}/>
                 {comments && comments.map((comment) => (
-                <CommentCard key={comment._id} comment={comment} />
+                <CommentCard key={comment._id} comment={comment} setComments={setComments} comments={comments}/>
             ))}
             </VStack>
         </Layout>
