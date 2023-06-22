@@ -11,14 +11,17 @@ export default async function handler(req, res) {
     switch (method) {
         case "GET":
             try {
-                const post = await Post.findById(id).populate({
-                    path: 'comments',
-                    populate: {
-                      path: 'creator',
-                    },
-                  })
-                  .populate('creator');
-                  
+                const post = await Post.findById(id).populate(
+                    "creator").populate({
+                        path: "comments",
+                        populate: {
+                            path: "creator",
+                            model: "User",
+                        },
+                    }
+                );
+                    
+
                 if (!post) {
                     return res.status(400).json({ success: false, message: "Post not found" });
                 }

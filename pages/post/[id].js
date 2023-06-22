@@ -30,6 +30,12 @@ export async function getServerSideProps(context) {
     const { id } = context.query;
     const res = await fetch(`http://localhost:3000/api/post/getOne/${id}`);
     const data = await res.json();
+    if(res.status === 400) {
+        return {
+            notFound: true,
+        };
+    }
+
     return {
         props: {
             post: data.data,
