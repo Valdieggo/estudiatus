@@ -27,6 +27,13 @@ const PostAdm = () => {
         })
     }
 
+    const handeleDelete = async(id)=>{
+        const response = await axios.delete(`/api/post/delete/${id}`).then((res)=>{
+            router.push("/administrator/post");
+        })
+        getPosts();
+    }
+
     const getPostFind = async (title) => {
         setPost(null);
         posts.map(post => {
@@ -93,6 +100,7 @@ const PostAdm = () => {
                         <Td>{post.createDate}</Td>
                         <Td><Button onClick={() => router.push(`/post/view/${post._id}`)}>Ver mas</Button></Td>
                         <Td><Button colorScheme="teal" onClick={() => router.push(`/post/edit/${postFind._id}`)}>Edit Post</Button></Td>
+                        <Td><Button colorScheme="red" onClick={() => handeleDelete(post._id)}>Delete Post</Button></Td>
                     </Tr>
                 )
             })
@@ -105,8 +113,9 @@ const PostAdm = () => {
                     <Td>{postFind.subjectName}</Td>
                     <Td>{postFind.username}</Td>
                     <Td>{postFind.createDate}</Td>
-                    <Td><Button onClick={() => router.push(`/post/view/${post._id}`)}>Ver mas</Button></Td>
+                    <Td><Button onClick={() => router.push(`/post/view/${post._id}`)}>View more</Button></Td>
                     <Td><Button colorScheme="teal" onClick={() => router.push(`/post/edit/${postFind._id}`)}>Edit Post</Button></Td>
+                    <Td><Button colorScheme="red" onClick={() => handeleDelete(postFind._id)}>Delete Post</Button></Td>
                 </Tr>
             )
         }
