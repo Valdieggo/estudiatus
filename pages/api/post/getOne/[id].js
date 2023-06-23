@@ -14,6 +14,7 @@ export default async function handler(req, res) {
                 const post = await Post.findById(id).populate(
                     "creator").populate({
                         path: "comments",
+                        model: "Comment",
                         populate: {
                             path: "creator",
                             model: "User",
