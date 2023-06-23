@@ -1,5 +1,5 @@
 import { connectToDatabase } from "../../../../utils/db";
-
+import Comment from "../../../../models/Comment";
 import Post from "../../../../models/Post";
 
 export default async function handler(req, res) {
