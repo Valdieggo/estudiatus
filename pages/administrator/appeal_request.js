@@ -26,9 +26,6 @@ export default function appeal_request() {
     const [appeals,setAppeals]= useState([])
     const router=useRouter()
     const getAppeals = async()=>{
-
-        //Obtener todas las apelaciones//falta escribir el getAll
-
     const { response } =await axios.get(`../api/appeal/getAll`)
     setAppeals(response.data)
   }
@@ -36,25 +33,6 @@ export default function appeal_request() {
   useEffect(()=>{
     getAppeals()
   }, [])
-
-/*const onDelete= async (id)=>{
-  Swal.fire({
-    title: 'Adveterncia',
-    text:'¿Está seguro que desea eliminar el espacio?',
-    icon: 'info',
-    showCloseButton: true,
-    showCancelButton: true,
-    confirmButtonText:'Sí, eliminar',
-    cancelButtonText:'Cancelar'
-  }).then(async(result)=>{
-    if(result.isConfirmed){
-      const response= await axios.delete(`${process.env.API_URL}/espaciocom/delete/${id}`)
-      router.push('/admin/admin')
-      return response
-    }
-})
-  
-}*/
 
   const showAppeals =()=>{
     return appeals.map(appeal =>{
@@ -64,12 +42,6 @@ export default function appeal_request() {
                 <Td>{appeal.name}</Td>
                 <Td>{appeal.description}</Td>
                 <Td>{appeal.status}</Td>
-           
-
-              <HStack>
-              //*<Button my={10} colorScheme="red" onClick={()=>onDelete(espacio._id)}>Eliminar</Button>
-              <Button my={10}  colorScheme="yellow" onClick={()=>router.push(`../api/appeal/admin/update/${appeal._id}`)} >Editar</Button>
-              </HStack>
             </Tr>
         )
     })

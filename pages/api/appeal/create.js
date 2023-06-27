@@ -7,13 +7,11 @@ export default async function handler(req, res) {
     const { name, description, ban, appealer, status} = req.body;
     connectToDatabase();
 
-    switch (method) {
-        case "POST":
+    if (method=="POST") {
             try {
                 const newAppeal = new Appeal({ name, description, ban, appealer, status });
-                await newAppeal.save();
+                await newAppeal.save().populate("appealer","-password -favs").populate("ban","-user");
                 if (newAppeal) {
-                    // retorna la apelacion creada
                     return res.status(201).json({ message: "Appeal created", appeal: newAppeal} );
                 }
                 else {
@@ -21,10 +19,10 @@ export default async function handler(req, res) {
                 }
         
             } catch (error) {
-                return res.status(500).json({ message: "Error al crear la apelacion" + error});
+                return res.status(500).json({ message: "Error al crear la apelacion. " + error});
             }
-        default:
-            res.status(400).json({ success: false });
-        break;
+    }else{ 
+        res.status(400).json({ success: false, message:"Wrong request method"  });
     }
+    
 };
