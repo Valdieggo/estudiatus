@@ -15,11 +15,11 @@ const appealSchema = new mongoose.Schema({
         maxLength:1000
     },
     ban: {
-        type: [Schema.ObjectId],
+        type: mongoose.Schema.Types.ObjectId,
         ref:"Ban"
     },
     appealer: {
-        type: [Schema.ObjectId],
+        type: mongoose.Schema.Types.ObjectId,
         ref:"User"
     },
     status: {
