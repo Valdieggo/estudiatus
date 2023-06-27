@@ -1,8 +1,20 @@
 import { Box, VStack, Text, Button, IconButton, Stack } from "@chakra-ui/react";
 import Image from "next/image";
 import Link from "next/link";
-function CommentCard({ comment }) {
+import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
+import axios from "axios";
+
+export default function CommentCard({ comment, setComments, comments }) {
     const { creator } = comment;
+
+    const { data: session, status } = useSession();
+
+    let isCreatorId = false;
+
+    if (session) {
+        isCreatorId = session.user.id === creator._id;
+    }
 
     const handleLike = () => {
         console.log("Like button clicked");
@@ -12,7 +24,15 @@ function CommentCard({ comment }) {
     };
 
     const handleDelete = () => {
-        console.log("Delete button clicked");
+        axios.delete(`http://localhost:3000/api/comment/delete/${comment._id}`)
+            .then((res) => {
+                setComments(comments.filter((comment) => comment._id !== res.data.data));
+            }
+        )
+        .catch((err) => {
+            console.log(err);
+        }
+        );
     };
 
     const handleEdit = () => {
@@ -73,10 +93,16 @@ function CommentCard({ comment }) {
                 >
                     Like
             </Button>
+            {isCreatorId && (
+                <Text
+                    alignSelf={"center"}
+                    onClick={() => handleDelete()}
+                >
+                    Eliminar
+                </Text>
+            )}
         </Stack>
         
     </Box>
   );
 }
-
-export default CommentCard;
