@@ -11,7 +11,7 @@ import { Popover, PopoverTrigger, PopoverContent, PopoverHeader,
     } from "@chakra-ui/react";
     
     
-    export function ConfirmationPopover({ message, onConfirm }) {
+    export default function ConfirmationPopover({ message, onConfirm }) {
       const [isOpen, setIsOpen] = useState(false);
       
       const [value, setValue] = useState("ban")

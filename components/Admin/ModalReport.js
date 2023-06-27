@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import ConfirmationPopover from "./PopOverReport";
 
 
-export default function ModalReport({ isOpen, onClose, reportId }) {
+export  default function ModalReport({ isOpen, onClose, reportId }) {
   const [report, setReport] = useState(null);
   const [showPopover, setShowPopover] = useState(false);
 
