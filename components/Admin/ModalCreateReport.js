@@ -81,8 +81,8 @@ export default function ModalCreateReport({ isOpen, onClose, reportedUser }) {
                     <Stack spacing={4}>
                         <Text fontWeight="bold">Usuario reportado:</Text>
                         <Grid templateColumns="auto 1fr" columnGap="50%">
-                            <Text>{reportedUser.username}</Text>
-                            <Text>{reportedUser.email}</Text>
+                            <Text>{}</Text>
+                            <Text>{}</Text>
                         </Grid>
                         <FormControl id="reason">
                             <FormLabel>Razon</FormLabel>
