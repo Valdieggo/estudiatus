@@ -29,6 +29,7 @@ export default function Moderation() {
     try {
       const response = await axios.get("../api/report/getAll");
       setReport(response.data);
+      console.log(response.data);
     } catch (error) {
       console.error(error);
     }
@@ -36,6 +37,7 @@ export default function Moderation() {
 
   useEffect(() => {
     getReport();
+
   }, []);
 
   const openModalReport = (report) => {
@@ -45,7 +47,7 @@ export default function Moderation() {
   const closeModalReport = () => {
     setSelectedReport(null);
     setModalReport(false);
-  };ç
+  };
   const openModalCreateReport = async () => {
    //S axios.get(`../api/user/getOne/${session.user.email}`)
 
