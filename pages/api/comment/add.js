@@ -39,7 +39,9 @@ export default async function handler(req, res) {
                 //await user.save();
                 await postDocument.save();
 
-                return res.status(201).json({ success: true, data: comment });
+                const commentPopulated = await Comment.findById(comment._id).populate('creator');
+
+                return res.status(201).json({ success: true, data: commentPopulated });
             }
             catch (error) {
                 return res.status(400).json({ success: false, message: error });
