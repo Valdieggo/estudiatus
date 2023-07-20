@@ -26,7 +26,7 @@ export default function Post({ post }) {
 
                             <Box>
                                 <Heading size='sm'>Segun Adebayo</Heading>
-                                <Text>Creator, Chakra UI</Text>
+                                <Text>{post.creator}, Chakra UI</Text>
                             </Box>
                         </Flex>
                     </Flex>
