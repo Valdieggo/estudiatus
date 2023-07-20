@@ -3,11 +3,9 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import Layout from "../../components/Layout/Layout";
 import CommentCard from "../../components/Comment/CommentCard";
-import { VStack,Text,CardBody,IconButton,Box,Heading,Flex,Card,CardHeader,Image,CardFooter,Button,Avatar} from "@chakra-ui/react";
+import { VStack,Text,CardBody,Icon,Box,Heading,Flex,Card,CardHeader,Image,CardFooter,Button,Avatar} from "@chakra-ui/react";
 import AddCommentCard from "../../components/Comment/AddCommentCard";
-import { BiLike, BiChat, BiShare } from "react-icons/bi";
-import {BsThreeDotsVertical} from "react-icons";
-
+import { ArrowUpIcon, ChatIcon} from "@chakra-ui/icons";
 export default function Post({ post }) {
     const router = useRouter();
     let { id } = router.query;
@@ -16,17 +14,17 @@ export default function Post({ post }) {
 
     return (
         <Layout>
-            <h1>Post: {post.title}</h1>
+            
             <VStack spacing={4} align="center">
             <Card maxW='md'>
                 <CardHeader>
                     <Flex spacing='4'>
                         <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-                            <Avatar name='Segun Adebayo' src='https://bit.ly/sage-adebayo' />
+                            <Avatar name='emerson salazar' src='https://bit.ly/sage-adebayo' />
 
                             <Box>
                                 <Heading size='sm'>Segun Adebayo</Heading>
-                                <Text>{post.creator}, Chakra UI</Text>
+                                <Text>{post.creator.username} Chakra UI</Text>
                             </Box>
                         </Flex>
                     </Flex>
@@ -53,14 +51,11 @@ export default function Post({ post }) {
                         },
                     }}
                 >
-                    <Button flex='1' variant='ghost' leftIcon={<BiLike />}>
+                    <Button flex='1' variant='ghost' leftIcon={<ArrowUpIcon/>}>
                         Like
                     </Button>
-                    <Button flex='1' variant='ghost' leftIcon={<BiChat />}>
-                        Comment
-                    </Button>
-                    <Button flex='1' variant='ghost' leftIcon={<BiShare />}>
-                        Share
+                    <Button flex='1' variant='ghost' leftIcon={<ChatIcon/>}>
+                        Comment 
                     </Button>
                 </CardFooter>
             </Card>
