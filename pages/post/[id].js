@@ -5,9 +5,7 @@ import Layout from "../../components/Layout/Layout";
 import CommentCard from "../../components/Comment/CommentCard";
 import { VStack, Text, CardBody, IconButton, Box, Heading, Flex, Card, CardHeader, Image, CardFooter, Button, Avatar } from "@chakra-ui/react";
 import AddCommentCard from "../../components/Comment/AddCommentCard";
-import { BiLike, BiChat } from "react-icons/bi";
 import { ChatIcon, ArrowUpIcon } from "@chakra-ui/icons";
-import { BsThreeDotsVertical } from "react-icons";
 
 export default function Post({ post }) {
     const router = useRouter();
@@ -64,7 +62,7 @@ export default function Post({ post }) {
                             _hover={{
                                 bg: "button.200",
                             }} leftIcon={<ChatIcon />}>
-                            Comment
+                            Comentar
                         </Button>
                     </CardFooter>
                 </Card>
