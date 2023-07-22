@@ -3,10 +3,11 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import Layout from "../../components/Layout/Layout";
 import CommentCard from "../../components/Comment/CommentCard";
-import { VStack,Text,CardBody,IconButton,Box,Heading,Flex,Card,CardHeader,Image,CardFooter,Button,Avatar} from "@chakra-ui/react";
+import { VStack, Text, CardBody, IconButton, Box, Heading, Flex, Card, CardHeader, Image, CardFooter, Button, Avatar } from "@chakra-ui/react";
 import AddCommentCard from "../../components/Comment/AddCommentCard";
-import { BiLike, BiChat, BiShare } from "react-icons/bi";
-import {BsThreeDotsVertical} from "react-icons";
+import { BiLike, BiChat } from "react-icons/bi";
+import { ChatIcon, ArrowUpIcon } from "@chakra-ui/icons";
+import { BsThreeDotsVertical } from "react-icons";
 
 export default function Post({ post }) {
     const router = useRouter();
@@ -18,52 +19,55 @@ export default function Post({ post }) {
         <Layout>
             <h1>Post: {post.title}</h1>
             <VStack spacing={4} align="center">
-            <Card maxW='md'>
-                <CardHeader>
-                    <Flex spacing='4'>
-                        <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-                            <Avatar name='Segun Adebayo' src='https://bit.ly/sage-adebayo' />
+                <Card color="white" width="100%" maxWidth="500px" margin="auto" bg="post.100" borderRadius="md" p={4}
+                    _hover={{
+                        bg: "post.200",
+                    }} >
+                    <CardHeader >
+                        <Flex spacing='4'>
+                            <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
+                                <Avatar name={post.creator.username} src='https://bit.ly/broken-link' bg='blue.700' color='white' />
 
-                            <Box>
-                                <Heading size='sm'>Segun Adebayo</Heading>
-                                <Text>{post.creator}, Chakra UI</Text>
-                            </Box>
+                                <Box>
+                                    <Heading size='sm'>{post.creator.username}</Heading>
+                                    <Text>Creator, {post.creator.role} </Text>
+                                </Box>
+                            </Flex>
                         </Flex>
-                    </Flex>
-                </CardHeader>
-                <CardBody>
-                    <Text>
-                        With Chakra UI, I wanted to sync the speed of development with the speed
-                        of design. I wanted the developer to be just as excited as the designer to
-                        create a screen.
-                    </Text>
-                </CardBody>
-                <Image
-                    objectFit='cover'
-                    src='https://images.unsplash.com/photo-1531403009284-440f080d1e12?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80'
-                    alt='Chakra UI'
-                />
+                    </CardHeader>
+                    <CardBody>
+                        <Text>
+                            {post.content}
+                        </Text>
+                    </CardBody>
 
-                <CardFooter
-                    justify='space-between'
-                    flexWrap='wrap'
-                    sx={{
-                        '& > button': {
-                            minW: '136px',
-                        },
-                    }}
-                >
-                    <Button flex='1' variant='ghost' leftIcon={<BiLike />}>
-                        Like
-                    </Button>
-                    <Button flex='1' variant='ghost' leftIcon={<BiChat />}>
-                        Comment
-                    </Button>
-                    <Button flex='1' variant='ghost' leftIcon={<BiShare />}>
-                        Share
-                    </Button>
-                </CardFooter>
-            </Card>
+                    <CardFooter
+                        justify='space-between'
+                        flexWrap='wrap'
+                        sx={{
+                            '& > button': {
+                                minW: '136px',
+                            },
+                        }}
+                    >
+                        <Button type="button"
+                            bg="button.100"
+                            width="48%"
+                            _hover={{
+                                bg: "button.200",
+                            }} leftIcon={<ArrowUpIcon />}>
+                            Like
+                        </Button>
+                        <Button type="button"
+                            bg="button.100"
+                            width="48%"
+                            _hover={{
+                                bg: "button.200",
+                            }} leftIcon={<ChatIcon />}>
+                            Comment
+                        </Button>
+                    </CardFooter>
+                </Card>
             </VStack>
             <VStack spacing={4} align="center">
                 <AddCommentCard post={post} setComments={setComments} comments={comments} />
