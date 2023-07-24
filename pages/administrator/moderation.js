@@ -15,17 +15,21 @@ import { useSession } from "next-auth/react"
 import { useEffect, useState } from "react";
 import axios from "axios";
 import ModalReport  from "../../components/Admin/ModalReport";
+import ModalCreateReport from "../../components/Admin/ModalCreateReport";
 
 export default function Moderation() {
   const { data: session, status } = useSession()
   const [report, setReport] = useState([]); 
   const [modalReport, setModalReport] = useState(false);
   const [selectedReport, setSelectedReport] = useState(null); 
+  const [modalCreateReport, setModalCreateReport] = useState(false);
+  const [userReported, setUserReported] = useState(null);
 
   const getReport = async () => {
     try {
       const response = await axios.get("../api/report/getAll");
       setReport(response.data);
+      console.log(response.data);
     } catch (error) {
       console.error(error);
     }
@@ -33,6 +37,7 @@ export default function Moderation() {
 
   useEffect(() => {
     getReport();
+
   }, []);
 
   const openModalReport = (report) => {
@@ -43,13 +48,25 @@ export default function Moderation() {
     setSelectedReport(null);
     setModalReport(false);
   };
+  const openModalCreateReport = async () => {
+   //S axios.get(`../api/user/getOne/${session.user.email}`)
 
+    setModalCreateReport(true);
+  };
+  const closeModalCreateReport = () => {
+    setModalCreateReport(false);
+  };
 
 
   return (
     // Se agrega el componente Layout centrado en medio de la pantalla
     <>
       <Layout>
+      <Button colorScheme="green" onClick={openModalCreateReport}>
+        Create Report
+      </Button>
+      <ModalCreateReport isOpen={modalCreateReport} onClose={closeModalCreateReport} reportedUser={userReported} />
+
       <TableContainer maxW="90vw" mx="auto" >
         <Table variant={"simple"}>
           <TableCaption>Reported Users</TableCaption>

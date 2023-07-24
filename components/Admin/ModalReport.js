@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import ConfirmationPopover from "./PopOverReport";
 
 
-export default function ModalReport({ isOpen, onClose, reportId }) {
+export  default function ModalReport({ isOpen, onClose, reportId }) {
   const [report, setReport] = useState(null);
   const [showPopover, setShowPopover] = useState(false);
 
@@ -31,6 +31,24 @@ export default function ModalReport({ isOpen, onClose, reportId }) {
   const handleConfirmBan = (sancionData) => {
     console.log("Sancionado");
     console.log(sancionData);
+    setShowPopover(false);
+    const createBan = async () => {
+      try {
+        const response = await axios.post("../api/ban/create", {
+          user: report.reportedUser._id,
+          type: sancionData.type,
+          time: sancionData.time,
+          status: "active",
+          report: report._id,
+          
+        });
+        console.log(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    createBan();
+
   };
 
   return (
