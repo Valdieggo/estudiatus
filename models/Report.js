@@ -27,6 +27,11 @@ const ReportSchema = new mongoose.Schema({
         ref: "Post",
         required: false,
     },
+    status : {
+        type: String,
+        enum: ["solve", "pending", ],
+        default: "pending",
+    },
 
 });
 
