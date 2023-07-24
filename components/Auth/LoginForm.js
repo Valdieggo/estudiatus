@@ -3,14 +3,15 @@ import { Box, Button, FormControl, FormLabel, Input, VStack } from "@chakra-ui/r
 import { useForm } from "react-hook-form";
 import { signIn } from "next-auth/react";
 
-const LoginForm = () => {
+const LoginForm = ( { callbackUrl } ) => {
   const { register, handleSubmit, formState: { errors } } = useForm();
+  callbackUrl = callbackUrl || "/";
 
   const onSubmit = async (data) => {
     await signIn("credentials", {
       email: data.email,
       password: data.password,
-      callbackUrl: "/",
+      callbackUrl: callbackUrl,
     });
   };
 
