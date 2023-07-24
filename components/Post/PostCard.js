@@ -1,7 +1,8 @@
 // PostCard.js
-import { VStack, Text, CardBody, IconButton, Box, Heading, Flex, Card, CardHeader, Image, CardFooter, Button, Avatar } from "@chakra-ui/react";
-import { ChatIcon, ArrowUpIcon } from "@chakra-ui/icons";
+import { VStack, Text, CardBody, IconButton, Box, Heading, Flex, Card, CardHeader, Image, CardFooter, Button, Avatar, Icon } from "@chakra-ui/react";
+import { ChatIcon, ArrowUpIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import LikePostButton from "./LikePostButton";
+import PopOptions from "./PopOptions";
 export default function PostCard({ post }) {
     return (
         <VStack spacing={4} align="center">
@@ -19,6 +20,7 @@ export default function PostCard({ post }) {
                                 <Text>Creator, {post.creator.role} </Text>
                             </Box>
                         </Flex>
+                        <PopOptions post={post} />
                     </Flex>
                 </CardHeader>
                 <CardBody>
