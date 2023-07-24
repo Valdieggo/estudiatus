@@ -22,9 +22,6 @@ export default function Moderation() {
   const [report, setReport] = useState([]); 
   const [modalReport, setModalReport] = useState(false);
   const [selectedReport, setSelectedReport] = useState(null); 
-  const [modalCreateReport, setModalCreateReport] = useState(false);
-  const [userReported, setUserReported] = useState(null);
-
   const getReport = async () => {
     try {
       const response = await axios.get("../api/report/getAll");
@@ -48,24 +45,15 @@ export default function Moderation() {
     setSelectedReport(null);
     setModalReport(false);
   };
-  const openModalCreateReport = async () => {
-   //S axios.get(`../api/user/getOne/${session.user.email}`)
 
-    setModalCreateReport(true);
-  };
-  const closeModalCreateReport = () => {
-    setModalCreateReport(false);
-  };
 
 
   return (
     // Se agrega el componente Layout centrado en medio de la pantalla
     <>
       <Layout>
-      <Button colorScheme="green" onClick={openModalCreateReport}>
-        Create Report
-      </Button>
-      <ModalCreateReport isOpen={modalCreateReport} onClose={closeModalCreateReport} reportedUser={userReported} />
+     
+     
 
       <TableContainer maxW="90vw" mx="auto" >
         <Table variant={"simple"}>
