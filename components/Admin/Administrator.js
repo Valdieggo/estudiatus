@@ -14,6 +14,7 @@ export default function Home() {
                 <Link href="/administrator/college">College</Link>
                 <Link href="/administrator/career">Career</Link>
                 <Link href="/administrator/post">Post</Link>
+                <Link href="/administrator/moderation">Moderacion</Link>
             </>
         )
     }
