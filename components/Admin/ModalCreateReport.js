@@ -1,6 +1,6 @@
 //  Este componente consiste en un boton que al ser presionado abre un modal para crear un reporte
 //  El modal tiene un formulario que al ser completado y enviado crea un reporte en la base de datos
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
     Button,
     Modal,
@@ -24,13 +24,12 @@ import {
 import axios from "axios";
 import { useSession } from "next-auth/react";
 
-export default function ModalCreateReport({ isOpen, onClose, reportedUser }) {
+export default function ModalCreateReport({ isOpen, onClose, reportedUser, postId }) {
     const { data: session, status } = useSession();
     const [reason, setReason] = useState("");
     const [description, setDescription] = useState("");
     const [loading, setLoading] = useState(false);
-    const toast = useToast();
-
+ 
     const handleReasonChange = (event) => {
         setReason(event.target.value);
     }
@@ -42,31 +41,20 @@ export default function ModalCreateReport({ isOpen, onClose, reportedUser }) {
     const handleSubmit = async (event) => {
         event.preventDefault();
         setLoading(true);
+        console.log("reportUser: " + session.user.id);
         try {
             const response = await axios.post("../api/report/create", {
-                reportedUser,
+                reportedUserId: reportedUser._id,
+                reportUserId: session.user.id,
                 reason,
                 description,
+                post: postId,
             });
             console.log(response.data);
-            toast({
-                title: "Reporte creado",
-                description: "El reporte fue creado con exito",
-                status: "success",
-                duration: 5000,
-                isClosable: true,
-            });
             setLoading(false);
             onClose();
         } catch (error) {
             console.error(error);
-            toast({
-                title: "Error",
-                description: "Ocurrio un error al crear el reporte",
-                status: "error",
-                duration: 5000,
-                isClosable: true,
-            });
             setLoading(false);
         }
     }
@@ -79,7 +67,7 @@ export default function ModalCreateReport({ isOpen, onClose, reportedUser }) {
                 <ModalCloseButton background="red" />
                 <ModalBody>
                     <Stack spacing={4}>
-                        <Text fontWeight="bold">Usuario reportado:</Text>
+                        <Text fontWeight="bold">Usuario reportado:{reportedUser.username}</Text>
                         <Grid templateColumns="auto 1fr" columnGap="50%">
                             <Text>{}</Text>
                             <Text>{}</Text>
