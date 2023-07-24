@@ -52,8 +52,8 @@ import { Popover, PopoverTrigger, PopoverContent, PopoverHeader,
               Sancionar
             </Button>
           </PopoverTrigger>
-          <PopoverContent background="bg.100">
-            <PopoverHeader>Crecion de sancion</PopoverHeader>
+          <PopoverContent background="bg.100"  borderColor='bg.100'>
+            <PopoverHeader pt={4} fontWeight='bold' border='0' >Crecion de sancion</PopoverHeader>
             <PopoverCloseButton />
             <PopoverBody>
               <Stack spacing={4}>
@@ -75,7 +75,7 @@ import { Popover, PopoverTrigger, PopoverContent, PopoverHeader,
                 </Box>
               </Stack>
             </PopoverBody>
-            <PopoverFooter >
+            <PopoverFooter  borderColor='bg.100' >
             {message}
               {
                 sancionTime ? (
