@@ -85,20 +85,15 @@ export default function Home() {
                                 </Text>
 
                                 <Text color={'gray.500'} textAlign={"center"}>
-                                        {subject.description}
+                                    {subject.description}
                                 </Text>
                             </Stack>
                         </Box>
                     </Link >
                 ))}
             </Box>
-
-
-
-
-
-
-        </>)
+        </>
+        )
     }
     return (
         <>

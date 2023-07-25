@@ -4,7 +4,11 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
-
+import {
+    Card, CardHeader, CardBody, CardFooter, Image, Stack, Text, Button,
+    Box,
+    Center
+} from '@chakra-ui/react'
 
 export default function Home() {
     const router = useRouter();
@@ -38,6 +42,52 @@ export default function Home() {
         });
     };
 
+    const displayCard = () => {
+        return (<>
+            <Box display={"flex"}>
+                {posts.map((post) => (
+                    <Link href={`/post/${post._id}`}>
+                        <Box
+                            margin={"20px"}
+                            maxW={'400px'}
+                            height={'400px'}
+                            maxH={'400px'}
+                            boxShadow={'0 0 10px black'} rounded={'md'}
+                            overflow={'hidden'}
+                        >
+                            <Box pos={'relative'}
+                                alignItems={"center"} justifyContent={"center"}
+                            >
+                                <Image
+                                    src={'/lol.jpg'}
+                                    alt="Example"
+                                    objectFit={'cover'}
+                                    w={'100%'}
+                                />
+                            </Box>
+                            <Stack>
+                                <Text
+                                    color={'green.500'}
+                                    textTransform={'uppercase'}
+                                    fontWeight={800}
+                                    fontSize={'sm'}
+                                    letterSpacing={1.1}>
+                                    <Center>
+                                        {post.title}
+                                    </Center>
+                                </Text>
+
+                                <Text color={'gray.500'} textAlign={"center"}>
+                                    {post.content}
+                                </Text>
+                            </Stack>
+                        </Box>
+                    </Link >
+                ))}
+            </Box>
+        </>
+        )
+    }
     return (
         <>
             <Head>
@@ -45,19 +95,7 @@ export default function Home() {
             </Head>
             <Layout>
                 <h1>{subject.subjectName}</h1>
-                <ul>
-                    {posts.map((post) => (
-                        <li key={post._id}>
-                            <Link href={`/post/${post._id}`}>
-                                <p>Nombre: {post.title}</p>
-                                <p>Puntaje: {post.score}</p>
-                                <p>Likes: {}</p>
-                                <p>Vistas: {post.view}</p>
-                                <p>Creador: {post.creator}</p>
-                            </Link>
-                        </li>
-                    ))}
-                </ul>
+               {displayCard()}
             </Layout>
         </>
     )
