@@ -1,32 +1,29 @@
 import React, {useState, useEffect}from 'react'
-import Layout from "../../components/Layout/Layout";
+import Layout from "../components/Layout/Layout";
 import Head from 'next/head';
-import verifyAdmin from "../../utils/verifyAdmin";
 import {
-  Box,
-  Container,
-  Heading,
-  Button,
-  HStack,
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-  TableCaption,
-  TableContainer
+Box,
+Container,
+Heading,
+Button,
+HStack,
+Table,
+Thead,
+Tbody,
+Tr,
+Th,
+Td,
+TableCaption,
+TableContainer
 } from "@chakra-ui/react";
 import axios from 'axios';
 
-
 export default function appeal_request() {
-    verifyAdmin();
 
     const [appeal,setAppeals]= useState([])
     const getAppeal = async () => {
       try {
-        const response = await axios.get("../api/appeal/getAll");
+        const response = await axios.get("../api/appeal/getOneUser");
         setAppeals(response.data);
       } catch (error) {
         console.error(error);
@@ -64,6 +61,4 @@ export default function appeal_request() {
       </TableContainer>
       </Layout>
     </>
-  );
-
-}
+  )}
