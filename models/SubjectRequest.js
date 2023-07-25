@@ -17,7 +17,7 @@ const SubjectRequestSchema = mongoose.Schema({
   },
   description: {
     type: String,
-    required: false,
+    required: true,
     minLength: 1,
     maxLength: 1000,
   },
