@@ -5,13 +5,12 @@ import Report from "../../../models/Report";
 
 export default async function handler(req,res){
     connectToDatabase();
-    const {reportUserId ,reportedUserId, reason, description} = req.body;
+    const {reportUserId ,reportedUserId, reason, description, post} = req.body;
     const { method } = req;
-
     switch (method) {
         case "POST":
             try {
-                const newReport = new Report({ reportUser: reportUserId, reportedUser:reportedUserId, reason, description });
+                const newReport = new Report({ reportUser: reportUserId, reportedUser:reportedUserId, reason, description, post });
                 await newReport.save();
                 if (newReport) {
                     return res.status(201).json({ message: "Report created" });

@@ -1,6 +1,8 @@
 import { connectToDatabase } from "../../../utils/db";
 
 import Post from "../../../models/Post";
+import Comment from "../../../models/Comment";
+import User from "../../../models/User";
 
 export default async function handler(req, res) {
     const { method } =req;
@@ -10,7 +12,16 @@ export default async function handler(req, res) {
     switch (method) {
         case "GET":
             try {
-                const posts = await Post.find({});
+                const posts = await Post.find({}).populate(
+                    "creator").populate({
+                        path: "comments",
+                        model: "Comment",
+                        populate: {
+                            path: "creator",
+                            model: "User",
+                        },
+                    }
+                );
                 return res.status(200).json({ success: true, data: posts });
             }
             catch (error) {

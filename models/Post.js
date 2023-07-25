@@ -7,6 +7,12 @@ const PostSchema = new mongoose.Schema({
         minLenght:1,
         maxLenght: 50,
     },
+    content: {
+        type: String,
+        required: [true, "Contenido obligatorio"],
+        minLenght:1,
+        maxLenght: 500,
+    },
     score: {
         type: Number,
         default: 0,
