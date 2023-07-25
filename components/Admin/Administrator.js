@@ -13,6 +13,8 @@ export default function Home() {
                 <Link href="/administrator/subject">Subject</Link>
                 <Link href="/administrator/college">College</Link>
                 <Link href="/administrator/career">Career</Link>
+                <Link href="/administrator/post">Post</Link>
+                <Link href="/administrator/moderation">Moderacion</Link>
                 <Link href="/administrator/appeal_request">Appeal requests</Link>
             </>
         )
