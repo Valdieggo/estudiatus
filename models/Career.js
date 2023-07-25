@@ -9,7 +9,7 @@ const CareerSchema = new mongoose.Schema({
     description: {
         type: String,
         required: [true, "Please provide a description"],
-        minLength: [10, "Description cannot be less than 10 characters"],
+        minLength: [1, "Description cannot be less than 10 characters"],
         maxLength: [300, "Carrer description cannot be more than 300 characters"],
     },
     img: {
