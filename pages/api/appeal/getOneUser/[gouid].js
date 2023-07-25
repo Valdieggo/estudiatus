@@ -6,8 +6,9 @@ import User from "../../../../models/User";
 export default async function handler(req, res) {
     await connectToDatabase();
     const { method } = req;
-    const { userid } = req.query;
-    const appeal = await Appeal.find({appealer:userid}, null,null)
+    const { gouid } = req.query;
+
+    const appeal = await Appeal.find({appealer:gouid}, null,null)
 
     if(method=="GET"){
         try {
