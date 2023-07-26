@@ -1,12 +1,15 @@
 import Ban from "../models/Ban";
 import { connectToDatabase } from "./db";
 
-export const isBaned = async (idBan) => {
-    // se verifica que el id del ban no sea null o undefined para usuarios que no han sido baneados nunca
-    if (idBan!=null) {
-        const ban = await Ban.findById(idBan);
-            // se verifica que el ban este activo
-           if (ban.status === "active") {
+export const isBaned = async (reportedUser) => {
+            // se busca el ban del usuario reportado en la base de datos cuando el estatus sea "active" y se guarda en la variable ban
+            connectToDatabase();
+            const ban = await Ban.findOne({ user: reportedUser, status: "active" });
+   
+                // si no hay ban se devuelve false
+                if (!ban) {
+                    return false;
+                }
                 // si esta activo se verifica que el tiempo de ban no haya expirado
                 const banTime = new Date(ban.time);
                 const now = new Date();
@@ -16,14 +19,8 @@ export const isBaned = async (idBan) => {
                 }else{
                     // si el tiempo de ban ha expirado se actualiza el estatus del ban a "inactive"
                     connectToDatabase();
-                    await Ban.findByIdAndUpdate(idBan, { status: "inactive" });
+                    await Ban.findByIdAndUpdate(ban._id, { status: "inactive" });
                     // se devuelve false
                     return false;
                 }
-           }else{
-                return false;
-           }
-    }else{
-        return false;
-    }
 };
