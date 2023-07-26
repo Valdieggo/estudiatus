@@ -1,9 +1,11 @@
-import { Box, VStack, Text, Button, IconButton, Stack } from "@chakra-ui/react";
+import { Box, Card, CardBody, CardHeader, CardFooter, VStack, Text, Button, IconButton, Stack, Flex, Avatar, Heading } from "@chakra-ui/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import axios from "axios";
+import LikeCommentButton from "./LikeCommentButton";
+import { ChatIcon } from "@chakra-ui/icons";
 
 export default function CommentCard({ comment, setComments, comments }) {
     const { creator } = comment;
@@ -48,61 +50,49 @@ export default function CommentCard({ comment, setComments, comments }) {
     }
 
     return (
-    <Box color="white" width="100%" maxWidth="500px" margin="auto" bg="post.100" borderRadius="md" p={4}
-        _hover={{
-            bg: "post.200",
-        }}
-    >
-        <Stack direction="row" spacing={4} align="center">
-            <VStack spacing={0} align="flex-start">
-                <Link href={`/profile/${creator._id}`}>
-                    <Image
-                        src={creator.img}
-                        alt="creator img"
-                        width={50}
-                        height={50}
-                        className="avatar"
-                    />
-                </Link>
-                <Text fontSize="sm">{creator.username}</Text>
-            </VStack> 
-            <Box d="flex" alignItems="center">
-                <Text pl={2}>{comment.text}</Text>
-            </Box>
-        </Stack>
-        <Stack direction="row" spacing={4} pt={4}>
-            <Button
-            type="button"
-            bg="button.100"
-            width="100%"
-            _hover={{
-                bg: "button.200",
-            }}
-            onClick={() => handleReply()}
-            >
-                Responder
-            </Button>
-            <Button
-                type="button"
-                bg="button.100"
-                width="100%"
+        <VStack spacing={4} align="center">
+            <Card color="white" width="100%"  margin="auto" bg="post.100" borderRadius="md" p={4}
                 _hover={{
-                    bg: "button.200",
+                    bg: "post.200",
+                }} >
+                <CardHeader >
+                    <Flex spacing='4'>
+                        <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
+                            <Avatar name={creator.username} src='https://bit.ly/broken-link' bg='blue.700' color='white' />
+
+                            <Box>
+                                <Heading size='sm'>{creator.username}</Heading>
+                                <Text>{creator.role} </Text>
+                            </Box>
+                        </Flex>
+                    </Flex>
+                </CardHeader>
+                <CardBody>
+                    <Text>
+                        {comment.text}
+                    </Text>
+                </CardBody>
+
+                <CardFooter
+                    justify='space-between'
+                    flexWrap='wrap'
+                    sx={{
+                        '& > button': {
+                            minW: '136px',
+                        },
                     }}
-                onClick={() => handleLike()}
                 >
-                    Like
-            </Button>
-            {isCreatorId && (
-                <Text
-                    alignSelf={"center"}
-                    onClick={() => handleDelete()}
-                >
-                    Eliminar
-                </Text>
-            )}
-        </Stack>
-        
-    </Box>
+                    <LikeCommentButton comment = {comment} />
+                    <Button type="button"
+                        bg="button.100"
+                        width="48%"
+                        _hover={{
+                            bg: "button.200",
+                        }} leftIcon={<ChatIcon />}>
+                        Responder
+                    </Button>
+                </CardFooter>
+            </Card>
+        </VStack>
   );
 }
