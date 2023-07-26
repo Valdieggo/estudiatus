@@ -41,8 +41,8 @@ var UserSchema = new mongoose.Schema({
         },
     ],
     isBanned: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Ban",
+        type: Boolean,
+        default: false,
     },
     img: {
         type: mongoose.Schema.Types.ObjectId,
