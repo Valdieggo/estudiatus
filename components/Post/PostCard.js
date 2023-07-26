@@ -17,7 +17,7 @@ export default function PostCard({ post }) {
 
                             <Box>
                                 <Heading size='sm'>{post.creator.username}</Heading>
-                                <Text>Creator, {post.creator.role} </Text>
+                                <Text>{post.creator.role} </Text>
                             </Box>
                         </Flex>
                         <PopOptions post={post} />

@@ -1,4 +1,4 @@
-// LikePostButton.js
+// LikeCommentButton.js
 import { Button, Spinner } from "@chakra-ui/react";
 import { ArrowUpIcon } from "@chakra-ui/icons";
 import { useState, useEffect } from "react";
@@ -7,18 +7,18 @@ import { useSession } from "next-auth/react";
 import { useDisclosure } from '@chakra-ui/react'
 import LoginModal from "../Auth/LoginModal.js";
 
-export default function LikePostButton({ post }) {
+export default function LikeCommentButton({ comment }) {
     const { data: session, status } = useSession();
     const [isLiked, setIsLiked] = useState(false);
-    const [likeCount, setLikeCount] = useState(post.likes.length);
+    const [likeCount, setLikeCount] = useState(comment.likes.length);
     const [isLiking, setIsLiking] = useState(false);
     const { isOpen, onOpen, onClose } = useDisclosure()
 
     useEffect(() => {
         if (status === "authenticated") {
             const userId = session.user.id;
-            const postId = post._id;
-            axios.post("/api/post/getUserLike", { userId, postId })
+            const commentId = comment._id;
+            axios.post("/api/comment/getUserLike", { userId, commentId })
                 .then((res) => {
                     setIsLiked(res.data.data);
                 })
@@ -32,8 +32,8 @@ export default function LikePostButton({ post }) {
         if (status === "authenticated") {
             setIsLiking(true);
             const userId = session.user.id;
-            const postId = post._id;
-            axios.put("/api/post/like", { userId, postId })
+            const commentId = comment._id;
+            axios.put("/api/comment/like", { userId, commentId })
                 .then((res) => {
                     const liked = res.data.data.includes(userId);
                     setIsLiked(liked);

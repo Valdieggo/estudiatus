@@ -1,5 +1,11 @@
-export { default } from "next-auth/middleware"
+import { withAuth } from "next-auth/middleware"
 
-export const config = { 
-    matcher: ["/profile"],
-}
+export default withAuth(
+  {
+    callbacks: {
+      authorized: ({ token }) => token?.role === "admin",    
+    },
+  }
+)
+
+export const config = { matcher: ["/administrator/:path*", "/api/ban/:path*"], }
