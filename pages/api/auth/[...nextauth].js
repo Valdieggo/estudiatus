@@ -3,6 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { connectToDatabase } from "../../../utils/db";
 import User from "../../../models/User";
 import { verifyPassword } from "../../../utils/auth";
+import { isBaned } from "../../../utils/isBaned";
 
 
 
@@ -37,6 +38,13 @@ export const authOptions = {
                 if (!isValid) {
                     throw new Error("Could not log you in");
                 }
+                
+                const isBanned = await isBaned(user._id);
+                if (isBanned) {
+                    throw new Error("You are banned");
+                }
+
+
                
                 return   user ;
 
@@ -73,6 +81,7 @@ export const authOptions = {
     },
     pages: {
         signIn: "/login",
+        error: '/auth/error',
     },
 
   };
