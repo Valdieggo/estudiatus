@@ -1,33 +1,9 @@
-import Sidebar from "./SideBar"
+/*import Sidebar from "./SideBar"
 import Navbar from "./Navbar";
 import { Grid, GridItem,Flex } from '@chakra-ui/react';
 import { useEffect } from "react";
 
 function Layout({ children }) {
-    /*original
-    return (
-        <Container
-            bg="bg.100"
-            maxW="100vw"
-            minH="100vh"
-            color="white"
-            >
-            <Stack>
-                <Navbar />
-                <Sidebar />
-            </Stack>
-
-            
-            <Flex ml="200px" p="4">
-                <Box>{children}</Box>
-            </Flex>
-        </Container>
-    ); 
-
-  */
-
-    //construye un layout a la derecha del sidebar
-
     useEffect(() => {
         document.body.style.backgroundColor = "#151f32";
     }, []);
@@ -35,6 +11,7 @@ function Layout({ children }) {
     return (
         <Flex bg="bg.100"
             color="white"
+            w="100%"
         >
             <Grid
                 templateAreas={`"nav header"
@@ -62,5 +39,29 @@ function Layout({ children }) {
         </Flex>
     )
 }
+
+export default Layout;*/
+
+import { Box, Flex, IconButton, useDisclosure } from '@chakra-ui/react';
+import { HamburgerIcon } from '@chakra-ui/icons';
+import Navbar from './Navbar';
+import Sidebar from './Sidebar';
+import { useEffect } from 'react';
+const Layout = ({ children, user }) => {
+    useEffect(() => {
+        document.body.style.backgroundColor = "#151f32";
+    }, []);
+  return (
+    <Box>
+      <Navbar user={user} />
+      <Flex>
+        <Sidebar />
+        <Box flex={1} p={5}>
+          {children}
+        </Box>
+      </Flex>
+    </Box>
+  );
+};
 
 export default Layout;
