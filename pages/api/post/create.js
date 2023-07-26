@@ -27,11 +27,12 @@ export default async function handler(req, res) {
                         creator,
                         subject,
                     });
+                    console.log(post._id)
                     await User.findByIdAndUpdate(creator, {
                         $push: { user: creator._id }
                     });
                     await Subject.findByIdAndUpdate(subject, {
-                        $push: { subject: subject._id }
+                        $push: { posts: post._id }
                     });
                     return res.status(200).json({ success: true, data: post });
                 }

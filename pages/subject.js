@@ -4,29 +4,30 @@ import Layout from "../components/Layout/Layout";
 import axios from "axios";
 import Card from "../components/Cards/card";
 
+
 export const getServerSideProps = async () => {
-    const response = await axios.get(`http://localhost:3000/api/college/getAll`);
-    const colleges = response.data.data;
+    const response = await axios.get(`http://localhost:3000/api/subject/getAll`);
+    const subjects = response.data.data;
     return {
         props: {
-            colleges,
+            subjects,
         },
     };
 }
 
-const College = (data) => {
-    const { colleges } = data
+const Subject = (data) => {
+    const { subjects } = data
 
     const displayCard = () => {
         return (<>
-            {colleges.map((college) => (
+            {subjects.map((subject) => (
                 <Card
-                    key={college._id}
-                    title={college.collegeName}
+                    key={subject._id}
+                    title={subject.subjectName}
                     image={"/lol.jpg"}
-                    description={college.description}
-                    link={`/college/${college._id}`}
-                    top={`${college.careers.length} ${college.careers.length !== 1 ? "carreras" : "carrera"}`} />
+                    description={subject.description}
+                    link={`/subject/${subject._id}`}
+                    top={`${subject.posts.length} ${subject.posts.length !== 1 ? "carreras" : "carrera"}`} />
             ))}
         </>
         )
@@ -38,13 +39,13 @@ const College = (data) => {
             </Head>
             <Layout>
                 <Box>
-                    <Text>Colleges</Text>
+                    <Text>Subjects</Text>
                     <Text>Todas las carreras disponibles</Text>
                     {displayCard()}
                 </Box>
             </Layout>
         </>
     );
-};
+}
 
-export default College;
+export default Subject;
