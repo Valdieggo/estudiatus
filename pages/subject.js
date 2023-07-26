@@ -27,7 +27,9 @@ const Subject = (data) => {
                     image={"/lol.jpg"}
                     description={subject.description}
                     link={`/subject/${subject._id}`}
-                    top={`${subject.posts.length} ${subject.posts.length !== 1 ? "carreras" : "carrera"}`} />
+                    top={`${subject.posts.length} ${subject.posts.length !== 1 ? "carreras" : "carrera"}`} 
+                    footer={`${subject.subscribers.length} ${subject.subscribers.length !== 1 ? "subscriptores" : "subscriptor"}`} 
+                    />
             ))}
         </>
         )
