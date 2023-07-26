@@ -5,7 +5,8 @@ const CollegeSchema = new mongoose.Schema({
         type: String,
         unique: true,
         required: [true, "Please provide a college name"],
-        maxLength: [1, "College name cannot be more than 100 characters"],
+        minLength: [1, "College name cannot be less than 1 characters"],
+        maxLength: [100, "College name cannot be more than 100 characters"],
     },
     img: {
         type: mongoose.Schema.Types.ObjectId,

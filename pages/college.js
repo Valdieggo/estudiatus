@@ -1,40 +1,46 @@
-import { Box } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import Head from "next/head";
 import Layout from "../components/Layout/Layout";
 import axios from "axios";
-import { useEffect, useState } from "react";
-import Link from "next/link";
+import Card from "../components/Cards/card";
 
-
-const College = () => {
-    const [colleges, setColleges] = useState([]);
-
-    const getColleges = async () => {
-        const { data } = await axios.get("/api/college/getAll");
-        setColleges(data.data);
+export const getServerSideProps = async () => {
+    const response = await axios.get(`http://localhost:3000/api/college/getAll`);
+    const colleges = response.data.data;
+    return {
+        props: {
+            colleges,
+        },
     };
+}
 
-    useEffect(() => {
-        getColleges();
-    }, []);
+const College = (data) => {
+    const { colleges } = data
 
+    const displayCard = () => {
+        return (<>
+            {colleges.map((college) => (
+                <Card
+                    key={college._id}
+                    title={college.collegeName}
+                    image={"/lol.jpg"}
+                    description={college.description}
+                    link={`/college/${college._id}`}
+                    top={`${college.careers.length} ${college.careers.length !== 1 ? "carreras" : "carrera"}`} />
+            ))}
+        </>
+        )
+    }
     return (
         <>
             <Head>
-                <title>Colleges</title>
+                <title></title>
             </Head>
             <Layout>
                 <Box>
-                    <h1>Colleges</h1>
-                    <ul>
-                        {colleges.map((college) => (
-                            <li key={college._id}>
-                                <Link href={`/college/${college._id}`}>
-                                    {college.collegeName}
-                                </Link>
-                            </li>
-                        ))}
-                    </ul>
+                    <Text>Colleges</Text>
+                    <Text>Todas las carreras disponibles</Text>
+                    {displayCard()}
                 </Box>
             </Layout>
         </>

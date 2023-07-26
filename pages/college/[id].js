@@ -1,68 +1,58 @@
 import Head from "next/head";
 import Layout from "../../components/Layout/Layout";
 import axios from "axios";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import Link from "next/link";
-import { Box } from "@chakra-ui/layout";
+import Card from "../../components/Cards/card";
+
+
+import {
+    Box,
+    Text,
+    Center
+} from '@chakra-ui/react'
+
+
+
+
+export const getServerSideProps = async (context) => {
+    const { id } = context.query;
+    const response = await axios.get(`http://localhost:3000/api/college/getOne/${id}`);
+    const college = response.data.data;
+    return {
+        props: {
+            college,
+        },
+    };
+}
 
 //obtiene la informacion de un determinado college
-export default function Home() {
-    //obtiene la id del link
-    const router = useRouter();
+export default function Home(data) {
+   const {college} = data;
 
-    //obtiene la informacion del college
-    const [college, setCollege] = useState([]);
-    const [careers, setCareers] = useState([]);
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        if (router.isReady) {
-            getCollege(router.query.id);
-        }
-    }, [
-        router.isReady,
-        !loading
-    ]);
-
-
-    const getCollege = async (id) => {
-        const response = await axios.get(`/api/college/getOne/${id}`).then((res) => {
-            setCollege(res.data.data);
-        }).then(() => {
-            getCareers();
-        });
-    };
-
-    const getCareers = async () => {
-        //OBTIENE TODAS LAS CARRERAS Y LUEGO FILTRA POR LA ID OBTENIDA
-        const response = await axios.get(`/api/career/getAll`).then((res) => {
-            const careers = res.data.data.filter((career) => career.college === college._id);
-            setCareers(careers);
-        });
-        setLoading(false);
-    };
-
+    const displayCard = () => {
+            return (<>
+                {college.careers.map((career) => (
+                    <Card
+                        key={career._id}
+                        title={career.careerName}
+                        image={"/lol.jpg"}
+                        description={career.description}
+                        link={`/career/${career._id}`}
+                        top={`${career.subjects.length} ${career.subjects.length !== 1 ? "asignaturas" : "asignatura"}`} />
+                ))}
+            </>
+            )
+    }
     return (
         <>
-            <Box>
-                <Head>
-                    <title>{college.collegeName}</title>
-                </Head>
-                <Layout>
-                    <h1>{college.collegeName}</h1>
-                    <img src={`/photo.svg`} alt={`logo`} width="20px" height="20px" />
-                    <ul>
-                        {careers.map((career) => (
-                            <li key={career._id}>
-                                <Link href={`/career/${career._id}`}>
-                                    {career.careerName}
-                                </Link>
-                            </li>
-                        ))}
-                    </ul>
-                </Layout>
-            </Box>
+            <Head>
+                <title>{college.collegeName}</title>
+            </Head>
+            <Layout>
+                <Center>
+                    <Text>{college.collegeName}</Text>
+                </Center>
+                {displayCard()}
+            </Layout>
         </>
     )
 }
