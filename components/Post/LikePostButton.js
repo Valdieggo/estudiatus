@@ -33,12 +33,10 @@ export default function LikePostButton({ post }) {
             setIsLiking(true);
             const userId = session.user.id;
             const postId = post._id;
-            console.log(userId, postId);
             axios.put("/api/post/like", { userId, postId })
                 .then((res) => {
                     const liked = res.data.data.includes(userId);
                     setIsLiked(liked);
-                    // Increment or decrement the like count depending on if the post was liked or unliked
                     setLikeCount((prevCount) => prevCount + (liked ? 1 : -1));
                     setIsLiking(false);
                 })
