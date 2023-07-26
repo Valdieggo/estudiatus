@@ -7,11 +7,22 @@ export default async function handler(req, res) {
   await connectToDatabase();
 
   switch (method) {
-    case "GET":
+    case "PUT":
       try {
-        const subjectRequests = await SubjectRequest.find({});
+        const subjectRequest = await SubjectRequest.findByIdAndUpdate(
+          req.body._id,
+          req.body,
+          {
+            new: true,
+            runValidators: true,
+          }
+        );
 
-        res.status(200).json({ success: true, data: subjectRequests });
+        if (!subjectRequest) {
+          return res.status(400).json({ success: false });
+        }
+
+        res.status(200).json({ success: true, data: subjectRequest });
       } catch (error) {
         res.status(400).json({ success: false });
       }
