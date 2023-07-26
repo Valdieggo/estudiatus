@@ -17,13 +17,14 @@ export default function blogPostWithImage({ title, image, description, link, top
             <Link href={link}>
                 <Box
                     w="380px"
-                    h="400px"
+                    h="450px"
                     // eslint-disable-next-line react-hooks/rules-of-hooks
                     bg={useColorModeValue('white', 'gray.900')}
-                    boxShadow={'2xl'}
+                    boxShadow={'dark-lg'}
                     rounded={'md'}
-                    p={6}
-                    overflow={'hidden'}>
+                    padding={"20px"}
+                    display={"grid"}
+                    >
                     <Box h={'210px'} bg={'gray.100'} mt={-6} mx={-6} mb={6} pos={'relative'}>
                         <Image
                             src={image}
@@ -34,7 +35,7 @@ export default function blogPostWithImage({ title, image, description, link, top
 
                         />
                     </Box>
-                    <Stack>
+                    <Stack overflow={"auto"}>
                         <Text
                             color={'green.500'}
                             textTransform={'uppercase'}
@@ -50,7 +51,7 @@ export default function blogPostWithImage({ title, image, description, link, top
                             fontFamily={'body'}>
                             {title}
                         </Heading>
-                        <Text color={'gray.500'}>
+                        <Text color={'gray.500'} >
                             {description}
                         </Text>
                     </Stack>
