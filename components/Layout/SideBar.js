@@ -75,7 +75,7 @@ return (
       <Link href="/">Inicio</Link>
       <Link href="/about">Acerca de</Link>
       <Link href="/contact">Contacto</Link>
-      <Link href="/college">Universidades con un titulo largo para ver que pasa</Link>
+      <Link href="/college/64c01fdb4f1783bb3dc306f2">Universidad Z</Link>
     </Stack>
     <Stack spacing="3">
     {Administrator()}
