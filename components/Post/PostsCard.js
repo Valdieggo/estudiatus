@@ -29,24 +29,6 @@ export default function PostsCard({ post ,subject}) {
                                 </Box>
                             </Flex>
                         )}
-                        {console.log(post.subject)}
-                        {post.subject && ( // Renderiza condicionalmente si post.creator está definido
-
-                        <HStack spacing={4}>
-                            {['sm'].map((size) => (
-                                <Tag
-                                    size={size}
-                                    key={size}
-                                    borderRadius='full'
-                                    variant='solid'
-                                    colorScheme='green'
-                                >
-                                    <TagLabel>{post.subject.subjectName}</TagLabel>
-                                    <TagCloseButton />
-                                </Tag>
-                            ))}
-                        </HStack>
-                        )}
                         <PopOptions post={post} />
                     </Flex>
                 </CardHeader>
