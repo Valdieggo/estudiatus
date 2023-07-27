@@ -1,12 +1,14 @@
 import Head from "next/head";
 import Layout from "../../components/Layout/Layout";
 import axios from "axios";
-import { Text } from '@chakra-ui/react'
+import { Box, Text, Card, Flex, CardBody, Avatar, CardHeader, CardFooter, Heading, Button, VStack, Stack, useDisclosure } from '@chakra-ui/react';
+import { ArrowUpIcon, ChatIcon } from '@chakra-ui/icons';
+import PostsCard from '../../components/Post/PostsCard';
 
 
 export const getServerSideProps = async (context) => {
     const { id } = context.query;
-    const response = await axios.get(`http://localhost:3000/api/post/getAll`);
+    const response = await axios.get(`http://localhost:3000/api/post/getAllBysubject/${id}`);
     const res2 = await axios.get(`http://localhost:3000/api/subject/getOne/${id}`);
 
     const subject = res2.data.data;
@@ -19,18 +21,19 @@ export const getServerSideProps = async (context) => {
     };
 }
 
-
-export default function Home(data) {
-    const {posts, subject} = data;
-
+const PostsSubject = ({ posts }) => {
     return (
-        <>
-            <Head>
-                <title>{subject.subjectName}</title>
-            </Head>
-            <Layout>
-                <Text>TODO: Publicaciones creadas</Text>
-            </Layout>
-        </>
-    )
-}
+        <Layout>
+            <Box>
+                <Stack>
+
+                </Stack>
+                {posts.map((post) => (
+                    <PostsCard key={post._id} post={post} />
+                ))}
+            </Box>
+        </Layout>
+    );
+};
+
+export default PostsSubject;
