@@ -30,6 +30,7 @@ const PostSchema = new mongoose.Schema({
         default: 0,
     },
     creator:{
+        required: [true, "Creador obligatorio"],
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
     },

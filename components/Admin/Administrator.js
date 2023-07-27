@@ -1,31 +1,24 @@
-import { Link, Text } from '@chakra-ui/react'
-import isAdmin from '../../utils/isAdmin'
+import {Divider } from "@chakra-ui/react";
+import MenuItem from "../Layout/MenuItem";
+import isAdmin from "../../utils/isAdmin";
 
-export default function Home() {
-    if (!isAdmin()) {
-        return <></>
-    } else {
-        return (
-            <>
-                <Text fontSize="2xl" mt="5">
-                    Admin Time
-                </Text>
-                <Link href="/administrator/subject">Subject</Link>
-                <Link href="/administrator/college">College</Link>
-                <Link href="/administrator/career">Career</Link>
-                <Link href="/administrator/post">Post</Link>
-                <Link href="/administrator/moderation">Moderacion</Link>
-                <Link href="/administrator/appeal_request">Appeal requests</Link>
+export default function Home({navSize}) {
+  if (!isAdmin()) {
+    return <></>;
+  } else {
+    return (
+      <>
+        <Divider />
+        <MenuItem title="Admin. Asignaturas" link={"/administrator/subject"} navSize={navSize} />
+        <MenuItem title="Admin. Post" link={"/administrator/post"} navSize={navSize} />
+        <MenuItem title="Admin. Moderation" link={"/administrator/moderation"} navSize={navSize} />
+        <MenuItem title="Admin. Appeal requests" link={"/administrator/appeal_request"} navSize={navSize} />
 
-
-                <Text fontSize="2xl" mt="5">
-                    Debug
-                </Text>
-                <Link href="/college">Universidades</Link>
-                <Link href="/subject">Asignaturas</Link>
-                <Link href="/career">Carreras</Link>
-
-            </>
-        )
-    }
+        <Divider />
+        <MenuItem title="Todas Las Universidades" link={"/college"} navSize={navSize} />
+        <MenuItem title="Todas Las carreras" link={"/career"} navSize={navSize} />
+        <MenuItem title="Todas Las Asignaturas" navSize={navSize} link={"/subject"}/>
+      </>
+    );
+  }
 }
