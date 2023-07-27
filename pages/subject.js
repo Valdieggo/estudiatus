@@ -6,7 +6,7 @@ import Card from "../components/Cards/card";
 
 
 export const getServerSideProps = async () => {
-    const response = await axios.get(`http://localhost:3000/api/subject/getAll`);
+    const response = await axios.get(`http://localhost:${process.env.PORT}/api/subject/getAll`);
     const subjects = response.data.data;
     return {
         props: {

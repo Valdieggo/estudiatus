@@ -1,6 +1,6 @@
 import { connectToDatabase } from "../../../../utils/db";
-import Report from "../../../models/Report";
-import User from "../../../models/User";
+import Report from "../../../../models/Report";
+import User from "../../../../models/User";
 
 export default async function handler(req, res) {
    try {

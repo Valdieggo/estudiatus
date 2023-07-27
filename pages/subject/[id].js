@@ -8,8 +8,8 @@ import PostsCard from '../../components/Post/PostsCard';
 
 export const getServerSideProps = async (context) => {
     const { id } = context.query;
-    const response = await axios.get(`http://localhost:3000/api/post/getAllBysubject/${id}`);
-    const res2 = await axios.get(`http://localhost:3000/api/subject/getOne/${id}`);
+    const response = await axios.get(`http://localhost:${process.env.PORT}/api/post/getAllBysubject/${id}`);
+    const res2 = await axios.get(`http://localhost:${process.env.PORT}/api/subject/getOne/${id}`);
 
     const subject = res2.data.data;
     const posts = response.data.data.filter((post) => post.subject === id);

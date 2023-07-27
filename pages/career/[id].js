@@ -1,15 +1,12 @@
 import Head from "next/head";
 import Layout from "../../components/Layout/Layout";
 import axios from "axios";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
 import Card from "../../components/Cards/card";
-
-import { Text, Center, Box } from '@chakra-ui/react'
+import { Text, Center } from '@chakra-ui/react'
 
 export const getServerSideProps = async (context) => {
     const { id } = context.query;
-    const response = await axios.get(`http://localhost:3000/api/career/getOne/${id}`);
+    const response = await axios.get(`http://localhost:${process.env.PORT}/api/career/getOne/${id}`);
     const career = response.data.data;
     return {
         props: {

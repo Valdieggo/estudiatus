@@ -11,7 +11,7 @@ import {
     Link,
 } from '@chakra-ui/react'
 
-export default function blogPostWithImage({ title, image, description, link, top,footer }) {
+export default function Card({ title, image, description, link, top,footer }) {
     return (
         <Center py={6} display={"inline-block"} margin={"15px"}>
             <Link href={link}>
