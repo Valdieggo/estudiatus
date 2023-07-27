@@ -16,6 +16,7 @@ export default function Home() {
         <Link href="/administrator/post">Post</Link>
         <Link href="/administrator/moderation">Moderacion</Link>
         <Link href="/administrator/appeal_request">Appeal requests</Link>
+        <Link href="/administrator/subject_request">Subject requests</Link>
 
         <Text fontSize="2xl" mt="5">
           Debug

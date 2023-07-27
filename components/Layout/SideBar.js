@@ -1,8 +1,8 @@
-import { Box, Stack, Link, Text, Flex } from '@chakra-ui/react'
-import Administrator from '../Admin/Administrator'
-import {Drawer} from '@chakra-ui/react'
+import { Box, Stack, Link, Text, Flex } from "@chakra-ui/react";
+import Administrator from "../Admin/Administrator";
+import { Drawer } from "@chakra-ui/react";
 const Sidebar = () => {
- /**
+  /**
   * 
   *  return (
     <Box
@@ -64,25 +64,18 @@ const Sidebar = () => {
   </Drawer>
   */
 
-return (
-  <Box
-    bg="gray.800"
-    p="5"
-    h="100vh"
-    minW="20vh"
-  >
-    <Stack spacing="3">
-      <Link href="/">Inicio</Link>
-      <Link href="/about">Acerca de</Link>
-      <Link href="/contact">Contacto</Link>
-      <Link href="/college/64c01fdb4f1783bb3dc306f2">Universidad Z</Link>
-    </Stack>
-    <Stack spacing="3">
-    {Administrator()}
-    </Stack>
-  </Box>
-)
- 
-}
+  return (
+    <Box bg="gray.800" p="5" h="100vh" minW="20vh">
+      <Stack spacing="3">
+        <Link href="/">Inicio</Link>
+        <Link href="/about">Acerca de</Link>
+        <Link href="/contact">Contacto</Link>
+        <Link href="/college/64c01fdb4f1783bb3dc306f2">Universidad Z</Link>
+        <Link href="/subjectRequest">Solicitar asignatura</Link>
+      </Stack>
+      <Stack spacing="3">{Administrator()}</Stack>
+    </Box>
+  );
+};
 
-export default Sidebar
+export default Sidebar;
