@@ -1,9 +1,11 @@
 // PostCard.js
-import { VStack, Text, CardBody, IconButton, Box, Heading, Flex, Card, CardHeader, Image, CardFooter, Button, Avatar, Icon } from "@chakra-ui/react";
+import { VStack, Text, CardBody, IconButton, Box, Heading, Flex, Card, CardHeader, Image, CardFooter, Button, Avatar, Icon, Tag, TagLabel, TagCloseButton, HStack } from "@chakra-ui/react";
 import { ChatIcon, ArrowUpIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import LikePostButton from "./LikePostButton";
 import PopOptions from "./PopOptions";
-export default function PostsCard({ post }) {
+
+
+export default function PostsCard({ post ,subject}) {
     return (
 
         <VStack key={post.id} spacing={4} align="center">
@@ -26,6 +28,24 @@ export default function PostsCard({ post }) {
                                     <Text>Creator, {post.creator.role}</Text>
                                 </Box>
                             </Flex>
+                        )}
+                        {console.log(post.subject)}
+                        {post.subject && ( // Renderiza condicionalmente si post.creator está definido
+
+                        <HStack spacing={4}>
+                            {['sm'].map((size) => (
+                                <Tag
+                                    size={size}
+                                    key={size}
+                                    borderRadius='full'
+                                    variant='solid'
+                                    colorScheme='green'
+                                >
+                                    <TagLabel>{post.subject.subjectName}</TagLabel>
+                                    <TagCloseButton />
+                                </Tag>
+                            ))}
+                        </HStack>
                         )}
                         <PopOptions post={post} />
                     </Flex>

@@ -1,9 +1,8 @@
-import { connectToDatabase } from "../../../utils/db";
+import { connectToDatabase } from "../../../../utils/db";
+import Post from "../../../../models/Post";
+import Subject from "../../../../models/Subject"
+import Comment from "../../../../models/Comment";
 
-import Post from "../../../models/Post";
-import Subject from "../../../models/Subject"
-import Comment from "../../../models/Comment";
-import User from "../../../models/User";
 
 export default async function handler(req, res) {
     const { method } = req;
@@ -21,7 +20,15 @@ export default async function handler(req, res) {
                     return res.status(400).json({ success: false, message: "idSubjectAll parameter missing" });
                 }
 
-                const post = await Post.findOne({ id }).populate(
+                // Find the subject by its ID
+                const subject = await Subject.findById(id);
+
+                if (!subject) {
+                    return res.status(400).json({ success: false, message: "Subject not found" });
+                }
+
+                // Find all posts that belong to the subject
+                const posts = await Post.find({ subject: subject._id }).populate(
                     "creator").populate({
                         path: "comments",
                         model: "Comment",
@@ -32,10 +39,7 @@ export default async function handler(req, res) {
                     }
                 );
 
-                if (!post) {
-                    return res.status(400).json({ success: false, message: "Post not found" });
-                }
-                return res.status(200).json({ success: true, data: post });
+                return res.status(200).json({ success: true, data: posts });
             }
             catch (error) {
                 return res.status(400).json({ success: false, message: error });

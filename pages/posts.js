@@ -1,4 +1,4 @@
-import { Box, Text, Card, Flex, CardBody, Avatar, CardHeader, CardFooter, Heading, Button, VStack } from '@chakra-ui/react';
+import { Box, Text, Card, Flex, CardBody, Avatar, CardHeader, CardFooter, Heading, Button, VStack ,Tag} from '@chakra-ui/react';
 import { ArrowUpIcon, ChatIcon } from '@chakra-ui/icons';
 import Layout from '../components/Layout/Layout';
 
@@ -30,8 +30,7 @@ const Posts = ({ posts }) => {
                                                 src="https://bit.ly/broken-link"
                                                 bg="blue.700"
                                                 color="white"
-                                            />
-                                            <Box>
+                                            />                                            <Box>
                                                 <Heading size="sm">{post.creator.username}</Heading>
                                                 <Text>Creator, {post.creator.role}</Text>
                                             </Box>
