@@ -18,17 +18,17 @@ TableContainer
 } from "@chakra-ui/react";
 import axios from 'axios';
 
-export default function appeal_request() {
+export default function Appeal() {
 
-    const [appeal,setAppeals]= useState([])
-    const getAppeal = async () => {
-      try {
-        const response = await axios.get("../api/appeal/getOneUser");
-        setAppeals(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
+  const [appeal,setAppeals]= useState([])
+  const getAppeal = async () => {
+    try {
+      const response = await axios.get(`/api/appeal/getOneUser/${userid}`);
+      setAppeals(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(()=>{
     getAppeal()

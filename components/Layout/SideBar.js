@@ -1,88 +1,145 @@
-import { Box, Stack, Link, Text, Flex } from '@chakra-ui/react'
-import Administrator from '../Admin/Administrator'
-import {Drawer} from '@chakra-ui/react'
+/* import React, { useState } from 'react'
+import {
+    Flex,
+    Text,
+    IconButton,
+    Divider,
+    Avatar,
+    Heading
+} from '@chakra-ui/react'
+import {
+    FiMenu,
+    FiHome,
+    FiCalendar,
+    FiUser,
+    FiDollarSign,
+    FiBriefcase,
+    FiSettings
+} from 'react-icons/fi'
+import { IoPawOutline } from 'react-icons/io5'
+import NavItem from './NavItem'
+
+export default function Sidebar() {
+    const [navSize, changeNavSize] = useState("large")
+    return (
+        <Flex
+            pos="sticky"
+            left="5"
+            h="95vh"
+            marginTop="2.5vh"
+            boxShadow="0 4px 12px 0 rgba(0, 0, 0, 0.05)"
+            borderRadius={navSize == "small" ? "15px" : "30px"}
+            w={navSize == "small" ? "75px" : "200px"}
+            flexDir="column"
+            justifyContent="space-between"
+        >
+            <Flex
+                p="5%"
+                flexDir="column"
+                w="100%"
+                alignItems={navSize == "small" ? "center" : "flex-start"}
+                as="nav"
+                align="center"
+            >
+                <IconButton
+                    color="white"
+                    bg="none"
+                    mt={5}
+                    _hover={{ background: 'none' }}
+                    icon={<FiMenu />}
+                    onClick={() => {
+                        if (navSize == "small")
+                            changeNavSize("large")
+                        else
+                            changeNavSize("small")
+                    }}
+                />
+                <NavItem navSize={navSize} icon={FiHome} title="Dashboard" description="This is the description for the dashboard." />
+                <NavItem navSize={navSize} icon={FiCalendar} title="Calendar" />
+                <NavItem navSize={navSize} icon={FiUser} title="Clients" />
+                <NavItem navSize={navSize} icon={IoPawOutline} title="Animals" />
+                <NavItem navSize={navSize} icon={FiDollarSign} title="Stocks" />
+                <NavItem navSize={navSize} icon={FiBriefcase} title="Reports" />
+                <NavItem navSize={navSize} icon={FiSettings} title="Settings" />
+            </Flex>
+        </Flex>
+    )
+} */
+
+import React, { useState } from 'react';
+import { Avatar, Box, Flex, IconButton, Text, Divider, Stack } from '@chakra-ui/react';
+import { FiMenu } from 'react-icons/fi';
+
 const Sidebar = () => {
- /**
-  * 
-  *  return (
-    <Box
-      w="200px"
-      h="100vh"
-      position="fixed"
-      top={0}
-      left={0}
-      bg="gray.800"
-      color="white"
-      p="5"
-    >
-      <Text fontSize="2xl" mb="5">
-        Menú
-      </Text>
-      <Stack spacing="3">
-        <Link href="/">Inicio</Link>
-        <Link href="/about">Acerca de</Link>
-        <Link href="/contact">Contacto</Link>
-        <Link href="/college">Universidades con un titulo largo para ver que pasa</Link>
+    const [navSize, setNavSize] = useState('large');
 
-      </Stack>
-      <Stack spacing="3">
-      {Administrator()}
-      </Stack>
-    </Box>
-  )
- return (
-  <Drawer
-  isOpen={true}
-  placement="left"
-  onClose={() => {}}
-  size="xs"
-  bg="gray.800"
-  >
-    <Box
-      w="200px"
-      h="100vh"
-      top={0}
-      left={0}
-      bg="gray.800"
-      color="white"
-      p="5"
-    >
-       <Text fontSize="2xl" mb="5">
-        Menú
-      </Text>
-      <Stack spacing="3">
-        <Link href="/">Inicio</Link>
-        <Link href="/about">Acerca de</Link>
-        <Link href="/contact">Contacto</Link>
-        <Link href="/college">Universidades con un titulo largo para ver que pasa</Link>
+    const changeNavSize = () => {
+        setNavSize(navSize === 'small' ? 'large' : 'small');
+    };
 
-      </Stack>
-      <Stack spacing="3">
-      {Administrator()}
-      </Stack>
-    </Box>
-  </Drawer>
-  */
+    const MenuItem = ({ title }) => {
+        return (
+            <Flex
+                w="100%"
+                justifyContent="center"
+                placeItems="center"
+                my="2"
+            >
+                {navSize === 'small' 
+                  ? 
+                  <Avatar bg="post.200" color="white" size="sm" name={title} />
+                  : 
+                  <Text>{title}</Text>
+                }
+            </Flex>
+        );
+    };
 
-return (
-  <Box
-    bg="gray.800"
-    p="5"
-    h="100vh"
-    minW="20vh"
-  >
-    <Stack spacing="3">
-      <Link href="/">Inicio</Link>
-      <Link href="/about">Acerca de</Link>
-      <Link href="/contact">Contacto</Link>
-      <Link href="/college/64c01fdb4f1783bb3dc306f2">Universidad Z</Link>
-    </Stack>
-    <Stack spacing="3">
-    {Administrator()}
-    </Stack>
-  </Box>
-)
- 
-}
+    return (
+        <Stack mt="2">
+            <IconButton
+                color="white"
+                bg="post.100"
+                aria-label="Menu"
+                icon={<FiMenu />}
+                onClick={changeNavSize}
+                borderRightRadius="10px"
+                borderLeftRadius="0"
+                pos="sticky"
+                w="fit-content"
+                _focus={{ boxShadow: 'none' }}
+                _hover={{ background: 'post.200' }}
+            />
+            <Box
+                pos="sticky"
+                left="5"
+                h="100vh"
+                borderRightRadius="10px"
+                w={navSize === 'small' ? 'fit' : '150px'}
+                bgColor="post.100"
+                overflow="auto"
+                textColor="white"
+            >
+                <Stack
+                    p="5%"
+                    flexDir="column"
+                    w="100%"
+                    alignItems='center'
+                    as="nav"
+                >
+                    <MenuItem title="Dashboard" />
+                    <MenuItem title="Calendar" />
+                    <MenuItem title="Clients" />
+                    <Divider />
+                    <MenuItem title="Animals" />
+                    <MenuItem title="Stocks" />
+                    <MenuItem title="Reports" />
+                    <MenuItem title="Settings" />
+                </Stack>
+            </Box>
+        </Stack>
+    );
+};
 
-export default Sidebar
+export default Sidebar;
+

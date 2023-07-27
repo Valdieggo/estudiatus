@@ -1,10 +1,11 @@
+// Post.js
 import { useRouter } from "next/router";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import Layout from "../../components/Layout/Layout";
 import CommentCard from "../../components/Comment/CommentCard";
 import PostCard from "../../components/Post/PostCard";
-import { VStack, Text, CardBody, IconButton, Box, Heading, Flex, Card, CardHeader, Image, CardFooter, Button, Avatar } from "@chakra-ui/react";
+import { VStack, Box, Grid } from "@chakra-ui/react"; // Importamos Box y Grid de Chakra UI
 import AddCommentCard from "../../components/Comment/AddCommentCard";
 import { ChatIcon, ArrowUpIcon } from "@chakra-ui/icons";
 
@@ -16,13 +17,15 @@ export default function Post({ post }) {
 
     return (
         <Layout>
+        <Box width="100%" maxWidth="500px" margin="auto"> {/* Contenedor común para asegurar el ancho máximo */}
             <PostCard post={post} />
             <VStack spacing={4} align="center">
-                <AddCommentCard post={post} setComments={setComments} comments={comments} />
-                {comments && comments.map((comment) => (
-                    <CommentCard key={comment._id} comment={comment} setComments={setComments} comments={comments} />
-                ))}
+            <AddCommentCard post={post} setComments={setComments} comments={comments} />
+            {comments && comments.map((comment) => (
+                <CommentCard key={comment._id} comment={comment} setComments={setComments} comments={comments} />
+            ))}
             </VStack>
+        </Box>
         </Layout>
     );
 }
