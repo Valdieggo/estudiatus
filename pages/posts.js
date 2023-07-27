@@ -23,18 +23,20 @@ const Posts = ({ posts }) => {
                         >
                             <CardHeader>
                                 <Flex spacing="4">
-                                    <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
-                                        <Avatar
-                                            name={post.creator.username}
-                                            src="https://bit.ly/broken-link"
-                                            bg="blue.700"
-                                            color="white"
-                                        />
-                                        <Box>
-                                            <Heading size="sm">{post.creator.username}</Heading>
-                                            <Text>Creator, {post.creator.role}</Text>
-                                        </Box>
-                                    </Flex>
+                                    {post.creator && ( // Renderiza condicionalmente si post.creator está definido
+                                        <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
+                                            <Avatar
+                                                name={post.creator.username}
+                                                src="https://bit.ly/broken-link"
+                                                bg="blue.700"
+                                                color="white"
+                                            />
+                                            <Box>
+                                                <Heading size="sm">{post.creator.username}</Heading>
+                                                <Text>Creator, {post.creator.role}</Text>
+                                            </Box>
+                                        </Flex>
+                                    )}
                                 </Flex>
                             </CardHeader>
                             <CardBody>
@@ -85,7 +87,7 @@ const Posts = ({ posts }) => {
 
 export default Posts;
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
     const res = await fetch(`http://localhost:3000/api/post/getAll`);
     const data = await res.json();
     if (res.status === 400) {
