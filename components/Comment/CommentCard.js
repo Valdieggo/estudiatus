@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import axios from "axios";
 import LikeCommentButton from "./LikeCommentButton";
+import MenuComment from "./MenuComment";
 import { ChatIcon } from "@chakra-ui/icons";
 
 export default function CommentCard({ comment, setComments, comments }) {
@@ -18,36 +19,13 @@ export default function CommentCard({ comment, setComments, comments }) {
         isCreatorId = session.user.id === creator._id;
     }
 
-    const handleLike = () => {
-        console.log("Like button clicked");
-    };
     const handleReply = () => {
         console.log("Reply button clicked");
-    };
-
-    const handleDelete = () => {
-        axios.delete(`http://localhost:3000/api/comment/delete/${comment._id}`)
-            .then((res) => {
-                setComments(comments.filter((comment) => comment._id !== res.data.data));
-            }
-        )
-        .catch((err) => {
-            console.log(err);
-        }
-        );
     };
 
     const handleEdit = () => {
         console.log("Edit button clicked");
     };
-
-    const handleReport = () => {
-        console.log("Report button clicked");
-    };
-    
-    if (!creator.img) {
-        creator.img = "/photo.svg";
-    }
 
     return (
         <Card color="white" width="100%"  margin="auto" bg="post.100" borderRadius="md" p={4}
@@ -64,6 +42,7 @@ export default function CommentCard({ comment, setComments, comments }) {
                             <Text>{creator.role} </Text>
                         </Box>
                     </Flex>
+                    <MenuComment comment={comment} comments={comments} setComments={setComments}/>
                 </Flex>
             </CardHeader>
             <CardBody>
