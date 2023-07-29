@@ -2,6 +2,7 @@ import { connectToDatabase } from "../../../utils/db";
 import Ban from "../../../models/Ban";
 import User from "../../../models/User";
 import Report from "../../../models/Report";
+import mongoose from "mongoose";
 
 
 export default async function handler(req, res) {
@@ -19,7 +20,7 @@ export default async function handler(req, res) {
                 const newBan = new Ban({ user, type, time, status, report });
                 await newBan.save();
                 // Actualiza el usuario en el campo de isBanned
-                await User.findByIdAndUpdate(user, { isBanned: newBan._id }, { session });
+                await User.findByIdAndUpdate(user, { isBanned: true }, { session });
                 // Actualiza el reporte en el campo de estatus a "solved"
                 const ReportUpdate = await Report.findByIdAndUpdate(report, { status: 'solved' }, { session });
                 await session.commitTransaction();
