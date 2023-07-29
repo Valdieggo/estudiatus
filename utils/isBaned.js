@@ -8,19 +8,19 @@ export const isBaned = async (reportedUser) => {
 
     // si no hay ban se devuelve false
     if (!ban) {
-        return true;
+        return { isBanned: false };
     }
     // si esta activo se verifica que el tiempo de ban no haya expirado
     const banTime = new Date(ban.time);
     const now = new Date();
     if (banTime > now) {
         // si el tiempo de ban no ha expirado se devuelve true
-    return true;
+        return { isBanned: true, _id: ban._id };
     }else{
         // si el tiempo de ban ha expirado se actualiza el estatus del ban a "inactive"
         connectToDatabase();
         await Ban.findByIdAndUpdate(ban._id, { status: "inactive" });
         // se devuelve false
-        return false;
+        return { isBanned: false };
     }
 };
