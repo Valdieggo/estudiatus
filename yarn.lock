@@ -1109,11 +1109,6 @@
   dependencies:
     tslib "^2.4.0"
 
-"@tsconfig/node16@^1.0.3":
-  version "1.0.4"
-  resolved "https://registry.npmjs.org/@tsconfig/node16/-/node16-1.0.4.tgz"
-  integrity sha512-vxhUy4J8lyeyinH7Azl1pdd43GJhZH/tP2weN8TntQblOY+A0XbT8DJk1/oCPuOOyg/Ja757rG0CgHcWC8OfMA==
-
 "@types/json5@^0.0.29":
   version "0.0.29"
   resolved "https://registry.npmjs.org/@types/json5/-/json5-0.0.29.tgz"
@@ -2707,14 +2702,6 @@ next-auth@^4, next-auth@^4.22.1:
     preact-render-to-string "^5.1.19"
     uuid "^8.3.2"
 
-next-connect@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.npmjs.org/next-connect/-/next-connect-1.0.0.tgz"
-  integrity sha512-FeLURm9MdvzY1SDUGE74tk66mukSqL6MAzxajW7Gqh6DZKBZLrXmXnGWtHJZXkfvoi+V/DUe9Hhtfkl4+nTlYA==
-  dependencies:
-    "@tsconfig/node16" "^1.0.3"
-    regexparam "^2.0.1"
-
 "next@^12.2.5 || ^13", next@>=13, next@latest:
   version "13.4.7"
   resolved "https://registry.npmjs.org/next/-/next-13.4.7.tgz"
@@ -3155,11 +3142,6 @@ regexp.prototype.flags@^1.4.3:
     call-bind "^1.0.2"
     define-properties "^1.2.0"
     functions-have-names "^1.2.3"
-
-regexparam@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.npmjs.org/regexparam/-/regexparam-2.0.1.tgz"
-  integrity sha512-zRgSaYemnNYxUv+/5SeoHI0eJIgTL/A2pUtXUPLHQxUldagouJ9p+K6IbIZ/JiQuCEv2E2B1O11SjVQy3aMCkw==
 
 regexpp@^3.0.0:
   version "3.2.0"
