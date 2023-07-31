@@ -7,7 +7,6 @@ import { connectToDatabase } from '../../../utils/db';
 import fs from 'fs';
 
 
-
 export const config = {
     api: {
       bodyParser: false
@@ -34,6 +33,7 @@ const upload = multer({
         const filetypes = /jpeg|jpg|png|gif|pdf|doc|docx|xls|xlsx|ppt|pptx|txt/;
         const mimetype = filetypes.test(file.mimetype);
         const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+        file.fieldname = file.filename;
         if (mimetype && extname) return cb(null, true);
         cb("Error: Archivo debe ser una imagen valida");
     }
@@ -47,9 +47,10 @@ export default async (req, res) => {
                 return res.status(500).json({ msg: err.message });
             }
             console.log(req.file)
-            const { originalname, path, mimetype, size } = req.file;
+            const {filename, originalname, path, mimetype, size } = req.file;
             const File = await FileModel.create({
-                filename: originalname,
+                originalName: originalname,
+                fileName: filename,
                 path,
                 size,
                 mimetype,
