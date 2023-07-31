@@ -31,3 +31,6 @@ yarn.lock
 .env.production.local
 package-lock.json
 package.json
+
+#archivos subidos
+/public/uploads*
