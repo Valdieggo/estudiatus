@@ -12,21 +12,16 @@ export default async function handler(req, res) {
 
     await connectToDatabase();
 
-    switch (method) {
-        case "DELETE":
+    //obtiene el archivo
+    switch(method){
+        case "GET":
             try {
                 const file = await File.findById(id);
-                //elimina el archivo local
-                try {
-                    fs.unlinkSync(path.join(process.cwd(), '/public/uploads/', file.fileName));
-                }
-                catch (error) {
-                    console.log(error);
-                }
-                //elimina el archivo de la base de datos
-                await File.findByIdAndRemove(id);
-                
-                return res.status(200).json({ success: true, data: file });
+                const filePath = path.resolve('.','public','uploads',file.fileName);
+                const fileBuffer = fs.readFileSync(filePath);
+
+                res.setHeader('Content-Type', file.mimetype);
+                res.send(fileBuffer);
             }
             catch (error) {
                 return res.status(400).json({ success: false, message: error });
@@ -34,4 +29,5 @@ export default async function handler(req, res) {
         default:
             return res.status(400).json({ success: false });
     }
+
 }
