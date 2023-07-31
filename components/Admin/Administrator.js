@@ -13,6 +13,7 @@ export default function Home({navSize}) {
         <MenuItem title="Admin. Post" link={"/administrator/post"} navSize={navSize} />
         <MenuItem title="Admin. Moderation" link={"/administrator/moderation"} navSize={navSize} />
         <MenuItem title="Admin. Appeal requests" link={"/administrator/appeal_request"} navSize={navSize} />
+        <MenuItem title="Admin. Subject Requests" link={"/administrator/subject_request"} navSize={navSize} />
 
         <Divider />
         <MenuItem title="Todas Las Universidades" link={"/college"} navSize={navSize} />
