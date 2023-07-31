@@ -1,6 +1,7 @@
 import { connectToDatabase } from "../../../utils/db";
 import Report from "../../../models/Report";
 import User from "../../../models/User";
+import Post from "../../../models/Post";
 
 export default async function getReports(req,res){
     // se listan todos los reportes

@@ -40,7 +40,6 @@ export  default function ModalReport({ isOpen, onClose, reportId }) {
           time: sancionData.time,
           status: "active",
           report: report._id,
-          
         });
         console.log(response.data);
       } catch (error) {
