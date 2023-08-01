@@ -1,59 +1,15 @@
-import {
-  Flex,
-  Box,
-  Link,
-  Grid,
-  GridItem
-} from "@chakra-ui/react";
-import User from "./User";
+import { Flex, Image, Text, useColorModeValue, Avatar } from '@chakra-ui/react';
+import User from './User';
+const Navbar = ({ user }) => (
+  <Flex align="center" justify="space-between" px={5} py={4} bg="post.100" pos="sticky" top="0" zIndex="10" w="100%" h="64px">
+    <Flex align="center">
+      <Image src="/estudiatus.svg" alt="Logo Estudiatus" boxSize="50px" />
+      <Text ml={4} fontSize="xl" fontWeight="bold" color="white">
+        Estudiatus
+      </Text>
+    </Flex>
+    <User />
+  </Flex>
+);
 
-export default function Navbar() {
-  /**
-   * return (
-    <Grid templateColumns="repeat(3, 1fr)" gap={6}>
-      
-      <Box >
-
-      <Box>
-        <Link px="4" href="/">
-          Foro
-        </Link>
-        <Link px="4" href="/repository">
-          Apuntes
-        </Link>
-        <Link px="4" href="/events">
-          Eventos
-        </Link>
-      </Box>
-
-      <User />
-    </Box>
-  );
-   */
-  //crea el navbar usando grid
-  return (
-    <Box marginTop="1%">
-      <Grid templateColumns="repeat(4, 1fr)" gap={1}>
-        <GridItem>
-          <Link px="4" href="/">
-            Foro
-          </Link>
-        </GridItem>
-        <GridItem>
-          <Link px="4" href="/repository">
-            Apuntes
-          </Link>
-        </GridItem>
-        <GridItem>
-          <Link px="4" href="/events">
-            Eventos
-          </Link>
-        </GridItem>
-        <GridItem marginLeft="auto">
-          <User />
-        </GridItem>
-      </Grid>
-    </Box>
-
-  )
-};
+export default Navbar;
