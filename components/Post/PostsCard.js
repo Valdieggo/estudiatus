@@ -1,11 +1,12 @@
-// PostCard.js
 import { VStack, Text, CardBody, IconButton, Box, Heading, Flex, Card, CardHeader, Image, CardFooter, Button, Avatar, Icon, Tag, TagLabel, TagCloseButton, HStack } from "@chakra-ui/react";
 import { ChatIcon, ArrowUpIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import LikePostButton from "./LikePostButton";
 import PopOptions from "./PopOptions";
+import { useRouter } from "next/router";
 
 
 export default function PostsCard({ post ,subject}) {
+    const router = useRouter()
     return (
 
         <VStack key={post.id} spacing={4} align="center">
@@ -48,13 +49,14 @@ export default function PostsCard({ post ,subject}) {
                     }}
                 >
                     <LikePostButton post={post} />
-                    <Button type="button"
+                    <Button onClick={() => router.push(`/post/${post._id}`)} type="button"
                         bg="button.100"
                         width="48%"
                         _hover={{
                             bg: "button.200",
                         }} leftIcon={<ChatIcon />}>
                         Comentar
+                        {console.log(post)}
                     </Button>
                 </CardFooter>
             </Card>
