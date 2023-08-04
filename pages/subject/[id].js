@@ -35,7 +35,7 @@ const PostsSubject = ({ posts, subject }) => {
         <Layout>
             <Box>
                 <Stack>
-                    <CreatePost subject={subject} />
+                    <CreatePost posts={posts} subject={subject} />
                 </Stack>
                 {posts.map((post) => (
                     <PostsCard key={post._id} post={post} />

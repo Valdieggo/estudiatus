@@ -7,10 +7,10 @@ import axios from "axios"
 import {Textarea, Spinner} from "@chakra-ui/react"
 import {useRouter} from "next/router"
 import {useEffect} from "react"
+import LoginModal from "../Auth/LoginModal"
 
 
-export default function CreatePost({ subject }) {
-    console.log(subject._id)
+export default function CreatePost({posts, subject }) {
     const { data: session, status } = useSession();
     const [isAddingPost, setIsAddingPost] = useState(false);
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -37,7 +37,7 @@ export default function CreatePost({ subject }) {
                     router.reload();
                 })
                 .catch((err) => {
-                    console.log(err);
+                    console.log("");
                     setIsAddingPost(false);
                 });
         } else {
@@ -48,12 +48,10 @@ export default function CreatePost({ subject }) {
 
     const handlerTitle = (e) => {
         setTitle(e.target.value);
-        console.log(e.target.value)
     };
 
     const handlerContent = (e) => {
         setContent(e.target.value);
-        console.log(e.target.value)
     };
     return (
         <Box
