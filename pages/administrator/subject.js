@@ -343,6 +343,7 @@ export default function Home() {
                                 Subject management system
                             </Box>
                             <Box>
+                                
                                 <Button onClick={() => onOpenCreate()} colorScheme="blue" size="sm">
                                     <p>Create new subject</p>
                                     <Image src={`/document-plus.svg`} alt={`Edit`} width="20px" height="20px" />
