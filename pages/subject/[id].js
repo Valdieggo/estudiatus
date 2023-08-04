@@ -30,18 +30,40 @@ export const getServerSideProps = async (context) => {
 };
 
 const PostsSubject = ({ posts, subject }) => {
+    const [showCreatePost, setShowCreatePost] = useState(false);
+
+    const toggleCreatePost = () => {
+        setShowCreatePost(!showCreatePost);
+    };
 
     return (
         <Layout>
             <Box>
                 <Stack>
-                    <CreatePost posts={posts} subject={subject} />
+                    <Box display="flex" justifyContent="center">
+                        <Button
+                            color="white"
+                            width="100%"
+                            maxWidth="500px"
+                            margin="4"
+                            bg="post.100"
+                            borderRadius="md"
+                            _hover={{
+                                bg: "post.200",
+                            }}
+                            onClick={toggleCreatePost}
+                        >
+                            {showCreatePost ? "Cancelar creacion" : "Crear una publicacion"}
+                        </Button>
+                    </Box>
+
+                    {showCreatePost && <CreatePost posts={posts} subject={subject} />}
                 </Stack>
                 {posts.map((post) => (
                     <PostsCard key={post._id} post={post} />
                 ))}
             </Box>
-        </Layout>
+        </Layout >
     );
 };
 

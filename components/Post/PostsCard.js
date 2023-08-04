@@ -10,7 +10,7 @@ import axios from "axios";
 export default function PostsCard({ post }) {
     const router = useRouter()
     return (
-        <VStack key={post.id} spacing={4} align="center">
+        <VStack key={post.id} margin={"5"} spacing={4} align="center">
             <Card color="white" width="100%" maxWidth="500px" margin="auto" bg="post.100" borderRadius="md" p={4}
                 _hover={{
                     bg: "post.200",
