@@ -3,12 +3,13 @@ import { ChatIcon, ArrowUpIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import LikePostButton from "./LikePostButton";
 import PopOptions from "./PopOptions";
 import { useRouter } from "next/router";
+import axios from "axios";
 
 
-export default function PostsCard({ post ,subject}) {
+
+export default function PostsCard({ post }) {
     const router = useRouter()
     return (
-
         <VStack key={post.id} spacing={4} align="center">
             <Card color="white" width="100%" maxWidth="500px" margin="auto" bg="post.100" borderRadius="md" p={4}
                 _hover={{
@@ -56,7 +57,6 @@ export default function PostsCard({ post ,subject}) {
                             bg: "button.200",
                         }} leftIcon={<ChatIcon />}>
                         Comentar
-                        {console.log(post)}
                     </Button>
                 </CardFooter>
             </Card>
