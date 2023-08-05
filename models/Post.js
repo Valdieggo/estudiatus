@@ -13,6 +13,11 @@ const PostSchema = new mongoose.Schema({
         minLenght:1,
         maxLenght: 500,
     },
+    file:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "File",
+        default: null,
+    },
     score: {
         type: Number,
         default: 0,

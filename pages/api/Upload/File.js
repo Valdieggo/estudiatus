@@ -9,20 +9,23 @@ import fs from 'fs';
 
 export const config = {
     api: {
-      bodyParser: false
+        bodyParser: false
     }
-  }
+}
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        const route = path.join(process.cwd(), '/public/uploads/');
-        if(!fs.existsSync(route)) fs.mkdirSync(route , { recursive: true });
+        const route = path.join(process.cwd(), "public/uploads/");
+        if (!fs.existsSync(route)) fs.mkdirSync(route, { recursive: true });
 
         cb(null, path.join(route));
     },
     filename: (req, file, cb) => {
-        cb(null, new Date().getTime() + path.extname(file.originalname));
-    }
+        cb(
+            null,
+            new Date().getTime() + path.extname(file.originalname)
+        );
+    },
 });
 
 const upload = multer({
@@ -47,7 +50,7 @@ export default async (req, res) => {
                 return res.status(500).json({ msg: err.message });
             }
             console.log(req.file)
-            const {filename, originalname, path, mimetype, size } = req.file;
+            const { filename, originalname, path, mimetype, size } = req.file;
             const File = await FileModel.create({
                 originalName: originalname,
                 fileName: filename,
@@ -60,4 +63,4 @@ export default async (req, res) => {
     } catch (err) {
         return res.status(500).json({ msg: err.message });
     }
-}
+};
