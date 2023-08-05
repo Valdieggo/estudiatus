@@ -7,8 +7,11 @@ export default function MenuReport({ post }) {
     const { isOpen, onOpen, onClose } = useDisclosure();
     return (
         <>
-            <Button onClick={onOpen}>Reportar</Button>
-            <ModalCreateReport isOpen={isOpen} onClose={onClose} post={post} onOpen={onOpen} />
+        <Flex align="center" as="button" onClick={onOpen} w="full" >
+            <Text mr={2}>Reportar</Text>
+            <ModalCreateReport isOpen={isOpen} onClose={onClose} post={post} />
+        </Flex>
+       
         </>
     );
 
