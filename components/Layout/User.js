@@ -22,7 +22,7 @@ export default function User() {
       return (
         
           <Menu>
-              <MenuButton as="button" color="post.200" px="6" py="3" borderRadius="full" maxW="fit-content" _hover={
+              <MenuButton as="button" color="post.200" px="6" py="3" borderradius="full" max-width="fit-content" _hover={
                   {
                     bg: "post.200",
                   }

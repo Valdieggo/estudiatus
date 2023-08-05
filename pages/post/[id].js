@@ -21,7 +21,7 @@ export default function Post({ post }) {
             <PostCard post={post} />
             <VStack spacing={4} align="center">
             <AddCommentCard post={post} setComments={setComments} comments={comments} />
-            {comments && comments.map((comment) => (
+            {comments && [...comments].reverse().map((comment) => (
                 <CommentCard key={comment._id} comment={comment} setComments={setComments} comments={comments} />
             ))}
             </VStack>

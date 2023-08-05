@@ -26,7 +26,7 @@ const College = (data) => {
                     image={"/lol.jpg"}
                     description={college.description}
                     link={`/college/${college._id}`}
-                    top={`${college.careers.length} ${college.careers.length !== 1 ? "carreras" : "carrera"}`} />
+                    top={`${college.careers.length} ${college.careers.length !== 1 ? "Publicaciones" : "Publicación"}`} />
             ))}
         </>
         )

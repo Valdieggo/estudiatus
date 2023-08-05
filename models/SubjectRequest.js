@@ -7,6 +7,14 @@ const SubjectRequestSchema = mongoose.Schema({
     maxLenght: 100,
     required: true,
   },
+  college: {
+    type: mongoose.Schema.Types.ObjectID,
+    ref: "College",
+  },
+  career: {
+    type: mongoose.Schema.Types.ObjectID,
+    ref: "Career",
+  },
   date: {
     type: Date,
     default: Date.now,
