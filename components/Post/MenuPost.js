@@ -1,9 +1,8 @@
-import  ReportButton  from '../Report/ReportButton';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import { Button, Icon, Menu, MenuButton, MenuDivider, MenuGroup, MenuItem, MenuList } from '@chakra-ui/react';
 import { useSession } from 'next-auth/react';
-
-
+import { useState } from 'react';
+import ReportButton from '../Report/ReportButton';
 export default function MenuPost({ post }) {
     const { data: session, status } = useSession();
     return (
@@ -26,8 +25,8 @@ export default function MenuPost({ post }) {
             {
                 post?.creator?._id !== session?.user?.id 
                 && 
-                <MenuItem>
-                    <ReportButton reportedUser={post.creator} post={post._id}/>         
+                <MenuItem >
+                    <ReportButton post={post}/>
                 </MenuItem>
             }
         </MenuList>
