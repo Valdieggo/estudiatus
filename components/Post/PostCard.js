@@ -2,6 +2,7 @@
 import { VStack, Text, CardBody, IconButton, Box, Heading, Flex, Card, CardHeader, Image, CardFooter, Button, Avatar, Icon } from "@chakra-ui/react";
 import { ChatIcon, ArrowUpIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import LikePostButton from "./LikePostButton";
+import MenuPost from "./MenuPost";
 
 export default function PostCard({ post }) {
     return (
@@ -20,7 +21,7 @@ export default function PostCard({ post }) {
                                 <Text>{post.creator.role} </Text>
                             </Box>
                         </Flex>
-                    
+                        <MenuPost post={post} />
                     </Flex>
                 </CardHeader>
                 <CardBody>
