@@ -1,7 +1,7 @@
 import {useSession} from "next-auth/react"
 import { VStack, Text, CardBody, IconButton, Box, Card, CardHeader, Image, Button, useDisclosure } from "@chakra-ui/react";
 import { ChatIcon } from "@chakra-ui/icons";
-import PopOptions from "./PopOptions";
+
 import {useState} from "react"
 import axios from "axios"
 import {Textarea, Spinner} from "@chakra-ui/react"
