@@ -52,6 +52,8 @@ export default function Home() {
     const [career, setCareer] = useState("");
     const [search, setSearch] = useState("");
 
+    const [image, setImage] = useState("");
+
     // modal
     const [loading, setLoading] = useState(true);
     const { isOpen, onOpen, onClose } = useDisclosure()
@@ -105,6 +107,10 @@ export default function Home() {
 
     };
 
+    const handleImageChange = (e) => {
+        setImage(e.target.files[0]);
+    }
+    
     const handleNameChange = (e) => {
         setName(e.target.value);
     }
