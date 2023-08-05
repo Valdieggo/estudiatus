@@ -14,8 +14,20 @@ export default async function handler(req, res) {
             try {
                 const user = await User.findById(id)
                     .populate({
+                        path: "favs",
+                        model: "Post",
+                        populate: {
+                            path: "creator",
+                            model: "User",
+                        },
+                    })
+                    .populate({
                         path: "posts",
                         model: "Post",
+                        populate: {
+                            path: "creator",
+                            model: "User",
+                        },
                     })
 
                 if (!user) {

@@ -44,28 +44,18 @@ export default function TabProfile({ user }) {
           >
             Posts Favoritos
           </Tab>
-          <Tab
-             textColor={"white"}
-             _hover={{
-                bg: "post.200",
-              }}
-              _selected={{
-                bg: "white",
-                textColor: "post.100",
-              }}
-          >
-            Comentarios
-          </Tab>
         </TabList>
         <TabPanels>
           <TabPanel>
-            1
+            {user.posts.map((post) => (
+              <PostCard key={post._id} post={post} />
+            ))}
           </TabPanel>
           <TabPanel>
-            2
-          </TabPanel>
-          <TabPanel>
-            3
+            {user.favs.map((fav) => (
+              <PostCard key={fav._id} post={fav} />
+            ))}
+
           </TabPanel>
         </TabPanels>
       </Tabs>

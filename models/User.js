@@ -40,6 +40,12 @@ var UserSchema = new mongoose.Schema({
             ref: "Post",
         },
     ],
+    comments: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Comment",
+        },
+    ],
     isBanned: {
         type: Boolean,
         default: false,
