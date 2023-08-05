@@ -193,18 +193,18 @@ export default function Home() {
         const messageError = "Error creating subject";
 
         const idImage = await Upload(image);
-        console.log(idImage)
-        /**
         const response = await axios.post(`/api/subject/create`, {
             subjectName: name,
-            description: description
+            career: career,
+            description: description,
+            img: idImage
         }).then((res) => {
             showSuccessToast(messageSuccess);
         }).catch((err) => {
+            console.log(err)
             showErrorToast(messageError);
         })
         getSubject();
-         */
         onCloseCreate();
     }
 

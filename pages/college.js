@@ -26,7 +26,7 @@ const College = (data) => {
                     image={"/lol.jpg"}
                     description={college.description}
                     link={`/college/${college._id}`}
-                    top={`${college.careers.length} ${college.careers.length !== 1 ? "Publicaciones" : "Publicación"}`} />
+                    top={`${college.careers.length} ${college.careers.length !== 1 ? "Carreras" : "Carrera"}`} />
             ))}
         </>
         )
@@ -38,8 +38,7 @@ const College = (data) => {
             </Head>
             <Layout>
                 <Box>
-                    <Text>Colleges</Text>
-                    <Text>Todas las carreras disponibles</Text>
+                    <Text>Todas las universidades disponibles</Text>
                     {displayCard()}
                 </Box>
             </Layout>

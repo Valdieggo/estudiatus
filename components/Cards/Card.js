@@ -14,8 +14,11 @@ import { useState } from 'react';
 
 
 export default function Card({ title, image, description, link, top, footer }) {
-    const [imageSrc, setImageSrc] = useState(image);
     const defaultImage = "/default/landscape.jpg";
+
+    if(!image) image = defaultImage;
+
+    const [imageSrc, setImageSrc] = useState(image);
 
     const handleImageError = (e) => {
         setImageSrc(defaultImage);
