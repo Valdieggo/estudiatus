@@ -14,23 +14,6 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 
-/* export const getServerSideProps = async () => {
-    const response = await axios
-        .get("/api/subject_request/getAll")
-        .then((res) => {
-            const subjectrequest = res.data.data;
-            return {
-                props: {
-                    subjectrequest,
-                },
-            };
-        })
-        .catch((err) => {
-            return { props: { subjectrequest: [] } };
-        });
-    return response;
-}; */
-
 export const getServerSideProps = async () => {
     const response = await axios.get(
         `http://localhost:3000/api/subject_request/getAll`
@@ -50,8 +33,8 @@ const SubjectRequest = (data) => {
         return subjectrequest.map((request) => (
             <Tr>
                 <Td>{request.subjectName}</Td>
-                <Td></Td>
-                <Td></Td>
+                <Td>{request.collegeName}</Td>
+                <Td>{request.careerName}</Td>
                 <Td>{request.status}</Td>
                 <Td>
                     <Button colorScheme="pink" variant="solid">

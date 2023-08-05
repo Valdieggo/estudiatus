@@ -15,17 +15,6 @@ import { useForm } from "react-hook-form";
 export default function SubjectRequest() {
     const { register, handleSubmit } = useForm();
 
-    /*   const getServerSideProps = async () => {
-    const response = await axios.get(
-      `http://localhost:3000/api/college/getAll`
-    );
-    const colleges = response.data.data;
-    return {
-      props: {
-        colleges,
-      },
-    };
-  }; */
     const submitRequest = () => {};
 
     return (
