@@ -7,7 +7,7 @@ import User from "../../../models/User";
 
 export default async function handler(req, res) {
     const { method } = req;
-    const { title, content, score, view, creator, subject,likes } = req.body;
+    const { title, content,file, score, view, creator, subject,likes } = req.body;
 
     if (!title || !content ||!creator) {
         return res.status(400).json({ success: false, message: "Empty fields" });
@@ -23,6 +23,7 @@ export default async function handler(req, res) {
                     const post = await Post.create({
                         title,
                         content,
+                        file,
                         likes,
                         score,
                         view,
