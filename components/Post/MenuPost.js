@@ -7,30 +7,30 @@ export default function MenuPost({ post }) {
     const { data: session, status } = useSession();
     return (
         <Menu gutter={0}>
-        <MenuButton as="button" color="button.100" _hover={
-            {
-            bg: "button.200",
-            }
-        }>
-        <Icon as={ChevronDownIcon} />
-        </MenuButton>
-        <MenuList color="#67686B" p={0} bg="none">
-            {
-                post?.creator?._id === session?.user?.id 
-                && 
-                <MenuItem>
-                   {/*Boton de eliminar post */ }
-                </MenuItem>
-            }
-            {
-                post?.creator?._id !== session?.user?.id 
-                && 
-                <MenuItem >
-                    <ReportButton post={post}/>
-                </MenuItem>
-            }
-        </MenuList>
-    </Menu>
+            <MenuButton as="button" color="button.100" _hover={
+                {
+                bg: "button.200",
+                }
+            }>
+            <Icon as={ChevronDownIcon} />
+            </MenuButton>
+            <MenuList color="#67686B" p={0} bg="none">
+                {
+                    post?.creator?._id === session?.user?.id 
+                    && 
+                    <MenuItem>
+                        Eliminar
+                    </MenuItem>
+                }
+                {
+                    post?.creator?._id !== session?.user?.id 
+                    && 
+                    <MenuItem >
+                        <ReportButton post={post}/>
+                    </MenuItem>
+                }
+            </MenuList>
+        </Menu>
     );
 }
 
