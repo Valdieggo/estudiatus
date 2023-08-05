@@ -10,14 +10,12 @@ import {useEffect} from "react"
 import LoginModal from "../Auth/LoginModal"
 
 
-export default function CreatePost({posts, subject }) {
+export default function CreatePost({ allPosts ,setAllPosts, subject }) {
     const { data: session, status } = useSession();
     const [isAddingPost, setIsAddingPost] = useState(false);
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const router = useRouter();
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
-    const [allPosts, setAllPosts] = useState(posts);
 
     const handleAddPost = () => {
         if (status === "authenticated") {
@@ -30,21 +28,20 @@ export default function CreatePost({posts, subject }) {
                 subject: subject._id,
             })
                 .then((res) => {
+                    console.log(res.data.data);
                     setTitle("");
                     setContent("");
-                    setAllPosts((prevPosts) => [...prevPosts, res.data.data]);
+                    setAllPosts((allPosts) => [res.data.data,...allPosts]);
                     setIsAddingPost(false);
-                    router.reload();
                 })
                 .catch((err) => {
-                    console.log("");
+                    console.log(err)
                     setIsAddingPost(false);
                 });
         } else {
             onOpen();
         }
     };
-
 
     const handlerTitle = (e) => {
         setTitle(e.target.value);
