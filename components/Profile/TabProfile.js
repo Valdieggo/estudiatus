@@ -59,10 +59,15 @@ export default function TabProfile({ user }) {
         </TabList>
         <TabPanels>
           <TabPanel>
-            1
+            {user.posts.map((post) => (
+              <PostCard key={post._id} post={post} />
+            ))}
           </TabPanel>
           <TabPanel>
-            2
+            {user.favs.map((fav) => (
+              <PostCard key={fav._id} post={fav} />
+            ))}
+
           </TabPanel>
           <TabPanel>
             3
