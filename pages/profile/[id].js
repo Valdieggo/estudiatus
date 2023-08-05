@@ -6,6 +6,7 @@ import Layout from "../../components/Layout/Layout";
 import { VStack, Box, Grid } from "@chakra-ui/react";
 import { ChatIcon, ArrowUpIcon } from "@chakra-ui/icons";
 import TabProfile from "../../components/Profile/TabProfile";
+import CardProfile from "../../components/Profile/CardProfile";
 
 export default function Profile({ user }) {
     const router = useRouter();
@@ -14,7 +15,9 @@ export default function Profile({ user }) {
     return (
         <Layout>
             <Box width="100%" maxWidth="800px" margin="auto">
+                <CardProfile user={user} />
                 <TabProfile user={user} />
+                
             </Box>
         </Layout>
     );
