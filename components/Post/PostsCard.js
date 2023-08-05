@@ -9,7 +9,7 @@ import axios from "axios";
 
 
 
-export default function PostsCard({ post, setAllPost, allPosts }) {
+export default function PostsCard({ post, setAllPosts, allPosts }) {
     const { creator } = post;
 
     let isCreatorId = false;
@@ -27,7 +27,7 @@ export default function PostsCard({ post, setAllPost, allPosts }) {
             axios.delete(`http://localhost:3000/api/post/delete/${post._id}`)
                 .then(res => {
                     console.log(res.data.data);
-                    setAllPost(allPosts.filter(post => post._id !== res.data.data._id));
+                    setAllPosts(allPosts.filter(post => post._id !== res.data.data._id));
                 })
                 .catch(err => {
                     console.log(err);

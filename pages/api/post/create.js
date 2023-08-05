@@ -47,7 +47,6 @@ export default async function handler(req, res) {
                         $push: { posts: post._id }
                     });
 
-                    console.log(postPopulated);
                     return res.status(200).json({ success: true, data: postPopulated });
                 }
                 catch (error) {
