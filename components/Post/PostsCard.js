@@ -1,7 +1,7 @@
 import { VStack, Text, CardBody, IconButton, Box, Heading, Flex, Card, CardHeader, Image, CardFooter, Button, Avatar, Icon, Tag, TagLabel, TagCloseButton, HStack } from "@chakra-ui/react";
 import { ChatIcon, ArrowUpIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import LikePostButton from "./LikePostButton";
-import PopOptions from "./PopOptions";
+
 import { useRouter } from "next/router";
 import axios from "axios";
 
@@ -31,7 +31,7 @@ export default function PostsCard({ post }) {
                                 </Box>
                             </Flex>
                         )}
-                        <PopOptions post={post} />
+                  
                     </Flex>
                 </CardHeader>
                 <CardBody>
