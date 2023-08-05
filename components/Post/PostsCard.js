@@ -4,8 +4,7 @@ import LikePostButton from "./LikePostButton";
 import PopOptions from "./PopOptions";
 import { useRouter } from "next/router";
 import axios from "axios";
-
-
+import FavPostButton from "./FavPostButton";
 
 export default function PostsCard({ post }) {
     const router = useRouter()
@@ -31,6 +30,7 @@ export default function PostsCard({ post }) {
                                 </Box>
                             </Flex>
                         )}
+                        <FavPostButton post={post} />
                         <PopOptions post={post} />
                     </Flex>
                 </CardHeader>
