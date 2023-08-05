@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import ConfirmationPopover from "./PopOverReport";
 
 
-export  default function ModalReport({ isOpen, onClose, reportId }) {
+export  default function ModalReport({ isOpen, onClose, reportId ,  setReports, reports}) {
   const [report, setReport] = useState(null);
   const [showPopover, setShowPopover] = useState(false);
 
@@ -25,8 +25,6 @@ export  default function ModalReport({ isOpen, onClose, reportId }) {
   }, [isOpen, reportId]);
 
   const handleConfirmBan = (sancionData) => {
-    console.log("Sancionado");
-    console.log(sancionData);
     setShowPopover(false);
     const createBan = async () => {
       try {
@@ -36,15 +34,40 @@ export  default function ModalReport({ isOpen, onClose, reportId }) {
           time: sancionData.time,
           status: "active",
           report: report._id,
-        });
+        }).then(
+          setReports(prevReports => prevReports.filter(report => report._id !== reportId))
+        );
+
+      } catch (error) {
+        console.error(error);
+      }
+
+      onClose();
+    };
+    createBan();
+  };
+
+
+  const handleNoSancionar = () => {
+    const updateReport = async () => {
+      try {
+        const response = await axios.put(`../api/report/update`, {
+          id: report._id,
+        }).then(
+          setReports(prevReports => prevReports.filter(report => report._id !== reportId))
+        );
+        
         console.log(response.data);
       } catch (error) {
         console.error(error);
       }
-    };
-    createBan();
+    }
+    updateReport();
+    onClose();
 
   };
+
+
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="xl" closeOnOverlayClick={false}>
@@ -79,7 +102,7 @@ export  default function ModalReport({ isOpen, onClose, reportId }) {
               message="¿Estás seguro de que deseas sancionar?"
               onConfirm={handleConfirmBan}
             />
-          <Button colorScheme="green" mx={10} onClick={onClose}>
+          <Button colorScheme="green" mx={10} onClick={handleNoSancionar}>
             No sancionar
           </Button>
         </ModalFooter>
