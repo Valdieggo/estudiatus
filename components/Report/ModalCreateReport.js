@@ -14,47 +14,34 @@ import {
     FormLabel,
     Input,
     Textarea,
-    useToast,
-    useDisclosure,
     Text,
     Spinner,
-    Grid,
     Stack,
+    Grid
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useSession } from "next-auth/react";
+import { useForm } from "react-hook-form";
+
+
 
 export default function ModalCreateReport({ isOpen, onClose, post }) {
     const { data: session, status } = useSession();
-    const [reason, setReason] = useState("");
-    const [description, setDescription] = useState("");
     const [loading, setLoading] = useState(false);
- 
-    const handleReasonChange = (event) => {
-        setReason(event.target.value);
-    }
+    const { register, handleSubmit } = useForm();
 
-    const handleDescriptionChange = (event) => {
-        setDescription(event.target.value);
-    }
-
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        setLoading(true);
-        console.log("reportUser: " + session.user.id);
+    const onSubmit = async (data) => {
         try {
             const response = await axios.post("../api/report/create", {
                 reportedUserId: post.creator._id,
                 reportUserId: session.user.id,
-                reason,
-                description,
+                reason:data.reason,
+                description: data.description,
                 post: post._id,
             });
-            console.log(response.data);
             setLoading(false);
             onClose();
         } catch (error) {
-            console.error(error);
             setLoading(false);
         }
     }
@@ -66,19 +53,19 @@ export default function ModalCreateReport({ isOpen, onClose, post }) {
                 <ModalHeader>Reportar usuario</ModalHeader>
                 <ModalCloseButton background="red" />
                 <ModalBody>
-                    <Stack spacing={4}>
+                    <Stack as="form" spacing={4} onSubmit={handleSubmit(onSubmit)}>
                         <Text fontWeight="bold">Usuario reportado:{post.creator.username}</Text>
                         <Grid templateColumns="auto 1fr" columnGap="50%">
                             <Text>{}</Text>
                             <Text>{}</Text>
                         </Grid>
-                        <FormControl id="reason">
+                        <FormControl >
                             <FormLabel>Razon</FormLabel>
-                            <Input type="text" value={reason} onChange={handleReasonChange} />
+                            <Input type="reason" {...register("reason", {required: true})} />
                         </FormControl>
-                        <FormControl id="description">
+                        <FormControl>
                             <FormLabel>Descripcion</FormLabel>
-                            <Textarea value={description} onChange={handleDescriptionChange} />
+                            <Textarea type="description" {...register("description", {required:true})} />
                         </FormControl>
                     </Stack>
                 </ModalBody>
@@ -86,7 +73,7 @@ export default function ModalCreateReport({ isOpen, onClose, post }) {
                     <Button colorScheme="red" mr={3} onClick={onClose}>
                         Cancelar
                     </Button>
-                    <Button colorScheme="green" onClick={handleSubmit} isLoading={loading}>
+                    <Button colorScheme="green" onClick={handleSubmit(onSubmit)} isLoading={loading}>
                         Enviar
                     </Button>
                 </ModalFooter>
