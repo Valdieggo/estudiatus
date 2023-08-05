@@ -26,10 +26,10 @@ export default function Home(res) {
                 <Card
                     key={subject._id}
                     title={subject.subjectName}
-                    image={"/lol.jpg"}
+                    image={subject.img ? `/uploads/${subject.img.fileName}` : null}
                     description={subject.description}
                     link={`/subject/${subject._id}`}
-                    top={`${subject.posts.length} ${subject.posts.length !== 1 ? "publicaciones" : "publicación"}`} />
+                    top={`${subject.posts.length} ${subject.posts.length !== 1 ? "Asignaturas" : "Asignatura"}`} />
             ))}
         </>
         )

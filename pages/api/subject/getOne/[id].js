@@ -14,8 +14,12 @@ export default async function handler(req, res) {
     switch (method) {
         case "GET":
             try {
-                const subject = await Subject.findById(id);
-                return res.status(200).json({success: true, data: subject});
+                const subject = await Subject.findById(id)
+                .populate({
+                    path: "img",
+                    model: "File",
+                })
+                return res.status(200).json({ success: true, data: subject });
             }
             catch (error) {
                 return res.status(400).json({ success: false, message: error });
