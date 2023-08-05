@@ -14,8 +14,8 @@ import {
 import { useSession } from "next-auth/react"
 import { useEffect, useState } from "react";
 import axios from "axios";
-import ModalReport  from "../../components/Admin/ModalReport";
-import ModalCreateReport from "../../components/Admin/ModalCreateReport";
+import ModalReport from "../../components/Report/ModalReport";
+
 
 export default function Moderation() {
   const { data: session, status } = useSession()
