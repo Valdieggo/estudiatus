@@ -11,6 +11,7 @@ export  default function ModalReport({ isOpen, onClose, reportId }) {
   useEffect(() => {
     const fetchReport = async () => {
       try {
+        console.log(reportId);
         const response = await axios.get(`../api/report/getOne/${reportId}`);
         setReport(response.data.report);
       } catch (error) {
@@ -22,11 +23,6 @@ export  default function ModalReport({ isOpen, onClose, reportId }) {
       fetchReport();
     }
   }, [isOpen, reportId]);
-
-  const handleClose = () => {
-    setReport(null);
-    onClose();
-  };
 
   const handleConfirmBan = (sancionData) => {
     console.log("Sancionado");
@@ -52,10 +48,10 @@ export  default function ModalReport({ isOpen, onClose, reportId }) {
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="xl" closeOnOverlayClick={false}>
-      <ModalOverlay backdropFilter="auto" backdropBlur="2px" />
+      <ModalOverlay  bg='blackAlpha.400'  backdropBlur="2px" />
       <ModalContent background="bg.100" color="white">
         <ModalHeader>Report Details</ModalHeader>
-        <ModalCloseButton background="red" onClick={handleClose} />
+        <ModalCloseButton background="red" onClick={onClose} />
         <ModalBody>
           {report ? (
             <>
@@ -83,7 +79,7 @@ export  default function ModalReport({ isOpen, onClose, reportId }) {
               message="¿Estás seguro de que deseas sancionar?"
               onConfirm={handleConfirmBan}
             />
-          <Button colorScheme="green" mx={10} onClick={handleClose}>
+          <Button colorScheme="green" mx={10} onClick={onClose}>
             No sancionar
           </Button>
         </ModalFooter>

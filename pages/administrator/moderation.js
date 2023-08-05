@@ -14,14 +14,21 @@ import {
 import { useSession } from "next-auth/react"
 import { useEffect, useState } from "react";
 import axios from "axios";
-import ModalReport  from "../../components/Admin/ModalReport";
-import ModalCreateReport from "../../components/Admin/ModalCreateReport";
+import ModalReport from "../../components/Report/ModalReport";
+import { useDisclosure } from "@chakra-ui/react";
+
 
 export default function Moderation() {
   const { data: session, status } = useSession()
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const [report, setReport] = useState([]); 
-  const [modalReport, setModalReport] = useState(false);
-  const [selectedReport, setSelectedReport] = useState(null); 
+  const[reportId, setReportId] = useState(null);
+
+  const openModalReport = (id) => {
+    setReportId(id);
+    onOpen();
+  };
+
   const getReport = async () => {
     try {
       const response = await axios.get("../api/report/getAll");
@@ -36,17 +43,6 @@ export default function Moderation() {
     getReport();
 
   }, []);
-
-  const openModalReport = (report) => {
-    setSelectedReport(report);
-    setModalReport(true);
-  };
-  const closeModalReport = () => {
-    setSelectedReport(null);
-    setModalReport(false);
-  };
-
-
 
   return (
     // Se agrega el componente Layout centrado en medio de la pantalla
@@ -73,17 +69,19 @@ export default function Moderation() {
                 <Td>{report.reason}</Td>
                 <Td>{report.description}</Td>
                 <Td>
-                  <Button colorScheme="green" onClick={()=>openModalReport(report)}>
+                  <Button colorScheme="green" onClick={()=>openModalReport(report._id)}>
                     Vew
                   </Button>
+                  
                 </Td>
               </Tr>
             ))}
+            <ModalReport isOpen={isOpen} onClose={onClose} onOpen={onOpen} reportId={reportId} />
           </Tbody>
         </Table>
       </TableContainer>
       </Layout>
-      <ModalReport isOpen={modalReport} onClose={closeModalReport} reportId={selectedReport?._id} />
+      
     </>
   );
 }

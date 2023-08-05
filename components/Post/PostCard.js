@@ -2,7 +2,8 @@
 import { VStack, Text, CardBody, IconButton, Box, Heading, Flex, Card, CardHeader, Image, CardFooter, Button, Avatar, Icon } from "@chakra-ui/react";
 import { ChatIcon, ArrowUpIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import LikePostButton from "./LikePostButton";
-import PopOptions from "./PopOptions";
+import MenuPost from "./MenuPost";
+
 export default function PostCard({ post }) {
     return (
         <VStack spacing={4} align="center">
@@ -20,7 +21,7 @@ export default function PostCard({ post }) {
                                 <Text>{post.creator.role} </Text>
                             </Box>
                         </Flex>
-                        <PopOptions post={post} />
+                        <MenuPost post={post} />
                     </Flex>
                 </CardHeader>
                 <CardBody>

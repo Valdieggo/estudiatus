@@ -24,7 +24,7 @@ import {
 import axios from "axios";
 import { useSession } from "next-auth/react";
 
-export default function ModalCreateReport({ isOpen, onClose, reportedUser, postId }) {
+export default function ModalCreateReport({ isOpen, onClose, post }) {
     const { data: session, status } = useSession();
     const [reason, setReason] = useState("");
     const [description, setDescription] = useState("");
@@ -44,11 +44,11 @@ export default function ModalCreateReport({ isOpen, onClose, reportedUser, postI
         console.log("reportUser: " + session.user.id);
         try {
             const response = await axios.post("../api/report/create", {
-                reportedUserId: reportedUser._id,
+                reportedUserId: post.creator._id,
                 reportUserId: session.user.id,
                 reason,
                 description,
-                post: postId,
+                post: post._id,
             });
             console.log(response.data);
             setLoading(false);
@@ -67,7 +67,7 @@ export default function ModalCreateReport({ isOpen, onClose, reportedUser, postI
                 <ModalCloseButton background="red" />
                 <ModalBody>
                     <Stack spacing={4}>
-                        <Text fontWeight="bold">Usuario reportado:{reportedUser.username}</Text>
+                        <Text fontWeight="bold">Usuario reportado:{post.creator.username}</Text>
                         <Grid templateColumns="auto 1fr" columnGap="50%">
                             <Text>{}</Text>
                             <Text>{}</Text>
