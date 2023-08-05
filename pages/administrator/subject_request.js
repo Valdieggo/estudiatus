@@ -1,6 +1,6 @@
 import Head from "next/head";
-import Layout from "../../components/Layout/Layout";
 import verifyAdmin from "../../utils/verifyAdmin";
+import Layout from "../../components/Layout/Layout";
 import {
     Button,
     Box,
@@ -13,6 +13,8 @@ import {
     TableContainer,
 } from "@chakra-ui/react";
 import axios from "axios";
+import ModalSubjectRequest from "../../components/Admin/ModalSubjectRequest";
+import { useDisclosure } from "@chakra-ui/react";
 
 export const getServerSideProps = async () => {
     const response = await axios.get(
@@ -25,9 +27,15 @@ export const getServerSideProps = async () => {
         },
     };
 };
+
 const SubjectRequest = (data) => {
     verifyAdmin();
     const { subjectrequest } = data;
+    const { isOpen, onOpen, onClose } = useDisclosure();
+
+    const handleOpenRequest = () => {
+        onOpen();
+    };
 
     const displaySubjectRequest = () => {
         return subjectrequest.map((request) => (
@@ -37,9 +45,18 @@ const SubjectRequest = (data) => {
                 <Td>{request.careerName}</Td>
                 <Td>{request.status}</Td>
                 <Td>
-                    <Button colorScheme="pink" variant="solid">
+                    <Button
+                        colorScheme="pink"
+                        variant="solid"
+                        onClick={() => handleOpenRequest(request._id)}
+                    >
                         Ver
                     </Button>
+                    <ModalSubjectRequest
+                        isOpen={isOpen}
+                        onClose={onClose}
+                        subjectRequestId={request._id}
+                    />
                 </Td>
             </Tr>
         ));
@@ -48,7 +65,7 @@ const SubjectRequest = (data) => {
     return (
         <>
             <Head>
-                <title>Prueba</title>
+                <title>Solicitudes de asignaturas</title>
             </Head>
             <Layout>
                 <Box pb={"10"}>Visualizacion de solicitudes de asignaturas</Box>
@@ -64,34 +81,7 @@ const SubjectRequest = (data) => {
                                     <Th>Opciones</Th>
                                 </Tr>
                             </Thead>
-                            <Tbody>
-                                {/* <Tr>
-                                    <Td>inches</Td>
-                                    <Td>millimetres (mm)</Td>
-                                    <Td isNumeric>25.4</Td>
-                                    <Td></Td>
-                                    <Td>
-                                        <Button
-                                            colorScheme="pink"
-                                            variant="solid"
-                                            onClick={getSubjectRequest}
-                                        >
-                                            Ver
-                                        </Button>
-                                    </Td>
-                                </Tr>
-                                <Tr>
-                                    <Td>feet</Td>
-                                    <Td>centimetres (cm)</Td>
-                                    <Td isNumeric>30.48</Td>
-                                </Tr>
-                                <Tr>
-                                    <Td>yards</Td>
-                                    <Td>metres (m)</Td>
-                                    <Td isNumeric>0.91444</Td>
-                                </Tr> */}
-                                {displaySubjectRequest()}
-                            </Tbody>
+                            <Tbody>{displaySubjectRequest()}</Tbody>
                         </Table>
                     </TableContainer>
                 </Box>

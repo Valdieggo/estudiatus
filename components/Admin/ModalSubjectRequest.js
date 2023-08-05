@@ -1,8 +1,4 @@
-//  Este componente consiste en un boton que al ser presionado abre un modal para crear un reporte
-//  El modal tiene un formulario que al ser completado y enviado crea un reporte en la base de datos
-import React, { useEffect, useState } from "react";
 import {
-    Button,
     Modal,
     ModalOverlay,
     ModalContent,
@@ -10,108 +6,44 @@ import {
     ModalFooter,
     ModalBody,
     ModalCloseButton,
-    FormControl,
-    FormLabel,
-    Input,
-    Textarea,
-    useToast,
-    useDisclosure,
-    Text,
-    Spinner,
-    Grid,
-    Stack,
+    VStack,
+    Heading,
+    Button,
 } from "@chakra-ui/react";
-import axios from "axios";
-import { useSession } from "next-auth/react";
+import { Text } from "@chakra-ui/react";
 
-export default function ModalCreateReport({
+export default function ModalSubjectRequest({
     isOpen,
     onClose,
-    reportedUser,
-    postId,
+    subjectRequestId,
 }) {
-    const { data: session, status } = useSession();
-    const [reason, setReason] = useState("");
-    const [description, setDescription] = useState("");
-    const [loading, setLoading] = useState(false);
-
-    const handleReasonChange = (event) => {
-        setReason(event.target.value);
-    };
-
-    const handleDescriptionChange = (event) => {
-        setDescription(event.target.value);
-    };
-
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        setLoading(true);
-        console.log("reportUser: " + session.user.id);
-        try {
-            const response = await axios.post("../api/report/create", {
-                reportedUserId: reportedUser._id,
-                reportUserId: session.user.id,
-                reason,
-                description,
-                post: postId,
-            });
-            console.log(response.data);
-            setLoading(false);
-            onClose();
-        } catch (error) {
-            console.error(error);
-            setLoading(false);
-        }
+    const displayData = async () => {
+        const response = await axios.get(
+            `http://localhost:3000/api/subject_request/getOne/${subjectRequestId}`
+        );
     };
 
     return (
-        <Modal
-            isOpen={isOpen}
-            onClose={onClose}
-            size="xl"
-            closeOnOverlayClick={false}
-        >
-            <ModalOverlay backdropFilter="auto" backdropBlur="2px" />
-            <ModalContent background="bg.100" color="white">
-                <ModalHeader>Reportar usuario</ModalHeader>
-                <ModalCloseButton background="red" />
+        <Modal isOpen={isOpen} onClose={onClose}>
+            <ModalOverlay />
+            <ModalContent bg="post.100">
+                <ModalHeader mt="6" color="white" textAlign="center">
+                    Información
+                </ModalHeader>
+                <ModalCloseButton color="white" />
                 <ModalBody>
-                    <Stack spacing={4}>
-                        <Text fontWeight="bold">
-                            Usuario reportado:{reportedUser.username}
-                        </Text>
-                        <Grid templateColumns="auto 1fr" columnGap="50%">
-                            <Text>{}</Text>
-                            <Text>{}</Text>
-                        </Grid>
-                        <FormControl id="reason">
-                            <FormLabel>Razon</FormLabel>
-                            <Input
-                                type="text"
-                                value={reason}
-                                onChange={handleReasonChange}
-                            />
-                        </FormControl>
-                        <FormControl id="description">
-                            <FormLabel>Descripcion</FormLabel>
-                            <Textarea
-                                value={description}
-                                onChange={handleDescriptionChange}
-                            />
-                        </FormControl>
-                    </Stack>
+                    <VStack mb="6" spacing="1">
+                        <Text color="white">Nombre :</Text>
+                        <Text color="white">Universidad :</Text>
+                        <Text color="white">Carrera :</Text>
+                        <Text color="white">Descripción :</Text>
+                    </VStack>
                 </ModalBody>
                 <ModalFooter>
                     <Button colorScheme="red" mr={3} onClick={onClose}>
                         Cancelar
                     </Button>
-                    <Button
-                        colorScheme="green"
-                        onClick={handleSubmit}
-                        isLoading={loading}
-                    >
-                        Enviar
-                    </Button>
+                    <Button colorScheme="green">Enviar</Button>
                 </ModalFooter>
             </ModalContent>
         </Modal>

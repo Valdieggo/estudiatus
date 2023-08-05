@@ -13,11 +13,11 @@ export default async function handler(req, res) {
             try {
                 const subjectRequests = await SubjectRequest.find({})
                     .populate("college", "collegeName -_id")
-                    .populate("career", "careerName -_id")
-                    .select("-_id");
+                    .populate("career", "careerName -_id");
 
                 const formattedSubjectRequests = subjectRequests.map(
                     (request) => ({
+                        _id: request._id,
                         subjectName: request.subjectName,
                         collegeName: request.college?.collegeName,
                         careerName: request.career?.careerName,
