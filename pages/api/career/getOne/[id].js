@@ -19,6 +19,10 @@ export default async function handler(req, res) {
                 .populate({
                     path: "subjects",
                     model: "Subject",
+                    populate: {
+                        path: "img",
+                        model: "File",
+                    }
                 })
                 return res.status(200).json({success: true, data: career});
             }
