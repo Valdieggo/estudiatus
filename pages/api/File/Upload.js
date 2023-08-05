@@ -46,7 +46,6 @@ export default async (req, res) => {
             if (err) {
                 return res.status(500).json({ msg: err.message });
             }
-            console.log(req.file)
             const {filename, originalname, path, mimetype, size } = req.file;
             const File = await FileModel.create({
                 originalName: originalname,
@@ -55,7 +54,7 @@ export default async (req, res) => {
                 size,
                 mimetype,
             });
-            res.status(200).json({ File });
+            res.status(200).json({success: true,data: File });
         });
     } catch (err) {
         return res.status(500).json({ msg: err.message });

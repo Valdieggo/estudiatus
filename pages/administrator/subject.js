@@ -4,6 +4,7 @@ import verifyAdmin from "../../utils/verifyAdmin";
 import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { Box, Link } from "@chakra-ui/react";
+import Upload from "../../components/File/Upload";
 
 import {
     Modal,
@@ -110,7 +111,7 @@ export default function Home() {
     const handleImageChange = (e) => {
         setImage(e.target.files[0]);
     }
-    
+
     const handleNameChange = (e) => {
         setName(e.target.value);
     }
@@ -118,9 +119,7 @@ export default function Home() {
         setDescription(e.target.value);
     }
     const handleCareerChange = (e) => {
-
         setCareer(e.target.value);
-        console.log(career);
     }
 
     const handleOpenEdit = (key, name, description) => {
@@ -167,17 +166,21 @@ export default function Home() {
         })
     }
 
+    
     const handleUpdate = async () => {
         const messageSuccess = "Subject updated successfully";
         const messageError = "Error updating the subject";
+        console.log(id, name, description, career);
 
         const response = await axios.put(`/api/subject/update`, {
             id: id,
             subjectName: name,
             description: description
+
         }).then((res) => {
             showSuccessToast(messageSuccess);
         }).catch((err) => {
+            console.log(err)
             showErrorToast(messageError);
             //html: err.response.data.message,
         })
@@ -189,16 +192,19 @@ export default function Home() {
         const messageSuccess = "Subject created successfully";
         const messageError = "Error creating subject";
 
+        const idImage = await Upload(image);
+        console.log(idImage)
+        /**
         const response = await axios.post(`/api/subject/create`, {
             subjectName: name,
-            description: description,
-            career: career
+            description: description
         }).then((res) => {
             showSuccessToast(messageSuccess);
         }).catch((err) => {
             showErrorToast(messageError);
         })
         getSubject();
+         */
         onCloseCreate();
     }
 
@@ -255,6 +261,8 @@ export default function Home() {
                                 <FormLabel>Description</FormLabel>
                                 <Input placeholder="Description" onChange={handleDescriptionChange} />
                             </FormControl>
+
+
                         </ModalBody>
 
                         <ModalFooter>
@@ -282,26 +290,30 @@ export default function Home() {
                 >
                     <ModalOverlay />
                     <ModalContent>
-                        <ModalHeader>Create subject</ModalHeader>
+                        <ModalHeader>Crear asignatura</ModalHeader>
                         <ModalCloseButton />
                         <ModalBody pb={6}>
                             <FormControl>
-                                <FormLabel>Name</FormLabel>
+                                <FormLabel>Nombre</FormLabel>
                                 <Input ref={initialRef} placeholder="Name" onChange={handleNameChange} />
                             </FormControl>
 
                             <FormControl mt={4}>
-                                <FormLabel>Description</FormLabel>
+                                <FormLabel>Descripción</FormLabel>
                                 <Input placeholder="Description" onChange={handleDescriptionChange} />
                             </FormControl>
 
-                            <FormControl onChange={handleCareerChange}>
-                                <FormLabel>Career</FormLabel>
-                                <Select placeholder="Select a career" >
+                            <FormControl>
+                                <FormLabel>Carrera</FormLabel>
+                                <Select placeholder="Select a career" onChange={handleCareerChange}>
                                     {careers.map((career) => (
                                         <option key={career._id} value={career._id} >{career.careerName}</option>
                                     ))}
                                 </Select>
+                            </FormControl>
+                            <FormControl>
+                                <FormLabel>Imagen</FormLabel>
+                                <Input placeholder="Image" type="file" onChange={handleImageChange} accept="image/*" />
                             </FormControl>
                         </ModalBody>
 
@@ -349,7 +361,7 @@ export default function Home() {
                                 Subject management system
                             </Box>
                             <Box>
-                                
+
                                 <Button onClick={() => onOpenCreate()} colorScheme="blue" size="sm">
                                     <p>Create new subject</p>
                                     <Image src={`/document-plus.svg`} alt={`Edit`} width="20px" height="20px" />

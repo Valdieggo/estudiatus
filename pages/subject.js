@@ -27,7 +27,7 @@ const Subject = (data) => {
                     image={"/lol.jpg"}
                     description={subject.description}
                     link={`/subject/${subject._id}`}
-                    top={`${subject.posts.length} ${subject.posts.length !== 1 ? "carreras" : "carrera"}`} 
+                    top={`${subject.posts.length} ${subject.posts.length !== 1 ? "asignaturas" : "asignatura"}`} 
                     footer={`${subject.subscribers.length} ${subject.subscribers.length !== 1 ? "subscriptores" : "subscriptor"}`} 
                     />
             ))}
@@ -42,7 +42,7 @@ const Subject = (data) => {
             <Layout>
                 <Box>
                     <Text>Subjects</Text>
-                    <Text>Todas las carreras disponibles</Text>
+                    <Text>Todas las asignaturas disponibles</Text>
                     {displayCard()}
                 </Box>
             </Layout>
