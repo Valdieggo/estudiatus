@@ -9,9 +9,11 @@ export default async function handler(req, res) {
     const { method } = req;
     const { title, content, score, view, creator, subject,likes } = req.body;
 
-    if (!title) {
+    if (!title || !content ||!creator) {
         return res.status(400).json({ success: false, message: "Empty fields" });
     }
+
+
 
     await connectToDatabase();
 
@@ -27,13 +29,14 @@ export default async function handler(req, res) {
                         creator,
                         subject,
                     });
+                    const postPopulated = await Post.findById(post._id).populate('creator', 'subject');
                     await User.findByIdAndUpdate(creator, {
-                        $push: { user: creator._id }
+                        $push: { posts: post._id }
                     });
                     await Subject.findByIdAndUpdate(subject, {
                         $push: { posts: post._id }
                     });
-                    return res.status(200).json({ success: true, data: post });
+                    return res.status(200).json({ success: true, data: postPopulated });
                 }
                 catch (error) {
                     return res.status(400).json({ success: false, message: error });
