@@ -4,7 +4,7 @@ import axios from "axios";
 import PostCard from "../Post/PostCard";
 import CommentCard from "../Comment/CommentCard";
 
-export default function TabProfile() {
+export default function TabProfile({ user }) {
     
     const [posts, setPosts] = useState([]);
     const [comments, setComments] = useState([]);
