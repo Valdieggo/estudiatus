@@ -1,4 +1,4 @@
-import { IconButton, Icon, Spinner } from "@chakra-ui/react";
+import { IconButton } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useSession } from "next-auth/react";
@@ -10,6 +10,7 @@ export default function FavPostButton({ post }) {
     const { data: session, status } = useSession();
     const [isFav, setIsFav] = useState(false);
     const [isFaving, setIsFaving] = useState(false);
+    const { isOpen, onOpen, onClose } = useDisclosure()
 
     const buttonIcon = isFav ? <BsBookmarkStarFill /> : <BsBookmarkStar />;
     const handleFav = () => {
@@ -47,10 +48,14 @@ export default function FavPostButton({ post }) {
     }, [status]);
 
     return (
+        <>
         <IconButton aria-label="añadir a favoritos" icon={buttonIcon} 
             bg="none" color="white" _hover={{ bg: "none" }}
             onClick={handleFav}
             isDisabled={isFaving}
-        />
+        >
+        </IconButton>
+        <LoginModal isOpen={isOpen} onClose={onClose} />
+        </>
     )
 }

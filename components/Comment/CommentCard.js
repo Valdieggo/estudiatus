@@ -28,7 +28,7 @@ export default function CommentCard({ comment, setComments, comments }) {
     };
 
     return (
-        <Card color="white" width="100%"  margin="auto" bg="post.100" borderRadius="md" p={4}
+        <Card color="white" width="100%" maxWidth="475px" margin="auto" bg="post.100" borderRadius="md" p={4}
             _hover={{
                 bg: "post.200",
             }} >
