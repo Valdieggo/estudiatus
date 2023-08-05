@@ -30,13 +30,24 @@ export default async function handler(req, res) {
                         creator,
                         subject,
                     });
-                    const postPopulated = await Post.findById(post._id).populate('creator', 'subject');
+                    const postPopulated = await Post.findById(post._id)
+                        .populate({
+                            path: "creator",
+                            ref: "User",
+                        })
+                        .populate({
+                            path: "subject",
+                            ref: "Subject",
+                        })
+
                     await User.findByIdAndUpdate(creator, {
                         $push: { posts: post._id }
                     });
                     await Subject.findByIdAndUpdate(subject, {
                         $push: { posts: post._id }
                     });
+
+                    console.log(postPopulated);
                     return res.status(200).json({ success: true, data: postPopulated });
                 }
                 catch (error) {
