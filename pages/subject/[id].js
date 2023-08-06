@@ -8,6 +8,7 @@ import axios from "axios";
 import Layout from "../../components/Layout/Layout";
 import PostsCard from "../../components/Post/PostsCard";
 import CreatePost from "../../components/Post/CreatePost";
+import PaginationControls from "../../components/Post/PaginationControls .js";
 
 const PostsSubject = ({ posts, subject }) => {
     const [allPosts, setAllPosts] = useState(posts)
@@ -17,9 +18,27 @@ const PostsSubject = ({ posts, subject }) => {
     const toggleCreatePost = () => {
         setShowCreatePost(!showCreatePost);
     };
+    const [currentPage, setCurrentPage] = useState(1);
+    const postsPerPage = 5; // Number of posts to show per page
+
+    const indexOfLastPost = currentPage * postsPerPage;
+    const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    const currentPosts = allPosts.slice(indexOfFirstPost, indexOfLastPost);
+
+    const totalPages = Math.ceil(allPosts.length / postsPerPage);
+
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
+
 
     return (
         <Layout>
+            <PaginationControls
+                currentPage={currentPage}
+                totalPages={totalPages}
+                handlePageChange={handlePageChange}
+            />
             <Box>
                 <Stack>
                     <Box display="flex" justifyContent="center">
@@ -40,12 +59,17 @@ const PostsSubject = ({ posts, subject }) => {
                     </Box>
 
                     {showCreatePost &&
-                    <CreatePost allPosts={allPosts} setAllPosts={setAllPosts} subject={subject} />}
+                        <CreatePost allPosts={allPosts} setAllPosts={setAllPosts} subject={subject} />}
                 </Stack>
-                {allPosts && allPosts.map((post) => (
+                {currentPosts.map((post) => (
                     <PostsCard key={post._id} post={post} setAllPosts={setAllPosts} allPosts={allPosts} />
                 ))}
             </Box>
+            <PaginationControls
+                currentPage={currentPage}
+                totalPages={totalPages}
+                handlePageChange={handlePageChange}
+            />
         </Layout >
     );
 };
