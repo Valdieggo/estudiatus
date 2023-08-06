@@ -11,11 +11,12 @@ import {
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
 export default function ModalDeletePost({ isOpen, onClose, onOpen, post, allPosts, setAllPosts }) {
-    
     const { creator } = post;
 
     let isCreatorId = false;
+
     const { data: session, status } = useSession();
+
     if (session && creator && creator._id) {
         isCreatorId = session.user.id === creator._id;
     }
