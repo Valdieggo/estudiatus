@@ -11,6 +11,7 @@ import {
     CardFooter,
     Button,
     Avatar,
+    Link
 } from "@chakra-ui/react";
 import {
     ChatIcon,
@@ -49,24 +50,28 @@ export default function PostsCard({ post, setAllPosts, allPosts }) {
                     bg: "post.200",
                 }}
             >
+                <Box margin={"5"}>
+                    <Text fontSize='3xl'>{post.title}</Text>
+                </Box>
                 <CardHeader>
                     <Flex spacing="4">
                         {post.creator && ( // Renderiza condicionalmente si post.creator está definido
                             <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
-                                <Link href={`/profile/${post.creator.id}`}>
+                                <Link href={`/profile/${creator.id}`}>
                                     <Flex direction='row' gap={4}>
                                         <Avatar
-                                            name={post.creator.username}
+                                            name={creator.username}
                                             src="https://bit.ly/broken-link"
                                             bg="blue.700"
                                             color="white"
                                         />
                                         <Box>
-                                            <Heading size="sm">{post.creator.username}</Heading>
-                                            <Text>Creator, {post.creator.role}</Text>
+                                            <Heading size="sm">{creator.username}</Heading>
+                                            <Text>Creator, {creator.role}</Text>
                                         </Box>
                                     </Flex>
                                 </Link>
+                                <Text>Publicado {timeAgo}</Text>
                             </Flex>
                         )}
                         <MenuPost
@@ -82,25 +87,25 @@ export default function PostsCard({ post, setAllPosts, allPosts }) {
                 </CardBody >
                 {post.file && (
                     <>
-                    <Box align="center">
-                        {post.file.endsWith(".png") || post.file.endsWith(".jpg") ? (
-                            <Image src={`/api/File/download/${post.file}`} alt="Imagen" />
-                        ) : (
-                            <Button
-                                w={"430px"}
-                                as="a"
-                                bg="button.100"
-                                _hover={{
-                                    bg: "button.200",
-                                }}
-                                download={`/api/File/download/${post.file}`}
-                                href={`/api/File/download/${post.file}`}
-                                leftIcon={<DownloadIcon />}
-                            >
-                                Ver Documento
-                            </Button>
-                        )}
-                    </Box>
+                        <Box align="center">
+                            {post.file.endsWith(".png") || post.file.endsWith(".jpg") ? (
+                                <Image src={`/api/File/download/${post.file}`} alt="Imagen" />
+                            ) : (
+                                <Button
+                                    w={"430px"}
+                                    as="a"
+                                    bg="button.100"
+                                    _hover={{
+                                        bg: "button.200",
+                                    }}
+                                    download={`/api/File/download/${post.file}`}
+                                    href={`/api/File/download/${post.file}`}
+                                    leftIcon={<DownloadIcon />}
+                                >
+                                    Ver Documento
+                                </Button>
+                            )}
+                        </Box>
                     </>
                 )}
 
@@ -113,7 +118,7 @@ export default function PostsCard({ post, setAllPosts, allPosts }) {
                         },
                     }}
                 >
-                    <LikePostButton post={post} isList={true}/>
+                    <LikePostButton post={post} isList={true} />
                     <Button onClick={() => router.push(`/post/${post._id}`)} type="button"
                         bg="button.100"
                         width="48%"
