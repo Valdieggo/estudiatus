@@ -23,7 +23,7 @@ const PostsSubject = ({ posts, subject }) => {
         <Layout>
             <Box width="100%" maxW="500px" margin="auto">
                 <Stack>
-                    <HeaderCard title={subject.subjectName} description={subject.description} />
+                    <HeaderCard title={subject.subjectName} description={subject.description} image={subject.img ? `/uploads/${subject.img.fileName}` : '/default/landscape.jpg"'} />
                     <Box display="flex" justifyContent="center">
                         <Button
                             color="white"
