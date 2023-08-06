@@ -61,14 +61,14 @@ export default function CommentCard({ comment, setComments, comments }) {
                 }}
             >
                 <LikeCommentButton comment = {comment} />
-                <Button type="button"
+                {/*<Button type="button"
                     bg="button.100"
                     width="48%"
                     _hover={{
                         bg: "button.200",
                     }} leftIcon={<ChatIcon />}>
                     Responder
-                </Button>
+                </Button>*/}
             </CardFooter>
         </Card>
   );
