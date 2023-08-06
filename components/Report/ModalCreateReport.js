@@ -17,7 +17,8 @@ import {
     Text,
     Spinner,
     Stack,
-    Grid
+    Grid,
+    Select
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useSession } from "next-auth/react";
@@ -28,7 +29,7 @@ import { useForm } from "react-hook-form";
 export default function ModalCreateReport({ isOpen, onClose, post }) {
     const { data: session, status } = useSession();
     const [loading, setLoading] = useState(false);
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm();
 
     const onSubmit = async (data) => {
         try {
@@ -38,20 +39,33 @@ export default function ModalCreateReport({ isOpen, onClose, post }) {
                 reason:data.reason,
                 description: data.description,
                 post: post._id,
-            });
-            setLoading(false);
-            onClose();
+            })
+            
+            if(response.status === 201) {
+                setLoading(false);
+                onClose();
+            } else {
+                console.log("Error al crear reporte");
+            }
+            
         } catch (error) {
             setLoading(false);
         }
     }
+    const listSelect = [
+        { value: "spam", label: "Spam" },
+        { value: "insult", label: "Insulto" },
+        { value: "inappropriate", label: "Inapropiado" },
+        { value: "other", label: "Otro" },
+    ];
+
 
     return (
         <Modal isOpen={isOpen} onClose={onClose} size="xl" closeOnOverlayClick={false}>
             <ModalOverlay backdropFilter="auto" backdropBlur="2px" />
             <ModalContent background="bg.100" color="white">
                 <ModalHeader>Reportar usuario</ModalHeader>
-                <ModalCloseButton background="red" />
+                <ModalCloseButton />
                 <ModalBody>
                     <Stack as="form" spacing={4} onSubmit={handleSubmit(onSubmit)}>
                         <Text fontWeight="bold">Usuario reportado:{post.creator.username}</Text>
@@ -61,11 +75,19 @@ export default function ModalCreateReport({ isOpen, onClose, post }) {
                         </Grid>
                         <FormControl >
                             <FormLabel>Razon</FormLabel>
-                            <Input type="reason" {...register("reason", {required: true})} />
+                            <Select type="reason" {...register("reason", {required:true})}>
+                                {listSelect.map((option) => (
+                                    <option style={{ color: 'black' }} key={option.value} value={option.value}>
+                                        {option.label}
+                                    </option>
+                                ))}
+                            </Select>
+                            { errors.reason && <Text color="red">Este campo es requerido</Text>}
                         </FormControl>
                         <FormControl>
                             <FormLabel>Descripcion</FormLabel>
                             <Textarea type="description" {...register("description", {required:true})} />
+                            { errors.description && <Text color="red">Este campo es requerido</Text>}
                         </FormControl>
                     </Stack>
                 </ModalBody>
