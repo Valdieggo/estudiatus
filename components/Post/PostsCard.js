@@ -20,8 +20,6 @@ export default function PostsCard({ post, setAllPosts, allPosts }) {
 
     const isAdmin = session?.user.role === "admin";
 
-    const router = useRouter();
-
     const handleDeletePost = () => {
         if (isAdmin || isCreatorId) {
             axios.delete(`http://localhost:3000/api/post/delete/${post._id}`)
@@ -36,6 +34,9 @@ export default function PostsCard({ post, setAllPosts, allPosts }) {
             console.log("No tienes los permisos necesarios.");
         }
     }
+
+    const router = useRouter();
+
     return (
         <VStack key={post.id} margin={"5"} spacing={4} align="center">
             <Card color="white" width="100%" maxWidth="500px" margin="auto" bg="post.100" borderRadius="md" p={4}
