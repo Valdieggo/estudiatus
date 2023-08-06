@@ -11,11 +11,12 @@ import {
     CardFooter,
     Button,
     Avatar,
-    Link
+    Link,
 } from "@chakra-ui/react";
 import {
     ChatIcon,
     DownloadIcon,
+    ViewIcon
 } from "@chakra-ui/icons";
 import LikePostButton from "./LikePostButton";
 import React from "react";
@@ -87,25 +88,44 @@ export default function PostsCard({ post, setAllPosts, allPosts }) {
                 </CardBody >
                 {post.file && (
                     <>
-                        <Box align="center">
-                            {post.file.endsWith(".png") || post.file.endsWith(".jpg") ? (
-                                <Image src={`/api/File/download/${post.file}`} alt="Imagen" />
-                            ) : (
+                        <CardFooter
+                            justify="space-between"
+                            flexWrap="wrap"
+                            sx={{
+                                "& > button": {
+                                    minW: "140px",
+                                },
+                            }}>
+                                {post.file.endsWith(".png") || post.file.endsWith(".jpg") ? (
+                                    <Image src={`/api/File/download/${post.file}`} alt="Imagen" />
+                                ) : (
+                                    <Button
+                                        w={"205px"}
+                                        as="a"
+                                        bg="button.100"
+                                        _hover={{
+                                            bg: "button.200",
+                                        }}
+                                        download={`/api/File/download/${post.file}`}
+                                        href={`/api/File/download/${post.file}`}
+                                        leftIcon={<DownloadIcon />}
+                                    >
+                                        Descargar Documento
+                                    </Button>
+                                )}
                                 <Button
-                                    w={"430px"}
+                                    w={"205px"}
                                     as="a"
                                     bg="button.100"
                                     _hover={{
                                         bg: "button.200",
                                     }}
-                                    download={`/api/File/download/${post.file}`}
                                     href={`/api/File/download/${post.file}`}
-                                    leftIcon={<DownloadIcon />}
+                                    leftIcon={<ViewIcon />}
                                 >
-                                    Descargar Documento
+                                    Ver Documento
                                 </Button>
-                            )}
-                        </Box>
+                        </CardFooter>
                     </>
                 )}
 
