@@ -35,7 +35,7 @@ export  default function ModalReport({ isOpen, onClose, reportId ,  setReports, 
             status: "active",
             report: report._id,
           })
-          if (response.status===200){
+          if (response.status===201){
             setReports(prevReports => prevReports.filter(report => report._id !== reportId))
           }
         } catch (error) {
