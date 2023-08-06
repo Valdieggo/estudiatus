@@ -38,7 +38,7 @@ export default function PostsCard({ post,setAllPost, allPosts }) {
                     <Flex spacing="4">
                         {post.creator && ( // Renderiza condicionalmente si post.creator está definido
                             <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
-                                <Link href={`/profile/${post.creator.id}`}>
+                                <Link href={`/profile/${post.creator._id}`}>
                                     <Flex direction='row' gap={4}>
                                         <Avatar
                                             name={post.creator.username}
