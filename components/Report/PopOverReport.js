@@ -9,14 +9,21 @@ import { Popover, PopoverTrigger, PopoverContent, PopoverHeader,
       Radio,
       FormLabel,
     } from "@chakra-ui/react";
+    import { useForm } from "react-hook-form";
+import { get } from "mongoose";
     
     
     export default function ConfirmationPopover({ message, onConfirm }) {
       const [isOpen, setIsOpen] = useState(false);
+      const{register, watch, reset, handleSubmit, formState: { errors }} = useForm();
       
-      const [value, setValue] = useState("ban")
-      const [sancionTime, setSancionTime] = useState(null);
-      
+
+      const handleTypeChange = () => {
+        if (watch("type") === "permanentemente") {
+          reset({ date: new Date(null) }); 
+        }
+      };
+ 
       const getCurrentDate = () => {
         const now = new Date();
         const year = now.getFullYear();
@@ -24,16 +31,15 @@ import { Popover, PopoverTrigger, PopoverContent, PopoverHeader,
         const day = String(now.getDate()).padStart(2, "0");
         return `${year}-${month}-${day}`;
       };
-      const handleConfirm = () => {
-        
+      const onSubmit = (data) => {
         const sancionData = {
-          type: value,
-          time: sancionTime,
+          type: data.value,
+          time: data.date,
         }
         onConfirm(sancionData);
         setIsOpen(false);
       };
-    
+     
       const handleCancel = () => {
         setIsOpen(false);
       };
@@ -60,35 +66,36 @@ import { Popover, PopoverTrigger, PopoverContent, PopoverHeader,
                 <Box>
                   <FormControl as="fieldset" isRequired>
                     <FormLabel as="legend">Tipo de sancion</FormLabel>
-                    <RadioGroup defaultValue="ban" onChange={setValue}>
-                      <Stack spacing={4} direction="row">
-                        <Radio value="ban">Ban</Radio>
-                        <Radio value="mute">Mute</Radio>
-                        <Radio value="shadowban">shadowban</Radio>
+                    <RadioGroup  >
+                      <Stack spacing={4} direction="row" onChange={handleTypeChange}>
+                        <Radio value="temporalmente" {...register("type", { required: true })} />
+                        <Text>temporal</Text>
+                        <Radio value="permanentemente" {...register("type", { required: true })} />
+                        <Text>permanente</Text>
                       </Stack>
                     </RadioGroup>
+                    {errors.value && <Text color="red">Este campo es requerido</Text>}
                   </FormControl>
-                  <FormControl isRequired   >
-                    <FormLabel>Duracion</FormLabel>
-                    <Input type="date" min={getCurrentDate()} onChange={(e) => setSancionTime(e.target.value)} />
-                  </FormControl>
+                  { watch("type") === "temporalmente" ? (
+                    <FormControl isRequired>
+                      <FormLabel>Duracion</FormLabel>
+                      <Input type="date" min={getCurrentDate()} {...register("date", { required: true })} />
+                    </FormControl>
+                  ): null}
                 </Box>
               </Stack>
             </PopoverBody>
             <PopoverFooter  borderColor='bg.100' >
             {message}
-              {
-                sancionTime ? (
-                  <Button colorScheme="green" onClick={handleConfirm} ml={4}>
-                    Confirmar
-                  </Button>
-                ) : (
-                  <Button isLoading colorScheme="green" >
-    
-                  </Button>
-                )
-    
-              }
+              {( watch("date")  && watch("type") === "temporalmente") || watch("type")=== "permanentemente" ?   (
+                <Button colorScheme="green" onClick={handleSubmit(onSubmit)} ml={4}>
+                  Confirmar
+                </Button>
+              ) : (
+                <Button colorScheme="green" isDisabled>
+                  Confirmar
+                </Button>
+              )}
               <Button colorScheme="red" onClick={handleCancel} ml={4}>
                 Cancelar
               </Button>
