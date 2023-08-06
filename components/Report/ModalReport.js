@@ -27,23 +27,28 @@ export  default function ModalReport({ isOpen, onClose, reportId ,  setReports, 
   const handleConfirmBan = (sancionData) => {
     setShowPopover(false);
     const createBan = async () => {
-      try {
-        const response = await axios.post("../api/ban/create", {
-          user: report.reportedUser._id,
-          type: sancionData.type,
-          time: sancionData.time,
-          status: "active",
-          report: report._id,
-        }).then(
+        try {
+          const response = await axios.post("../api/ban/create", {
+            user: report.reportedUser._id,
+            type: sancionData.type,
+            time: sancionData.time,
+            status: "active",
+            report: report._id,
+          })
+          if (response.status===200){
+            const mail = await axios.post("../api/mail/send", {
+              email: report.reportedUser.email,
+              name: report.reportedUser.username,
+              time: sancionData.time,
+            })
+          }
           setReports(prevReports => prevReports.filter(report => report._id !== reportId))
-        );
+        } catch (error) {
+          console.error(error);
+        }
 
-      } catch (error) {
-        console.error(error);
-      }
-
-      onClose();
-    };
+        onClose();
+      };
     createBan();
   };
 

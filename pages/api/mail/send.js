@@ -1,37 +1,47 @@
 import nodemailer from "nodemailer";
 
 export default async (req, res) => {
+    const { email, name } = req.body;
     const token = process.env.PW;
     const user = process.env.USER;
-    const email = "emerson.salazar1901@alumnos.ubiobio.cl";
-    const name = "Emerson";
+    //const email = "emerson.salazar1901@alumnos.ubiobio.cl";
+    //const name = "Emerson";
 
-    try {
-        let transporter = nodemailer.createTransport({
-            host: "smtp.gmail.com",
-            port: 587,
-            secure: false, // Cambiado a false para usar STARTTLS
-            auth: {
-                user: "estuadiatus@gmail.com",
-                pass: token,
-            },
-        });
 
-        const mailOptions = {
-            from: `Estudiatus <${user}>`,
-            to: email,
-            subject: "Sancion",
-            html: `
-                <p>Estimado ${name},</p>
-                <p>Haz sido baneado lo lamentamos</p>
-            `,
-        };
+    switch (req.method) {
+    case "POST":
+        try {
+            let transporter = nodemailer.createTransport({
+                host: "smtp.gmail.com",
+                port: 587,
+                secure: false, // Cambiado a false para usar STARTTLS
+                auth: {
+                    user: "estuadiatus@gmail.com",
+                    pass: token,
+                },
+            });
 
-        await transporter.sendMail(mailOptions);
+            const mailOptions = {
+                from: `Estudiatus <${user}>`,
+                to: email,
+                subject: "Sancion",
+                html: `
+                    <p>Estimado ${name},</p>
+                    <p>Haz sido baneado lo lamentamos</p>
+                `,
+            };
 
-        res.status(200).json({ message: "Email enviado correctamente" });
-    } catch (error) {
-        console.log(error);
-        res.status(500).send(error.message);
+            await transporter.sendMail(mailOptions);
+
+            res.status(200).json({ message: "Email enviado correctamente" });
+        } catch (error) {
+            console.log(error);
+            res.status(500).send(error.message);
+        }
+        break;
+    default:
+        res.status(405).end(); //Method Not Allowed
+        break;
     }
+
 };
