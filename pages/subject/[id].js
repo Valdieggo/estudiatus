@@ -8,6 +8,7 @@ import axios from "axios";
 import Layout from "../../components/Layout/Layout";
 import PostsCard from "../../components/Post/PostsCard";
 import CreatePost from "../../components/Post/CreatePost";
+import HeaderCard from "../../components/Cards/HeaderCard";
 
 const PostsSubject = ({ posts, subject }) => {
     const [allPosts, setAllPosts] = useState(posts)
@@ -20,14 +21,15 @@ const PostsSubject = ({ posts, subject }) => {
 
     return (
         <Layout>
-            <Box>
+            <Box width="100%" maxW="500px" margin="auto">
                 <Stack>
+                    <HeaderCard title={subject.subjectName} description={subject.description} />
                     <Box display="flex" justifyContent="center">
                         <Button
                             color="white"
                             width="100%"
                             maxWidth="500px"
-                            margin="4"
+                            
                             bg="post.100"
                             borderRadius="md"
                             _hover={{
