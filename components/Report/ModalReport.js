@@ -36,17 +36,11 @@ export  default function ModalReport({ isOpen, onClose, reportId ,  setReports, 
             report: report._id,
           })
           if (response.status===200){
-            const mail = await axios.post("../api/mail/send", {
-              email: report.reportedUser.email,
-              name: report.reportedUser.username,
-              time: sancionData.time,
-            })
+            setReports(prevReports => prevReports.filter(report => report._id !== reportId))
           }
-          setReports(prevReports => prevReports.filter(report => report._id !== reportId))
         } catch (error) {
           console.error(error);
         }
-
         onClose();
       };
     createBan();
