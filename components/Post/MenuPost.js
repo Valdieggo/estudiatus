@@ -19,7 +19,7 @@ export default function MenuPost({ post }) {
                 post?.creator?._id === session?.user?.id 
                 && 
                 <MenuItem>
-                   {/*Boton de eliminar post */ }
+                   Eliminar añadir boton aca
                 </MenuItem>
             }
             {
