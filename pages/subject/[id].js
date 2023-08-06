@@ -8,6 +8,8 @@ import axios from "axios";
 import Layout from "../../components/Layout/Layout";
 import PostsCard from "../../components/Post/PostsCard";
 import CreatePost from "../../components/Post/CreatePost";
+import PaginationControls from "../../components/Post/PaginationControls .js";
+import HeaderCard from "../../components/Cards/HeaderCard";
 
 const PostsSubject = ({ posts, subject }) => {
     const [allPosts, setAllPosts] = useState(posts)
@@ -17,17 +19,38 @@ const PostsSubject = ({ posts, subject }) => {
     const toggleCreatePost = () => {
         setShowCreatePost(!showCreatePost);
     };
+    const [currentPage, setCurrentPage] = useState(1);
+    const postsPerPage = 5; // Number of posts to show per page
+
+    const indexOfLastPost = currentPage * postsPerPage;
+    const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    const currentPosts = allPosts.slice(indexOfFirstPost, indexOfLastPost);
+
+    const totalPages = Math.ceil(allPosts.length / postsPerPage);
+
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
+
 
     return (
         <Layout>
-            <Box>
+            <PaginationControls
+                currentPage={currentPage}
+                totalPages={totalPages}
+                handlePageChange={handlePageChange}
+            />
+            <Box width="100%" maxW="500px" margin="auto">
                 <Stack>
+                    <HeaderCard title={subject.subjectName} description={subject.description} image={subject.img ? `/uploads/${subject.img.fileName}` : '/default/landscape.jpg"'} 
+                    type={"subject"} id={subject._id}
+                    />
                     <Box display="flex" justifyContent="center">
                         <Button
                             color="white"
                             width="100%"
                             maxWidth="500px"
-                            margin="4"
+                            
                             bg="post.100"
                             borderRadius="md"
                             _hover={{
@@ -40,12 +63,17 @@ const PostsSubject = ({ posts, subject }) => {
                     </Box>
 
                     {showCreatePost &&
-                    <CreatePost allPosts={allPosts} setAllPosts={setAllPosts} subject={subject} />}
+                        <CreatePost allPosts={allPosts} setAllPosts={setAllPosts} subject={subject} />}
                 </Stack>
-                {allPosts && allPosts.map((post) => (
+                {currentPosts.map((post) => (
                     <PostsCard key={post._id} post={post} setAllPosts={setAllPosts} allPosts={allPosts} />
                 ))}
             </Box>
+            <PaginationControls
+                currentPage={currentPage}
+                totalPages={totalPages}
+                handlePageChange={handlePageChange}
+            />
         </Layout >
     );
 };

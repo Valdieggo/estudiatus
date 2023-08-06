@@ -11,11 +11,12 @@ import {
     CardFooter,
     Button,
     Avatar,
-    Link
+    Link,
 } from "@chakra-ui/react";
 import {
     ChatIcon,
     DownloadIcon,
+    ViewIcon
 } from "@chakra-ui/icons";
 import LikePostButton from "./LikePostButton";
 import React from "react";
@@ -37,15 +38,8 @@ export default function PostsCard({ post, setAllPosts, allPosts }) {
     });
 
     return (
-        <VStack key={post.id} margin={"5"} spacing={4} align="center">
-            <Card
-                color="white"
-                width="100%"
-                maxWidth="500px"
-                margin="auto"
-                bg="post.100"
-                borderRadius="md"
-                p={4}
+        <VStack key={post.id} marginY={4} spacing={4} align="center">
+            <Card color="white" width="100%" maxWidth="500px" margin="auto" bg="post.100" borderRadius="md" p={4}
                 _hover={{
                     bg: "post.200",
                 }}
@@ -57,7 +51,7 @@ export default function PostsCard({ post, setAllPosts, allPosts }) {
                     <Flex spacing="4">
                         {post.creator && ( // Renderiza condicionalmente si post.creator está definido
                             <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
-                                <Link href={`/profile/${creator.id}`}>
+                                <Link href={`/profile/${post.creator._id}`}>
                                     <Flex direction='row' gap={4}>
                                         <Avatar
                                             name={creator.username}
@@ -87,12 +81,19 @@ export default function PostsCard({ post, setAllPosts, allPosts }) {
                 </CardBody >
                 {post.file && (
                     <>
-                        <Box align="center">
+                        <CardFooter
+                            justify="space-between"
+                            flexWrap="wrap"
+                            sx={{
+                                "& > button": {
+                                    minW: "140px",
+                                },
+                            }}>
                             {post.file.endsWith(".png") || post.file.endsWith(".jpg") ? (
                                 <Image src={`/api/File/download/${post.file}`} alt="Imagen" />
                             ) : (
                                 <Button
-                                    w={"430px"}
+                                    w={"205px"}
                                     as="a"
                                     bg="button.100"
                                     _hover={{
@@ -105,7 +106,23 @@ export default function PostsCard({ post, setAllPosts, allPosts }) {
                                     Descargar Documento
                                 </Button>
                             )}
-                        </Box>
+                            {post.file.endsWith(".png") || post.file.endsWith(".jpg") ? (
+                                <Image src={`/api/File/download/${post.file}`} alt="Imagen" />
+                            ) : (
+                                <Button
+                                    w={"205px"}
+                                    as="a"
+                                    bg="button.100"
+                                    _hover={{
+                                        bg: "button.200",
+                                    }}
+                                    href={`/api/File/download/${post.file}`}
+                                    leftIcon={<ViewIcon />}
+                                >
+                                    Ver Documento
+                                </Button>
+                            )}
+                        </CardFooter>
                     </>
                 )}
 
