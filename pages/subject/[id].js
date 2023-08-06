@@ -9,6 +9,7 @@ import Layout from "../../components/Layout/Layout";
 import PostsCard from "../../components/Post/PostsCard";
 import CreatePost from "../../components/Post/CreatePost";
 import PaginationControls from "../../components/Post/PaginationControls .js";
+import HeaderCard from "../../components/Cards/HeaderCard";
 
 const PostsSubject = ({ posts, subject }) => {
     const [allPosts, setAllPosts] = useState(posts)
@@ -39,14 +40,17 @@ const PostsSubject = ({ posts, subject }) => {
                 totalPages={totalPages}
                 handlePageChange={handlePageChange}
             />
-            <Box>
+            <Box width="100%" maxW="500px" margin="auto">
                 <Stack>
+                    <HeaderCard title={subject.subjectName} description={subject.description} image={subject.img ? `/uploads/${subject.img.fileName}` : '/default/landscape.jpg"'} 
+                    type={"subject"} id={subject._id}
+                    />
                     <Box display="flex" justifyContent="center">
                         <Button
                             color="white"
                             width="100%"
                             maxWidth="500px"
-                            margin="4"
+                            
                             bg="post.100"
                             borderRadius="md"
                             _hover={{

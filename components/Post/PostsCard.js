@@ -38,15 +38,8 @@ export default function PostsCard({ post, setAllPosts, allPosts }) {
     });
 
     return (
-        <VStack key={post.id} margin={"5"} spacing={4} align="center">
-            <Card
-                color="white"
-                width="100%"
-                maxWidth="500px"
-                margin="auto"
-                bg="post.100"
-                borderRadius="md"
-                p={4}
+        <VStack key={post.id} marginY={4} spacing={4} align="center">
+            <Card color="white" width="100%" maxWidth="500px" margin="auto" bg="post.100" borderRadius="md" p={4}
                 _hover={{
                     bg: "post.200",
                 }}
@@ -58,7 +51,7 @@ export default function PostsCard({ post, setAllPosts, allPosts }) {
                     <Flex spacing="4">
                         {post.creator && ( // Renderiza condicionalmente si post.creator está definido
                             <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
-                                <Link href={`/profile/${creator.id}`}>
+                                <Link href={`/profile/${post.creator._id}`}>
                                     <Flex direction='row' gap={4}>
                                         <Avatar
                                             name={creator.username}
