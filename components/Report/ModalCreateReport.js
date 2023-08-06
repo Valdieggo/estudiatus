@@ -86,8 +86,8 @@ export default function ModalCreateReport({ isOpen, onClose, post }) {
                         </FormControl>
                         <FormControl>
                             <FormLabel>Descripcion</FormLabel>
-                            <Textarea type="description" {...register("description", {required:true})} />
-                            { errors.description && <Text color="red">Este campo es requerido</Text>}
+                            <Textarea type="description" {...register("description", {required:true , minLength : 10})} />
+                            { errors.description && <Text color="red">Este campo es requerido, minimo 15 caracteres </Text>}
                         </FormControl>
                     </Stack>
                 </ModalBody>
