@@ -4,23 +4,22 @@ import Navbar from './Navbar';
 import Sidebar from './SideBar';
 import { useEffect } from 'react';
 const Layout = ({ children, user }) => {
-    useEffect(() => {
-        document.body.style.backgroundColor = "#151f32";
-    }, []);
+  
   return (
     <Box
         color="white"
         w="100%"
         h="100vh"
-        overflowY="auto"
+        overflowY="auto" 
+        bg="bg.100"
     >
-    <Navbar user={user} />
-    <Flex color="white">
-        <Sidebar />
-        <Box flex={1} p={5}>
-        {children}
-        </Box>
-    </Flex>
+      <Navbar user={user} />
+      <Flex color="white">
+          <Sidebar />
+          <Box flex={1} p={5}>
+          {children}
+          </Box>
+      </Flex>
     </Box>
 
   );

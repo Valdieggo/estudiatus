@@ -2,11 +2,12 @@
 import { VStack, Text, CardBody, IconButton, Box, Heading, Flex, Card, CardHeader, Image, CardFooter, Button, Avatar, Icon } from "@chakra-ui/react";
 import { ChatIcon, ArrowUpIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import LikePostButton from "./LikePostButton";
-import PopOptions from "./PopOptions";
+import MenuPost from "./MenuPost";
+
 export default function PostCard({ post }) {
     return (
-        <VStack margin={"5"} spacing={4} align="center">
-            <Card color="white" width="100%" maxWidth="500px" margin="auto" bg="post.100" borderRadius="md" p={4}
+        <VStack spacing={4} align="center">
+            <Card color="white" width="100%" margin="auto" bg="post.100" borderRadius="md" p={4}
                 _hover={{
                     bg: "post.200",
                 }} >
@@ -20,7 +21,7 @@ export default function PostCard({ post }) {
                                 <Text>{post.creator.role} </Text>
                             </Box>
                         </Flex>
-                        <PopOptions post={post} />
+                        <MenuPost post={post} />
                     </Flex>
                 </CardHeader>
                 <CardBody>

@@ -19,10 +19,14 @@ export default function Post({ post }) {
         <Layout>
         <Box width="100%" maxWidth="500px" margin="auto"> {/* Contenedor común para asegurar el ancho máximo */}
             <PostCard post={post} />
-            <VStack spacing={4} align="center">
+            <VStack spacing={0} align="center">
+            <Box width="4px" bg="white" color="white" height="10px" marginRight="425px"></Box>
             <AddCommentCard post={post} setComments={setComments} comments={comments} />
             {comments && [...comments].reverse().map((comment) => (
+                <>
+                <Box width="4px" bg="white" color="white" height="10px" marginRight="425px"></Box>
                 <CommentCard key={comment._id} comment={comment} setComments={setComments} comments={comments} />
+                </>
             ))}
             </VStack>
         </Box>

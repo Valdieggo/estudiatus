@@ -1,13 +1,12 @@
 import { VStack, Text, CardBody, IconButton, Box, Heading, Flex, Card, CardHeader, Image, CardFooter, Button, Avatar, Icon, Tag, TagLabel, TagCloseButton, HStack } from "@chakra-ui/react";
 import { ChatIcon, DownloadIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import LikePostButton from "./LikePostButton";
-import PopOptions from "./PopOptions";
+
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 import axios from "axios";
-
-
+import FavPostButton from "./FavPostButton";
 
 export default function PostsCard({ post, setAllPosts, allPosts }) {
     const { creator } = post;
@@ -62,7 +61,7 @@ export default function PostsCard({ post, setAllPosts, allPosts }) {
                         {isAdmin || isCreatorId ? (
                             <Button onClick={handleDeletePost}>X</Button>
                         ) : null}
-                        <PopOptions post={post} />
+                        <FavPostButton post={post} />
                     </Flex>
                 </CardHeader>
                 <CardBody>
