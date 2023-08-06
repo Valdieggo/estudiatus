@@ -2,6 +2,7 @@ import { connectToDatabase } from "../../../utils/db";
 import Comment from "../../../models/Comment";
 import User from "../../../models/User";
 import Post from "../../../models/Post";
+import sendMail from "../../../utils/mail";
 
 export default async function handler(req, res) {
     connectToDatabase();
@@ -41,6 +42,12 @@ export default async function handler(req, res) {
                 postDocument.comments.push(comment._id);
                 await userDocument.save();
                 await postDocument.save();
+
+                // Send email to the post creator
+                const postCreator = await User.findById(postDocument.creator);
+                const subject = "Tienes un nuevo comentario! 🎉";
+                const emailHtml = `Hola ${postCreator.username},\n\nTu post "${postDocument.title}" tiene un nuevo comentario.\n\nPuedes verlo en: ${process.env.NEXTAUTH_URL}/post/${postDocument._id}\n\nSaludos,\nEstudiatus`;
+                sendMail(postCreator.email, postCreator.username, subject, emailHtml);
 
                 const commentPopulated = await Comment.findById(comment._id).populate('creator');
 
