@@ -1,5 +1,6 @@
 import { connectToDatabase } from "../../../../utils/db";
 import Subject from "../../../../models/Subject";
+import File from "../../../../models/File";
 
 export default async function handler(req, res) {
     const { method } = req;
