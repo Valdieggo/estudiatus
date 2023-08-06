@@ -96,23 +96,26 @@ export default function PostsCard({ post, setAllPosts, allPosts }) {
                                     minW: "140px",
                                 },
                             }}>
-                                {post.file.endsWith(".png") || post.file.endsWith(".jpg") ? (
-                                    <Image src={`/api/File/download/${post.file}`} alt="Imagen" />
-                                ) : (
-                                    <Button
-                                        w={"205px"}
-                                        as="a"
-                                        bg="button.100"
-                                        _hover={{
-                                            bg: "button.200",
-                                        }}
-                                        download={`/api/File/download/${post.file}`}
-                                        href={`/api/File/download/${post.file}`}
-                                        leftIcon={<DownloadIcon />}
-                                    >
-                                        Descargar Documento
-                                    </Button>
-                                )}
+                            {post.file.endsWith(".png") || post.file.endsWith(".jpg") ? (
+                                <Image src={`/api/File/download/${post.file}`} alt="Imagen" />
+                            ) : (
+                                <Button
+                                    w={"205px"}
+                                    as="a"
+                                    bg="button.100"
+                                    _hover={{
+                                        bg: "button.200",
+                                    }}
+                                    download={`/api/File/download/${post.file}`}
+                                    href={`/api/File/download/${post.file}`}
+                                    leftIcon={<DownloadIcon />}
+                                >
+                                    Descargar Documento
+                                </Button>
+                            )}
+                            {post.file.endsWith(".png") || post.file.endsWith(".jpg") ? (
+                                <Image src={`/api/File/download/${post.file}`} alt="Imagen" />
+                            ) : (
                                 <Button
                                     w={"205px"}
                                     as="a"
@@ -125,6 +128,7 @@ export default function PostsCard({ post, setAllPosts, allPosts }) {
                                 >
                                     Ver Documento
                                 </Button>
+                            )}
                         </CardFooter>
                     </>
                 )}
