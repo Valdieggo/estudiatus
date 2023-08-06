@@ -1,6 +1,5 @@
-import { Box, Card, CardBody, CardHeader, CardFooter, VStack, Text, Button, IconButton, Stack, Flex, Avatar, Heading } from "@chakra-ui/react";
+import { Box, Link, Card, CardBody, CardHeader, CardFooter, VStack, Text, Button, IconButton, Stack, Flex, Avatar, Heading } from "@chakra-ui/react";
 import Image from "next/image";
-import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import axios from "axios";
@@ -28,19 +27,22 @@ export default function CommentCard({ comment, setComments, comments }) {
     };
 
     return (
-        <Card color="white" width="100%"  margin="auto" bg="post.100" borderRadius="md" p={4}
+        <Card color="white" width="100%" maxWidth="475px" margin="auto" bg="post.100" borderRadius="md" p={4}
             _hover={{
                 bg: "post.200",
             }} >
             <CardHeader >
                 <Flex spacing='4'>
                     <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-                        <Avatar name={creator.username} src='https://bit.ly/broken-link' bg='blue.700' color='white' />
-
-                        <Box>
-                            <Heading size='sm'>{creator.username}</Heading>
-                            <Text>{creator.role} </Text>
-                        </Box>
+                        <Link href={`/profile/${creator.id}`}>
+                            <Flex direction='row' gap={4}>
+                            <Avatar name={creator.username} src='https://bit.ly/broken-link' bg='blue.700' color='white' />
+                            <Box>
+                                <Heading size='sm'>{creator.username}</Heading>
+                                <Text>{creator.role} </Text>
+                            </Box>
+                            </Flex>
+                        </Link>
                     </Flex>
                     <MenuComment comment={comment} comments={comments} setComments={setComments}/>
                 </Flex>
@@ -61,14 +63,14 @@ export default function CommentCard({ comment, setComments, comments }) {
                 }}
             >
                 <LikeCommentButton comment = {comment} />
-                <Button type="button"
+                {/*<Button type="button"
                     bg="button.100"
                     width="48%"
                     _hover={{
                         bg: "button.200",
                     }} leftIcon={<ChatIcon />}>
                     Responder
-                </Button>
+                </Button>*/}
             </CardFooter>
         </Card>
   );

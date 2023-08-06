@@ -10,7 +10,7 @@ export default async function handler(req, res) {
     switch (method) {
         case "POST":
             try {
-                const { creator, text, postId, parent } = req.body;
+                const { creator, text, postId } = req.body;
 
                 if (!creator || !text || !postId) {
                     return res.status(400).json({ success: false, message: "Missing fields" });
@@ -34,9 +34,12 @@ export default async function handler(req, res) {
                     //parent
                 });
 
-                //user.comments.push(comment);
-                postDocument.comments.push(comment);
-                //await user.save();
+                if(userDocument.comments === undefined){
+                    userDocument.comments = [];
+                }
+                userDocument.comments.push(comment._id);
+                postDocument.comments.push(comment._id);
+                await userDocument.save();
                 await postDocument.save();
 
                 const commentPopulated = await Comment.findById(comment._id).populate('creator');
@@ -44,7 +47,7 @@ export default async function handler(req, res) {
                 return res.status(201).json({ success: true, data: commentPopulated });
             }
             catch (error) {
-                return res.status(400).json({ success: false, message: error });
+                return res.status(400).json({ success: false, message: "ansdjkadsnkaj" });
             }
         default:
             return res.status(400).json({ success: false });
