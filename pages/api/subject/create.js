@@ -4,7 +4,7 @@ import Career from "../../../models/Career";
 
 export default async function handler(req, res) {
     const { method } = req;
-    const { subjectName, career, description } = req.body;
+    const { subjectName, career, description, img } = req.body;
     if (!subjectName) {
         return res.status(400).json({ success: false, message: "Empty subjectName" });
     }
@@ -40,7 +40,8 @@ export default async function handler(req, res) {
                 const subject = await Subject.create({
                     subjectName,
                     description,
-                    career
+                    career,
+                    img
                 });
                 await Career.findByIdAndUpdate(career, {
                     $push: { subjects: subject._id }

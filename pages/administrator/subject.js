@@ -171,11 +171,13 @@ export default function Home() {
         const messageSuccess = "Subject updated successfully";
         const messageError = "Error updating the subject";
         console.log(id, name, description, career);
+        const idImage = await Upload(image);
 
         const response = await axios.put(`/api/subject/update`, {
             id: id,
             subjectName: name,
-            description: description
+            description: description,
+            img: idImage,
 
         }).then((res) => {
             showSuccessToast(messageSuccess);
@@ -193,18 +195,18 @@ export default function Home() {
         const messageError = "Error creating subject";
 
         const idImage = await Upload(image);
-        console.log(idImage)
-        /**
         const response = await axios.post(`/api/subject/create`, {
             subjectName: name,
-            description: description
+            career: career,
+            description: description,
+            img: idImage
         }).then((res) => {
             showSuccessToast(messageSuccess);
         }).catch((err) => {
+            console.log(err)
             showErrorToast(messageError);
         })
         getSubject();
-         */
         onCloseCreate();
     }
 
@@ -261,7 +263,10 @@ export default function Home() {
                                 <FormLabel>Description</FormLabel>
                                 <Input placeholder="Description" onChange={handleDescriptionChange} />
                             </FormControl>
-
+                            <FormControl>
+                                <FormLabel>Imagen</FormLabel>
+                                <Input placeholder="Image" type="file" onChange={handleImageChange} accept="image/*" />
+                            </FormControl>
 
                         </ModalBody>
 

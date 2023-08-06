@@ -51,24 +51,22 @@ export default function PostsCard({ post, setAllPosts, allPosts }) {
             >
                 <CardHeader>
                     <Flex spacing="4">
-                        {post.creator && (
-                            <Flex
-                                flex="1"
-                                gap="4"
-                                alignItems="center"
-                                flexWrap="wrap"
-                            >
-                                <Avatar
-                                    name={creator.username}
-                                    src="https://bit.ly/broken-link"
-                                    bg="blue.700"
-                                    color="white"
-                                />
-                                <Box>
-                                    <Heading size="sm">{creator.username}</Heading>
-                                    <Text>Creator, {creator.role}</Text>
-                                </Box>
-                                <p>Creado: {timeAgo} </p>
+                        {post.creator && ( // Renderiza condicionalmente si post.creator está definido
+                            <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
+                                <Link href={`/profile/${post.creator.id}`}>
+                                    <Flex direction='row' gap={4}>
+                                        <Avatar
+                                            name={post.creator.username}
+                                            src="https://bit.ly/broken-link"
+                                            bg="blue.700"
+                                            color="white"
+                                        />
+                                        <Box>
+                                            <Heading size="sm">{post.creator.username}</Heading>
+                                            <Text>Creator, {post.creator.role}</Text>
+                                        </Box>
+                                    </Flex>
+                                </Link>
                             </Flex>
                         )}
                         <MenuPost
@@ -115,10 +113,8 @@ export default function PostsCard({ post, setAllPosts, allPosts }) {
                         },
                     }}
                 >
-                    <LikePostButton post={post} />
-                    <Button
-                        onClick={() => router.push(`/post/${post._id}`)}
-                        type="button"
+                    <LikePostButton post={post} isList={true}/>
+                    <Button onClick={() => router.push(`/post/${post._id}`)} type="button"
                         bg="button.100"
                         width="48%"
                         _hover={{
