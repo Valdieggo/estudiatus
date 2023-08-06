@@ -7,7 +7,7 @@ import User from "../../../models/User";
 
 export default async function handler(req, res) {
     const { method } = req;
-    const { title, content, score, view, creator, subject,likes } = req.body;
+    const { title, content,file, score, view, creator, subject,likes } = req.body;
 
     if (!title || !content ||!creator) {
         return res.status(400).json({ success: false, message: "Empty fields" });
@@ -23,19 +23,30 @@ export default async function handler(req, res) {
                     const post = await Post.create({
                         title,
                         content,
+                        file,
                         likes,
                         score,
                         view,
                         creator,
                         subject,
                     });
-                    const postPopulated = await Post.findById(post._id).populate('creator', 'subject');
+                    const postPopulated = await Post.findById(post._id)
+                        .populate({
+                            path: "creator",
+                            ref: "User",
+                        })
+                        .populate({
+                            path: "subject",
+                            ref: "Subject",
+                        })
+
                     await User.findByIdAndUpdate(creator, {
                         $push: { posts: post._id }
                     });
                     await Subject.findByIdAndUpdate(subject, {
                         $push: { posts: post._id }
                     });
+
                     return res.status(200).json({ success: true, data: postPopulated });
                 }
                 catch (error) {
