@@ -29,7 +29,11 @@ const SubjectSchema = new mongoose.Schema({
     career: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Career",
-    }
+    },
+    img: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "File"
+    },
 })
 
 module.exports =  mongoose.models.Subject || mongoose.model("Subject", SubjectSchema);

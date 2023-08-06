@@ -1,5 +1,5 @@
 import {useSession} from "next-auth/react"
-import { VStack, Text, CardBody, IconButton, Box, Card, CardHeader, Image, Button, useDisclosure } from "@chakra-ui/react";
+import { VStack, Input, CardBody, IconButton, Box, Card, CardHeader, Image, Button, useDisclosure } from "@chakra-ui/react";
 import { ChatIcon } from "@chakra-ui/icons";
 
 import {useState} from "react"
@@ -8,19 +8,22 @@ import {Textarea, Spinner} from "@chakra-ui/react"
 import {useRouter} from "next/router"
 import {useEffect} from "react"
 import LoginModal from "../Auth/LoginModal"
+import Upload from "../../components/File/Upload.js"
 
 
-export default function CreatePost({posts, subject }) {
+export default function CreatePost({ allPosts ,setAllPosts, subject }) {
     const { data: session, status } = useSession();
     const [isAddingPost, setIsAddingPost] = useState(false);
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const router = useRouter();
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
-    const [allPosts, setAllPosts] = useState(posts);
+    const [file,setFile] = useState("");
 
-    const handleAddPost = () => {
+
+
+    const handleAddPost = async () => {
         if (status === "authenticated") {
+            const idfile = await Upload(file)
             setIsAddingPost(true);
             axios
             .post(`http://localhost:3000/api/post/create`, {
@@ -28,16 +31,17 @@ export default function CreatePost({posts, subject }) {
                 content: content,
                 creator: session.user.id,
                 subject: subject._id,
+                file: idfile,
             })
                 .then((res) => {
+                    console.log(idfile);
                     setTitle("");
                     setContent("");
-                    setAllPosts((prevPosts) => [...prevPosts, res.data.data]);
+                    setAllPosts((allPosts) => [res.data.data,...allPosts]);
                     setIsAddingPost(false);
-                    router.reload();
                 })
                 .catch((err) => {
-                    console.log("");
+                    console.log(err)
                     setIsAddingPost(false);
                 });
         } else {
@@ -45,6 +49,11 @@ export default function CreatePost({posts, subject }) {
         }
     };
 
+
+
+    const handlerUpdate =(e)=>{
+        setFile(e.target.files[0]);
+    }
 
     const handlerTitle = (e) => {
         setTitle(e.target.value);
@@ -79,6 +88,8 @@ export default function CreatePost({posts, subject }) {
             onChange={handlerContent}
             my={4}
         />
+        <Input placeholder="Image" type="file" onChange={handlerUpdate} accept=".jpg, .jpeg, .png, .gif, .pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx, .txt"
+/>
 
         <Button
             type="button"

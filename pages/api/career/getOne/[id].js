@@ -1,6 +1,7 @@
 import { connectToDatabase } from "../../../../utils/db";
 import Career from "../../../../models/Career";
 import Subject from "../../../../models/Subject";
+import File from "../../../../models/File";
 
 export default async function handler(req, res) {
     const { method } = req;
@@ -19,6 +20,10 @@ export default async function handler(req, res) {
                 .populate({
                     path: "subjects",
                     model: "Subject",
+                    populate: {
+                        path: "img",
+                        model: "File",
+                    }
                 })
                 return res.status(200).json({success: true, data: career});
             }

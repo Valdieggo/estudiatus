@@ -23,10 +23,9 @@ const Career = (data) => {
                 <Card
                     key={career._id}
                     title={career.careerName}
-                    image={"/lol.jpg"}
                     description={career.description}
                     link={`/career/${career._id}`}
-                    top={`${career.subjects.length} ${career.subjects.length !== 1 ? "publicaciones" : "publicación"}`} />
+                    top={`${career.subjects.length} ${career.subjects.length !== 1 ? "Asignaturas" : "Asignatura"}`} />
             ))}
         </>
         )

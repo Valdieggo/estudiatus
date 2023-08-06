@@ -7,7 +7,7 @@ import { useSession } from "next-auth/react";
 import { useDisclosure } from '@chakra-ui/react'
 import LoginModal from "../Auth/LoginModal.js";
 
-export default function LikePostButton({ post }) {
+export default function LikePostButton({ post, isList}) {
     const { data: session, status } = useSession();
     const [isLiked, setIsLiked] = useState(false);
     const [likeCount, setLikeCount] = useState(post.likes.length);
@@ -50,11 +50,11 @@ export default function LikePostButton({ post }) {
     };
 
     const buttonColor = isLiked ? "button.200" : "button.100";
-
+    const buttonWidth = isList ? "48%" : "full";
     return (
         <Button type="button"
             bg={buttonColor}
-            width="48%"
+            width={buttonWidth}
             onClick={handleLike}
             isDisabled={isLiking}
             _hover={{

@@ -37,7 +37,7 @@ export default function Home(data) {
                         image={"/lol.jpg"}
                         description={career.description}
                         link={`/career/${career._id}`}
-                        top={`${career.subjects.length} ${career.subjects.length !== 1 ? "asignaturas" : "asignatura"}`} />
+                        top={`${career.subjects.length} ${career.subjects.length !== 1 ? "Carreras" : "Carrera"}`} />
                 ))}
             </>
             )

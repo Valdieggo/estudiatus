@@ -37,7 +37,7 @@ export default function FavPostButton({ post }) {
         if (status === "authenticated") {
             const userId = session.user.id;
             const postId = post._id;
-            axios.post("/api/post/getUserFav", { userId, postId })
+            axios.post("/api/user/getPostFav", { userId, postId })
                 .then((res) => {
                     setIsFav(res.data.data);
                 })
