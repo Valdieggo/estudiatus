@@ -1,7 +1,7 @@
 import { Card, CardBody, CardFooter, Heading, Image, Stack, Text, Button } from '@chakra-ui/react';
+import SubscribeButton from '../Subscribe/SubButton';
 
-
-export default function HeaderCard({ title, image, description, link, top, footer, children }) {
+export default function HeaderCard({ title, image, description, type, id }) {
     return (
         <Card
         direction={{ base: 'column', sm: 'row' }}
@@ -28,9 +28,7 @@ export default function HeaderCard({ title, image, description, link, top, foote
             </CardBody>
 
             <CardFooter>
-            <Button variant='solid' colorScheme='blue'>
-                Suscribirse
-            </Button>
+                <SubscribeButton type={type} id={id} />
             </CardFooter>
         </Stack>
         </Card>

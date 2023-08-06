@@ -2,7 +2,7 @@ import Head from "next/head";
 import Layout from "../../components/Layout/Layout";
 import axios from "axios";
 import Card from "../../components/Cards/card";
-import { Text, Center } from '@chakra-ui/react'
+import { Text, Center, Box } from '@chakra-ui/react'
 import HeaderCard from "../../components/Cards/HeaderCard";
 export const getServerSideProps = async (context) => {
     const { id } = context.query;
@@ -23,7 +23,7 @@ export default function Home(res) {
     const displayCard = () => {
         if (career.subjects) return (<>
             {career.subjects.map((subject) => (
-                <Card
+                 <Card
                     key={subject._id}
                     title={subject.subjectName}
                     image={subject.img ? `/uploads/${subject.img.fileName}` : null}
@@ -40,9 +40,10 @@ export default function Home(res) {
                 <title>{career.careerName}</title>
             </Head>
             <Layout>
-
-                <HeaderCard title={career.careerName} description={career.description} />
+                <HeaderCard title={career.careerName} description={career.description} image={career.image} type={"career"} id={career._id}/>
+                <Box p={4}>
                 {displayCard()}
+                </Box>
             </Layout>
         </>
     )
