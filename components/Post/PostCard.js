@@ -3,6 +3,7 @@ import { VStack, Text, CardBody, IconButton, Box, Heading, Flex, Card, CardHeade
 import { ChatIcon, ArrowUpIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import LikePostButton from "./LikePostButton";
 import MenuPost from "./MenuPost";
+import FavPostButton from "./FavPostButton";
 
 export default function PostCard({ post }) {
     return (
@@ -21,6 +22,7 @@ export default function PostCard({ post }) {
                                 <Text>{post.creator.role} </Text>
                             </Box>
                         </Flex>
+                        <FavPostButton post={post} />
                         <MenuPost post={post} />
                     </Flex>
                 </CardHeader>
