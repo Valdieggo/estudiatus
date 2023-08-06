@@ -9,7 +9,9 @@ import {
     Flex,
 } from '@chakra-ui/react'
 import axios from 'axios';
+import { useSession } from 'next-auth/react';
 export default function ModalDeletePost({ isOpen, onClose, onOpen, post, allPosts, setAllPosts }) {
+    
     const { creator } = post;
 
     let isCreatorId = false;

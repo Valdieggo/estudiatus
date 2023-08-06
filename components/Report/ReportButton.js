@@ -11,7 +11,6 @@ export default function MenuReport({ post }) {
             <Text mr={2}>Reportar</Text>
             <ModalCreateReport isOpen={isOpen} onClose={onClose} post={post} />
         </Flex>
-       
         </>
     );
 
