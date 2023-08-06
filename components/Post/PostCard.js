@@ -44,15 +44,15 @@ export default function PostCard({ post }) {
                         },
                     }}
                 >
-                    <LikePostButton post = {post} />
-                    <Button type="button"
+                    <LikePostButton post = {post} isList={false}/>
+                    {/*<Button type="button"
                         bg="button.100"
                         width="48%"
                         _hover={{
                             bg: "button.200",
                         }} leftIcon={<ChatIcon />}>
                         Comentar
-                    </Button>
+                    </Button>*/}
                 </CardFooter>
             </Card>
         </VStack>

@@ -52,7 +52,7 @@ export default function PostsCard({ post }) {
                         },
                     }}
                 >
-                    <LikePostButton post={post} />
+                    <LikePostButton post={post} isList={true}/>
                     <Button onClick={() => router.push(`/post/${post._id}`)} type="button"
                         bg="button.100"
                         width="48%"
