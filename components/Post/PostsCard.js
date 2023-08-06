@@ -1,4 +1,4 @@
-import { VStack, Text, CardBody, IconButton, Box, Heading, Flex, Card, CardHeader, Image, CardFooter, Button, Avatar, Icon, Tag, TagLabel, TagCloseButton, HStack } from "@chakra-ui/react";
+import { VStack, Link, Text, CardBody, IconButton, Box, Heading, Flex, Card, CardHeader, Image, CardFooter, Button, Avatar, Icon, Tag, TagLabel, TagCloseButton, HStack } from "@chakra-ui/react";
 import { ChatIcon, ArrowUpIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import LikePostButton from "./LikePostButton";
 
@@ -18,16 +18,20 @@ export default function PostsCard({ post }) {
                     <Flex spacing="4">
                         {post.creator && ( // Renderiza condicionalmente si post.creator está definido
                             <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
-                                <Avatar
-                                    name={post.creator.username}
-                                    src="https://bit.ly/broken-link"
-                                    bg="blue.700"
-                                    color="white"
-                                />
-                                <Box>
-                                    <Heading size="sm">{post.creator.username}</Heading>
-                                    <Text>Creator, {post.creator.role}</Text>
-                                </Box>
+                                <Link href={`/profile/${post.creator.id}`}>
+                                    <Flex direction='row' gap={4}>
+                                        <Avatar
+                                            name={post.creator.username}
+                                            src="https://bit.ly/broken-link"
+                                            bg="blue.700"
+                                            color="white"
+                                        />
+                                        <Box>
+                                            <Heading size="sm">{post.creator.username}</Heading>
+                                            <Text>Creator, {post.creator.role}</Text>
+                                        </Box>
+                                    </Flex>
+                                </Link>
                             </Flex>
                         )}
                         <FavPostButton post={post} />

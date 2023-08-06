@@ -1,5 +1,5 @@
 // PostCard.js
-import { VStack, Text, CardBody, IconButton, Box, Heading, Flex, Card, CardHeader, Image, CardFooter, Button, Avatar, Icon } from "@chakra-ui/react";
+import { VStack, Link, Text, CardBody, IconButton, Box, Heading, Flex, Card, CardHeader, Image, CardFooter, Button, Avatar, Icon } from "@chakra-ui/react";
 import { ChatIcon, ArrowUpIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import LikePostButton from "./LikePostButton";
 import MenuPost from "./MenuPost";
@@ -13,15 +13,18 @@ export default function PostCard({ post }) {
                     bg: "post.200",
                 }} >
                 <CardHeader >
-                    <Flex spacing='4'>
-                        <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-                            <Avatar name={post.creator.username} src='https://bit.ly/broken-link' bg='blue.700' color='white' />
-
-                            <Box>
-                                <Heading size='sm'>{post.creator.username}</Heading>
-                                <Text>{post.creator.role} </Text>
-                            </Box>
-                        </Flex>
+                    <Flex spacing='4' justifyItems='between'>
+                            <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
+                            <Link href={`/profile/${post.creator._id}`}>
+                                <Flex direction='row' gap={4}>
+                                    <Avatar name={post.creator.username} src='https://bit.ly/broken-link' bg='blue.700' color='white' />
+                                    <Box>
+                                        <Heading size='sm'>{post.creator.username}</Heading>
+                                        <Text>{post.creator.role} </Text>
+                                    </Box>
+                                </Flex>
+                             </Link>
+                            </Flex>
                         <FavPostButton post={post} />
                         <MenuPost post={post} />
                     </Flex>
