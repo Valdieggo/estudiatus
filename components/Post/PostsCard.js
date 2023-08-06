@@ -102,7 +102,7 @@ export default function PostsCard({ post, setAllPosts, allPosts }) {
                                     href={`/api/File/download/${post.file}`}
                                     leftIcon={<DownloadIcon />}
                                 >
-                                    Ver Documento
+                                    Descargar Documento
                                 </Button>
                             )}
                         </Box>
