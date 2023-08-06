@@ -17,6 +17,7 @@ import {
     TagLabel,
     TagCloseButton,
     HStack,
+    Link
 } from "@chakra-ui/react";
 import {
     ChatIcon,
