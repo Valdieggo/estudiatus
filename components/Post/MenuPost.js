@@ -3,7 +3,9 @@ import { Button, Icon, Menu, MenuButton, MenuDivider, MenuGroup, MenuItem, MenuL
 import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 import ReportButton from '../Report/ReportButton';
-export default function MenuPost({ post }) {
+import DeleteButtonPost from './DeleteButtonPost';
+
+export default function MenuPost({ post,allPosts, setAllPosts }) {
     const { data: session, status } = useSession();
     return (
         <Menu gutter={0}>
@@ -16,15 +18,15 @@ export default function MenuPost({ post }) {
         </MenuButton>
         <MenuList color="#67686B" p={0} bg="none">
             {
-                post?.creator?._id === session?.user?.id 
-                && 
+                post?.creator?._id === session?.user?.id
+                &&
                 <MenuItem>
-                   Eliminar añadir boton aca
+                    <DeleteButtonPost post={post} allPosts={allPosts} setAllPosts={setAllPosts}/>
                 </MenuItem>
             }
             {
-                post?.creator?._id !== session?.user?.id 
-                && 
+                post?.creator?._id !== session?.user?.id
+                &&
                 <MenuItem >
                     <ReportButton post={post}/>
                 </MenuItem>
