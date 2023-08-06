@@ -1,14 +1,10 @@
 import { Tab, Tabs, TabList, TabPanel, TabPanels, Box } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import PostCard from "../Post/PostCard";
+import PostsCard from "../Post/PostsCard";
 import CommentCard from "../Comment/CommentCard";
 
 export default function TabProfile({ user }) {
-    
-    const [posts, setPosts] = useState([]);
-    const [comments, setComments] = useState([]);
-    const [favorites, setFavorites] = useState([]);
   
     return (
     <Box
@@ -48,12 +44,12 @@ export default function TabProfile({ user }) {
         <TabPanels>
           <TabPanel>
             {user.posts.map((post) => (
-              <PostCard key={post._id} post={post} />
+              <PostsCard key={post._id} post={post} />
             ))}
           </TabPanel>
           <TabPanel>
             {user.favs.map((fav) => (
-              <PostCard key={fav._id} post={fav} />
+              <PostsCard key={fav._id} post={fav} />
             ))}
 
           </TabPanel>
