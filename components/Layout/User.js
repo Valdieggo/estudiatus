@@ -17,7 +17,6 @@ import {
 
 export default function User() {
     const { data: session, status } = useSession();
-
     if (status === "authenticated") {
         return (
             <Menu>
@@ -45,12 +44,14 @@ export default function User() {
 
                 <MenuList color="#67686B">
                     <MenuGroup color="#000">
-                        <MenuItem>
-                            <Link href="/profile">Perfil</Link>
-                        </MenuItem>
+                        <Link href={`/profile/${session.user.id}`} >
+                            <MenuItem>
+                                Perfil
+                            </MenuItem>
+                        </Link>
                         <MenuItem>Configuración</MenuItem>
                         <MenuItem>
-                            <Link href="/appeals">Mis apelaciones</Link>
+                            <Link href="/appeals" w="full">Mis apelaciones</Link>
                         </MenuItem>
                     </MenuGroup>
                     <MenuDivider />
