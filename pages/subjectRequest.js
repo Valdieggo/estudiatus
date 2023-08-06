@@ -10,12 +10,47 @@ import {
     Button,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
-//import axios from "axios";
+import axios from "axios";
+import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
 
 export default function SubjectRequest() {
     const { register, handleSubmit } = useForm();
+    const [collegeList, setCollegeList] = useState([]);
+    const [careerList, setCareerList] = useState([]);
+    const { data: session } = useSession();
 
-    const submitRequest = () => {};
+    const submitRequest = (data) => {
+        console.log("register:", data.subjectName);
+        const response = axios.post("../api/subject_request/create", {
+            subjectName: data.subjectName,
+            college: data.college,
+            career: data.career,
+            description: data.description,
+            requestingUser: session.user.id,
+        });
+    };
+
+    const handleCollege = async () => {
+        const response = await axios.get(
+            "http://localhost:3000/api/college/getAll"
+        );
+        const collegeList = response.data.data;
+        setCollegeList(collegeList);
+    };
+
+    const handleCareer = async () => {
+        const response = await axios.get(
+            "http://localhost:3000/api/career/getAll"
+        );
+        const careerList = response.data.data;
+        setCareerList(careerList);
+    };
+
+    useEffect(() => {
+        handleCollege();
+        handleCareer();
+    }, []);
 
     return (
         <Layout>
@@ -43,8 +78,11 @@ export default function SubjectRequest() {
                             placeholder="Selecciona una Universidad"
                             {...register("college", { required: true })}
                         >
-                            <option value="option1">Option 1</option>
-                            <option value="option2">Option 2</option>
+                            {collegeList.map((college) => (
+                                <option key={college._id} value={college._id}>
+                                    {college.collegeName}
+                                </option>
+                            ))}
                         </Select>
                     </FormControl>
                     <FormControl>
@@ -53,8 +91,11 @@ export default function SubjectRequest() {
                             placeholder="Selecciona una carrera"
                             {...register("career", { required: true })}
                         >
-                            <option value="option1">Option 1</option>
-                            <option value="option2">Option 2</option>
+                            {careerList.map((career) => (
+                                <option key={career._id} value={career._id}>
+                                    {career.careerName}
+                                </option>
+                            ))}
                         </Select>
                     </FormControl>
                     <FormControl>
