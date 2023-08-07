@@ -81,7 +81,7 @@ export default function PostsCard({ post, setAllPosts, allPosts, title,subjectId
                 <CardBody>
                     <Text>{post.content}</Text>
                 </CardBody >
-                <Image src={`/api/File/download/${post.file}`} alt="Imagen" />
+                <Image src={`/api/File/download/${post.file}`}/>
 
                 {post.file && (
                     <>
