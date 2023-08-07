@@ -3,8 +3,8 @@ import SubscribeButton from '../Subscribe/SubButton';
 
 export default function HeaderCard({ title, image, description, type, id }) {
     const defaultImage = "/default/landscape.jpg";
-
     if(!image) image = defaultImage;
+    console.log(image)
     return (
         <Card
         direction={{ base: 'column', sm: 'row' }}

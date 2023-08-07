@@ -14,9 +14,8 @@ export const getServerSideProps = async () => {
     };
 }
 
-const Career = (data) => {
-    const {careers} = data;
-    
+const Career = ({ careers }) => {
+
     const displayCard = () => {
         return (<>
             {careers.map((career) => (
@@ -30,7 +29,7 @@ const Career = (data) => {
         </>
         )
     }
-    
+
     return (
         <>
             <Head>

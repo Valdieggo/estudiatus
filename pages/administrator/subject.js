@@ -1,7 +1,6 @@
 import Head from "next/head";
 import Layout from "../../components/Layout/Layout";
 import Upload from "../../components/File/Upload";
-import { ErrorAlert, SucessAlert, WarningAlert, InfoAlert } from "../../components/Alert/Alert";
 import verifyAdmin from "../../utils/verifyAdmin";
 import { useEffect, useState, useRef } from "react";
 import axios from "axios";
@@ -27,17 +26,15 @@ import {
     Td,
     TableCaption,
     Button,
-    useToast,
     useDisclosure,
     Box,
     Heading,
     Link,
     Text,
-    Alert,
-    AlertIcon,
-    AlertTitle,
-    AlertDescription,
+    useToast
+
 } from '@chakra-ui/react'
+import { set } from "date-fns";
 
 
 export const getServerSideProps = async () => {
@@ -58,6 +55,8 @@ export default function Home(data) {
     //mas adelante se puede exportar a otro archivo de idioma
     const texto = {
         "title": "Administración de asignaturas",
+        "error": "Error",
+        "success": "Éxito",
         "subtitle": "Lista de asignaturas",
         "create": "Crear asignatura",
         "name": "Nombre",
@@ -84,11 +83,6 @@ export default function Home(data) {
         "noDataImage": "No se han encontrado imágenes",
         "noDataSubject": "No se han encontrado asignaturas",
         "noDataSearch": "No se han encontrado resultados",
-        "noDataSearchCareer": "No results found",
-        "noDataSearchImage": "No results found",
-        "noDataSearchSubject": "No results found",
-        "noDataSearchCareerImage": "No results found",
-        "noDataSearchCareerSubject": "No results found",
 
         "messageSubjectCreateSuccess": "Asignatura creada correctamente",
         "messageSubjectCreateError": "Error al crear la asignatura",
@@ -100,19 +94,19 @@ export default function Home(data) {
         "messageSubjectDeleteError": "Error al eliminar la asignatura",
     }
     //cambio formato fecha
-    const { careers, subjects } = data;
     const moment = require('moment');
-    const toast = useToast();
-    const toastIdRef = useRef();
+    const toast = useToast()
 
     // para editar
+    const [subjects, setSubjects] = useState(data.subjects);
+    const [careers, setCareers] = useState(data.careers);
     const [id, setId] = useState("");
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
-    const [search, setSearch] = useState("");
     const [career, setCareer] = useState("");
     const [image, setImage] = useState("");
-
+    const [filteredSubjects, setfilteredSubjects] = useState(subjects);
+    const inputRef = useRef();
     // modal
     const { isOpen, onOpen, onClose } = useDisclosure()
     const {
@@ -122,21 +116,17 @@ export default function Home(data) {
     } = useDisclosure()
     const initialRef = useRef(null)
 
-    // *****************************************************
 
 
     // *****************************************************
 
 
-    const deleteSubject = async (id) => {
-        const response = await axios.delete(`/api/subject/delete/${id}`).then((res) => {
-            subjects.splice(subjects.findIndex((element) => element._id === id), 1);
-            showSuccessToast(texto.messageSubjectDeleteSuccess);
-        }).catch((err) => {
-            showErrorToast(texto.messageSubjectDeleteError);
-        })
-    };
 
+
+
+
+
+    //**** */
     //obtiene el nombre de todas las carreras con las id  que aparecieron en subjects y luego se las agrega a subject
 
     const handleImageChange = (e) => {
@@ -160,74 +150,75 @@ export default function Home(data) {
         onOpen();
     }
 
-
-
-
-    //constante para el toast
-    const showSuccessToast = (message) => {
+    const SuccessToast = (title, description) => {
         toast({
-            position: 'bottom-right',
-            title: "Success.",
-            description: message,
+            title: title,
+            description: description,
             status: "success",
-            duration: 2000,
+            duration: 3000,
             isClosable: true,
+            position: 'bottom-right'
         })
     }
 
-    const showErrorToast = (message) => {
+    const ErrorToast = (title, description) => {
         toast({
-            position: 'bottom-right',
-            title: "Error.",
-            description: message,
+            title: title,
+            description: description,
             status: "error",
-            duration: 2000,
+            duration: 3000,
             isClosable: true,
+            position: 'bottom-right'
         })
     }
 
+    const handleSearch = (e) => {
+        const search = e.target.value.toLowerCase();
+        if (search.length > 0) {
+            setfilteredSubjects(subjects.filter((subject) => {
+                return subject.subjectName.toLowerCase().match(search);
+            }));
+        } else {
+            setfilteredSubjects(subjects);
+        }
 
-    const handleUpdate =  () => {
-        return (
-            <>
-                    <Alert status='success' variant='subtle'>
-                        <AlertIcon />
-                        Data uploaded to the server. Fire on!
-                    </Alert>
+    }
 
-                    <Alert status='success' variant='solid'>
-                        <AlertIcon />
-                        Data uploaded to the server. Fire on!
-                    </Alert>
+    const deleteSubject = async (id) => {
+        await axios.delete(`/api/subject/delete/${id}`).then((res) => {
+            setSubjects(subjects.filter((subject) => subject._id !== id));
+            SuccessToast(texto.success, texto.messageSubjectDeleteSuccess);
+        }).catch((err) => {
+            ErrorToast(texto.error, texto.messageSubjectDeleteError);
+        })
+    };
 
-                    <Alert status='success' variant='left-accent'>
-                        <AlertIcon />
-                        Data uploaded to the server. Fire on!
-                    </Alert>
-
-                    <Alert status='success' variant='top-accent'>
-                        <AlertIcon />
-                        Data uploaded to the server. Fire on!
-                    </Alert>
-            </>
-        )
-
-        /* 
+    const handleUpdate = async () => {
         const idImage = await Upload(image);
 
-        const response = await axios.put(`/api/subject/update`, {
+        await axios.put(`/api/subject/update`, {
             id: id,
             subjectName: name,
             description: description,
             img: idImage,
 
         }).then((res) => {
-            showSuccessToast(texto.messageSubjectUpdateSuccess);
+            setSubjects(subjects.map((subject) => {
+                if (subject._id === id) {
+                    return {
+                        ...subject,
+                        subjectName: name,
+                        description: description,
+                        img: idImage,
+                    }
+                }
+                return subject;
+            }));
+            SuccessToast(texto.messageSubjectUpdateSuccess);
         }).catch((err) => {
-            showErrorToast(texto.messageSubjectUpdateError);
+            ErrorToast(texto.messageSubjectUpdateError);
             //html: err.response.data.message,
         })
-        */
         onClose();
     }
 
@@ -239,51 +230,25 @@ export default function Home(data) {
             description: description,
             img: idImage
         }).then((res) => {
-            showSuccessToast(texto.messageSubjectCreateSuccess);
+            subjects.push(res.data.data);
+            SuccessToast(texto.success, texto.messageSubjectCreateSuccess);
         }).catch((err) => {
-            showErrorToast(texto.messageSubjectCreateError);
+            ErrorToast(texto.error, texto.messageSubjectCreateError);
         })
         onCloseCreate();
     }
 
-    const showSubjects = () => {
-        let sub = [];
-        if (search.length > 0) {
-            sub = subjects.filter((subject) => {
-                return subject.subjectName.toLowerCase().includes(search.toLowerCase());
-            })
-        } else {
-            sub = subjects;
-        }
-        return (
-            <>
-                {sub.map((subject) => (
-                    <Tr key={subject._id} color="white">
-                        <Td><Link href={`/subject/${subject._id}`}>{subject.subjectName}</Link></Td>
-                        <Td>{subject.description}</Td>
-                        <Td>{moment(subject.date).format('DD/MM/YYYY')}</Td>
-                        <Td><Link href={`/career/${subject.career._id}`}>{subject.career.careerName}</Link></Td>
-                        <Td><button onClick={() => deleteSubject(subject._id)}>{texto.delete}</button></Td>
-                        <Td>
-                            <Button onClick={() => {
-                                handleOpenEdit(subject._id, subject.subjectName, subject.description);
-                            }}>
-                                <Image src={`/edit.svg`} alt={`Edit`} width="20px" height="20px" />
-                            </Button>
-                            {showModalEdit()}
-                        </Td>
-                    </Tr>
-                ))}
-            </>
-        )
-    }
+
     const showModalEdit = () => {
         return (
             <>
                 <Modal
                     initialFocusRef={initialRef}
                     isOpen={isOpen}
-                    onClose={onClose}
+                    onClose={() => {
+                        onClose();
+                        SucessToast("a", 2);
+                    }}
                 >
                     <ModalOverlay />
                     <ModalContent>
@@ -373,19 +338,7 @@ export default function Home(data) {
         )
     }
 
-    const handleSearch = (e) => {
-        setSearch(e.target.value.toLowerCase());
-    }
 
-    const searchBar = () => {
-        return (
-            <Box>
-                <FormControl id="Buscar">
-                    <Input type="text" onChange={handleSearch} placeholder={texto.findByName} />
-                </FormControl>
-            </Box>
-        )
-    }
 
     return (
         <>
@@ -397,7 +350,6 @@ export default function Home(data) {
                 <Heading textAlign={"center"} my={10}>{texto.subtitle}</Heading>
 
                 <Box>
-                    {handleUpdate()}
 
                     <Button onClick={() => onOpenCreate()} colorScheme="blue" size="sm">
                         <Text>{texto.createSubject}</Text>
@@ -406,7 +358,9 @@ export default function Home(data) {
                     {showModalCreate()}
                 </Box>
                 <Box>
-                    {searchBar()}
+                    <FormControl id="Buscar">
+                        <Input type="text" onChange={handleSearch} placeholder={texto.findByName} />
+                    </FormControl>
                     <Table variant="simple" border={{ color: { sm: "red", lg: "green" } }}>
                         <TableCaption>{texto.subtitle}</TableCaption>
                         <Thead>
@@ -420,7 +374,24 @@ export default function Home(data) {
                             </Tr>
                         </Thead>
                         <Tbody>
-                            {showSubjects()}
+                            {filteredSubjects.map((subject) => (
+                                <Tr key={subject._id} color="white">
+                                    <Td><Link href={`/subject/${subject._id}`}>{subject.subjectName}</Link></Td>
+                                    <Td>{subject.description}</Td>
+                                    <Td>{moment(subject.date).format('DD/MM/YYYY')}</Td>
+                                    <Td><Link href={`/career/${subject.career._id}`}>{subject.career.careerName}</Link></Td>
+                                    <Td><button onClick={() => deleteSubject(subject._id)}>{texto.delete}</button></Td>
+                                    <Td>
+                                        <Button onClick={() => {
+                                            handleOpenEdit(subject._id, subject.subjectName, subject.description);
+                                        }}>
+                                            <Image src={`/edit.svg`} alt={`Edit`} width="20px" height="20px" />
+                                        </Button>
+                                        {showModalEdit()}
+                                    </Td>
+                                </Tr>
+                            ))}
+
                         </Tbody>
                     </Table>
                 </Box>

@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Layout from "../../components/Layout/Layout";
 import axios from "axios";
-import Card from "../../components/Cards/card";
+import Card from "../../components/Cards/Card.js";
 import { Text, Center, Box } from '@chakra-ui/react'
 import HeaderCard from "../../components/Cards/HeaderCard";
 export const getServerSideProps = async (context) => {
@@ -16,8 +16,7 @@ export const getServerSideProps = async (context) => {
 }
 
 
-export default function Home(res) {
-    const {career} = res;
+export default function Home({career}) {
 
 
     const displayCard = () => {

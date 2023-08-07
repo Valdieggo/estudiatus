@@ -14,8 +14,7 @@ export const getServerSideProps = async () => {
     };
 }
 
-const College = (data) => {
-    const { colleges } = data
+const College = ({colleges}) => {
 
     const displayCard = () => {
         return (<>
