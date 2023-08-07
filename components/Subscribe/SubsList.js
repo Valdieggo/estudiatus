@@ -14,7 +14,6 @@ export default function SubsList({navSize}) {
         if (session) {
             axios.get(`/api/subs/${session.user.id}`)
                 .then((res) => {
-                    console.log(res.data.data);
                     setCareerSubs(res.data.data.careers);
                     setSubjectSubs(res.data.data.subjects);
                 })

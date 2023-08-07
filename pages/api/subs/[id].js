@@ -11,8 +11,6 @@ export default async function handler(req, res) {
     switch (method) {
         case "GET":
             try {
-                console.log("acces");
-
                 const { id } = req.query;
 
                 if (!id) {
