@@ -12,18 +12,13 @@ import {
 } from '@chakra-ui/react'
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react'; // Importamos useEffect
 import Upload from '../../components/File/Upload.js';
 import { useRouter } from 'next/router';
 
-export default function ModalEditPost({ isOpen, onClose, onOpen, post, allPosts, setAllPosts ,subjectId}) {
+export default function ModalEditPost({ isOpen, onClose, onOpen, post, allPosts, setAllPosts, subjectId }) {
     const { creator } = post;
     const router = useRouter()
-
-    console.log(creator._id)
-    console.log(post.creator._id)
-    console.log(post._id)
-    console.log(subjectId)
 
     let isCreatorId = false;
 
@@ -38,6 +33,13 @@ export default function ModalEditPost({ isOpen, onClose, onOpen, post, allPosts,
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [file, setFile] = useState("");
+
+    useEffect(() => {
+        if (isOpen) { // Cuando el modal se abre, establecemos los valores iniciales de los campos
+            setTitle(post.title);
+            setContent(post.content);
+        }
+    }, [isOpen, post.title, post.content]);
 
     const handleUpdate = async () => {
         const idfile = await Upload(file);
@@ -54,12 +56,9 @@ export default function ModalEditPost({ isOpen, onClose, onOpen, post, allPosts,
             })
                 .then((res) => {
                     console.log(res.data.data);
-                    setTitle("");
-                    setContent("");
-                    setAllPosts(allPosts.filter(post => post._id !== res.data.data._id));
-                    setAllPosts((allPosts) => [res.data.data, ...allPosts]);
+                    setAllPosts(prevPosts => prevPosts.map(prevPost => prevPost._id === res.data.data._id ? res.data.data : prevPost));
                     setIsEditPost(false);
-                    // router.reload();
+                    onClose();
                 })
                 .catch((err) => {
                     console.log(err)
@@ -92,12 +91,14 @@ export default function ModalEditPost({ isOpen, onClose, onOpen, post, allPosts,
                 <ModalCloseButton color="white" />
 
                 <Textarea
+                    textColor={"white"}
                     placeholder="Escribe un Titulo"
                     value={title}
                     onChange={handlerTitle}
                     my={4}
                 />
                 <Textarea
+                    textColor={"white"}
                     placeholder="Escribe tu contenido"
                     value={content}
                     onChange={handlerContent}
