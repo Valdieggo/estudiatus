@@ -8,8 +8,8 @@ export default async function handler(req, res) {
     switch (method) {
         case "GET":
             try {
-                const career = await Career.find({});
-                return res.status(200).json({ success: true, data: career });
+                const careers = await Career.find({});
+                return res.status(200).json({ success: true, data: careers });
             } catch (error) {
                 return res.status(400).json({ success: false, message: error });
             }

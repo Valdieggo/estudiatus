@@ -29,7 +29,7 @@ export default function Home(res) {
                     image={subject.img ? `/uploads/${subject.img.fileName}` : null}
                     description={subject.description}
                     link={`/subject/${subject._id}`}
-                    top={`${subject.posts.length} ${subject.posts.length !== 1 ? "Posts" : "Post"}`} />
+                    top={`${subject.posts.length} ${subject.posts.length !== 1 ? "Asignaturas" : "Asignatura"}`} />
             ))}
         </>
         )
@@ -40,7 +40,8 @@ export default function Home(res) {
                 <title>{career.careerName}</title>
             </Head>
             <Layout>
-                <HeaderCard title={career.careerName} description={career.description} image={career.image} type={"career"} id={career._id}/>
+                {console.log(career.img)}
+                <HeaderCard title={career.careerName} description={career.description} image={career.img} type={"career"} id={career._id}/>
                 <Box p={4}>
                 {displayCard()}
                 </Box>

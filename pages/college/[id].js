@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Layout from "../../components/Layout/Layout";
 import axios from "axios";
-import Card from "../../components/Cards/card";
+import Card from "../../components/Cards/Card";
 
 
 import {
@@ -34,7 +34,7 @@ export default function Home(data) {
                     <Card
                         key={career._id}
                         title={career.careerName}
-                        image={"/lol.jpg"}
+                        image={career.img}
                         description={career.description}
                         link={`/career/${career._id}`}
                         top={`${career.subjects.length} ${career.subjects.length !== 1 ? "Carreras" : "Carrera"}`} />
