@@ -1,8 +1,8 @@
 import { Divider, Text } from "@chakra-ui/react";
-import MenuItem from "../Layout/MenuItem";
 import { useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import SidebarItem from "../Layout/SidebarItem";
 
 export default function SubsList({navSize}) {
   const { data: session, status } = useSession();
@@ -29,28 +29,22 @@ export default function SubsList({navSize}) {
   } else {
     return (
       <>
-        <Divider />
+        <Divider my="2" />
+        <Text mx="8" my="4" fontWeight="bold" fontSize="xs" letterSpacing="wide" textTransform="uppercase" color="gray.400">Subs</Text>
         {
-            navSize === 'large' &&
-            <Text fontSize="lg" fontWeight="bold" color="post.300">
-              {careerSubs.length > 1 ? "Tus Carreras" : "Tu Carrera"}
-            </Text>
+          careerSubs.map((career) => (
+            <SidebarItem key={career.id} icon={null} navSize={navSize}>
+              {career.careerName}
+            </SidebarItem>
+          ))
         }
-        {careerSubs.map((career) => (
-            <MenuItem title={career.careerName} link={`/career/${career._id}`} navSize={navSize} />
-        ))}
-        <Divider />
         {
-            navSize === 'large' &&
-            <Text fontSize="lg" fontWeight="bold" color="post.300">
-              {subjectSubs.length > 1 ? "Tus Asignaturas" : "Tu Asignatura"}
-            </Text>
+          subjectSubs.map((subject) => (
+            <SidebarItem key={subject.id} icon={null} navSize={navSize}>
+              {subject.subjectName}
+            </SidebarItem>
+          ))
         }
-        
-        {subjectSubs.map((subject) => (
-            <MenuItem title={subject.subjectName} link={`/subject/${subject._id}`} navSize={navSize} />
-        ))}
-        <Divider />
       </>
     );
   }
