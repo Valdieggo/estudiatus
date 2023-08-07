@@ -44,7 +44,7 @@ export default function ModalEditPost({ isOpen, onClose, onOpen, post, allPosts,
 
         if (isAdmin || isCreatorId) {
             setIsEditPost(true);
-            axios.put(`${process.env.NEXT_PUBLIC_URL}:${process.env.NEXT_PUBLIC_PORT}/api/post/update`, {
+            axios.put(`http://localhost:3000/api/post/update`, {
                 id: post._id,
                 title: title,
                 content: content,

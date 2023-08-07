@@ -83,10 +83,10 @@ export default PostsSubject;
 export const getServerSideProps = async (context) => {
     const { id } = context.query;
     const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_URL}:${process.env.NEXT_PUBLIC_PORT}/api/post/getAllBysubject/${id}`
+        `http://localhost:${process.env.PORT}/api/post/getAllBysubject/${id}`
     );
     const res2 = await axios.get(
-        `${process.env.NEXT_PUBLIC_URL}:${process.env.NEXT_PUBLIC_PORT}/api/subject/getOne/${id}`
+        `http://localhost:${process.env.PORT}/api/subject/getOne/${id}`
     );
 
     const subject = res2.data.data;
