@@ -1,7 +1,7 @@
 import { BsFillTrashFill } from 'react-icons/bs';
 import { Box, Button, Flex, useDisclosure, Icon, Text } from "@chakra-ui/react";
 import { useSession } from "next-auth/react";
-import ModalDeletePost from './ModelDeletePost';
+import ModalDeletePost from './ModalDeletePost';
 
 export default function DeleteButtonPost({ post, allPosts, setAllPosts }) {
     const { isOpen, onOpen, onClose } = useDisclosure()

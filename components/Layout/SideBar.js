@@ -8,7 +8,7 @@ const Sidebar = () => {
     const [navSize, setNavSize] = useState('large');
 
     const changeNavSize = () => {
-        setNavSize(navSize === 'small' ? 'large' : 'small');
+        setNavSize(navSize === "small" ? "large" : "small");
     };
 
 
@@ -41,7 +41,7 @@ const Sidebar = () => {
                     p="5%"
                     flexDir="column"
                     w="100%"
-                    alignItems='center'
+                    alignItems="center"
                     as="nav"
                 >
                     <MenuItem title="Universidades" link={"/college"} navSize={navSize} />
@@ -57,4 +57,3 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
-

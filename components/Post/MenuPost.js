@@ -4,10 +4,11 @@ import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 import ReportButton from '../Report/ReportButton';
 import DeleteButtonPost from './DeleteButtonPost';
+import EditButtonPost from './EditButtonPost';
 import LoginModal from '../Auth/LoginModal';
 import { useDisclosure } from '@chakra-ui/react';
 
-export default function MenuPost({ post, allPosts, setAllPosts }) {
+export default function MenuPost({ post, allPosts, setAllPosts,subjectId }) {
     const { creator } = post;
     const { isOpen, onOpen, onClose } = useDisclosure();
 

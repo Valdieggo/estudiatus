@@ -6,12 +6,14 @@ import { useState } from 'react';
 import PaginationControls from '../components/Post/PaginationControls .js';
 
 
-const Posts = ({ posts, subjects }) => {
+const Posts = ({ posts }) => {
+
+  // const { subject } = posts
 
   const [allPosts, setAllPosts] = useState(posts)
 
   const [currentPage, setCurrentPage] = useState(1);
-  const postsPerPage = 5; // Number of posts to show per page
+  const postsPerPage = 5;
 
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
@@ -35,7 +37,7 @@ const Posts = ({ posts, subjects }) => {
 
         </Stack>
         {currentPosts.map((post) => (
-          <PostsCard key={post.id} post={post} setAllPosts={setAllPosts} allPosts={allPosts} />
+          <PostsCard key={post.id} post={post} setAllPosts={setAllPosts} allPosts={allPosts} subjectId={post.subject} />
         ))}
       </Box>
       <PaginationControls
