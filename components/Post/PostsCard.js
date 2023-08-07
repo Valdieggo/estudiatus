@@ -39,7 +39,7 @@ export default function PostsCard({ post, setAllPosts, allPosts, title,subjectId
     });
 
     return (
-        <VStack key={post.id} marginY={4} spacing={4} align="center">
+        <VStack key={post.id} marginB={4} spacing={4} align="center">
             <Card color="white" width="100%" maxWidth="500px" margin="auto" bg="post.100" borderRadius="md" p={4}
                 _hover={{
                     bg: "post.200",
