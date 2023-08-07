@@ -1,6 +1,9 @@
 import { connectToDatabase } from "../../../../utils/db";
 import Career from "../../../../models/Career";
 import College from "../../../../models/College";
+import Subject from "../../../../models/Subject";
+import File from "../../../../models/File";
+import axios from "axios";
 
 export default async function handler(req, res) {
     const { method } = req;
@@ -15,8 +18,19 @@ export default async function handler(req, res) {
     switch (method) {
         case "DELETE":
             try {
-                const career = await Career.findByIdAndRemove(id);
+                const reqCareer = await Career.findById(id);
+                console.log(id)
+                if (reqCareer.img) {
+                    await File.findByIdAndDelete(reqCareer.img);
+                }
 
+                if (reqCareer.subjects.length > 0) {
+                    Promise.all(reqCareer.subjects.map(async (subject) => {
+                        await axios.delete(`http://localhost:${process.env.PORT}/api/subject/delete/${subject._id}`);
+                    }));
+                }
+
+                const career = await Career.findByIdAndRemove(id);
                 // lo elimina de college
                 await College.findByIdAndUpdate(career.college, {
                     $pull: { careers: career._id }

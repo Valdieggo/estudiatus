@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Layout from "../../components/Layout/Layout";
 import axios from "axios";
-import Card from "../../components/Cards/card";
+import Card from "../../components/Cards/Card.js";
 
 
 import {
@@ -25,8 +25,7 @@ export const getServerSideProps = async (context) => {
 }
 
 //obtiene la informacion de un determinado college
-export default function Home(data) {
-   const {college} = data;
+export default function Home({college}) {
 
     const displayCard = () => {
             return (<>
@@ -34,7 +33,7 @@ export default function Home(data) {
                     <Card
                         key={career._id}
                         title={career.careerName}
-                        image={"/lol.jpg"}
+                        image={career.img}
                         description={career.description}
                         link={`/career/${career._id}`}
                         top={`${career.subjects.length} ${career.subjects.length !== 1 ? "Carreras" : "Carrera"}`} />

@@ -22,6 +22,7 @@ export default async function handler(req, res) {
                 
 
                 res.setHeader('Content-Disposition', `attachment; filename=${file.originalName}`);
+                res.setHeader('Content-Type', file.mimetype);
                 res.send(fileBuffer);
             }
             catch (error) {

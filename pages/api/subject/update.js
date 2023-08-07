@@ -43,7 +43,14 @@ export default async function handler(req, res) {
                     career,
                     img
                 });
-                return res.status(200).json({ success: true, message: query });
+
+                const subject = await query.populate({
+                    path: "career",
+                    model: "Career",
+                    select: "careerName"
+                });
+                console.log(subject)
+                return res.status(200).json({ success: true, data: subject });
             }
             catch (error) {
                 console.log(error)

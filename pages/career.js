@@ -2,7 +2,7 @@ import { Box } from "@chakra-ui/react";
 import Head from "next/head";
 import Layout from "../components/Layout/Layout";
 import axios from "axios";
-import Card from "../components/Cards/card";
+import Card from "../components/Cards/Card.js";
 
 export const getServerSideProps = async () => {
     const response = await axios.get(`http://localhost:${process.env.PORT}/api/career/getAll`);
@@ -14,9 +14,8 @@ export const getServerSideProps = async () => {
     };
 }
 
-const Career = (data) => {
-    const {careers} = data;
-    
+const Career = ({ careers }) => {
+
     const displayCard = () => {
         return (<>
             {careers.map((career) => (
@@ -30,7 +29,7 @@ const Career = (data) => {
         </>
         )
     }
-    
+
     return (
         <>
             <Head>

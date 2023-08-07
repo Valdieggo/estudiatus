@@ -1,5 +1,5 @@
 import { connectToDatabase } from "../../../utils/db";
-import Subject from "../../../models/Subject";
+import Subject, { findById } from "../../../models/Subject";
 import Career from "../../../models/Career";
 
 export default async function handler(req, res) {
@@ -37,14 +37,19 @@ export default async function handler(req, res) {
     switch (method) {
         case "POST":
             try {
-                const subject = await Subject.create({
+                const reqSubject = await Subject.create({
                     subjectName,
                     description,
                     career,
                     img
-                });
+                })
                 await Career.findByIdAndUpdate(career, {
-                    $push: { subjects: subject._id }
+                    $push: { subjects: reqSubject._id }
+                });
+                const subject = await Subject.findById(reqSubject._id).populate({
+                    path: "career",
+                    model: "Career",
+                    select: "careerName"
                 });
 
                 return res.status(200).json({ success: true, data: subject });

@@ -2,7 +2,7 @@ import { Box, Text } from "@chakra-ui/react";
 import Head from "next/head";
 import Layout from "../components/Layout/Layout";
 import axios from "axios";
-import Card from "../components/Cards/card";
+import Card from "../components/Cards/Card.js";
 
 
 export const getServerSideProps = async () => {
@@ -15,8 +15,7 @@ export const getServerSideProps = async () => {
     };
 }
 
-const Subject = (data) => {
-    const { subjects } = data
+const Subject = ({ subjects }) => {
 
     const displayCard = () => {
         return (<>
@@ -27,9 +26,9 @@ const Subject = (data) => {
                     image={subject.img ? `/uploads/${subject.img.fileName}` : null}
                     description={subject.description}
                     link={`/subject/${subject._id}`}
-                    top={`${subject.posts.length} ${subject.posts.length !== 1 ? "Publicaciones" : "Publicacione"}`} 
-                    footer={`${subject.subscribers.length} ${subject.subscribers.length !== 1 ? "subscriptores" : "subscriptor"}`} 
-                    />
+                    top={`${subject.posts.length} ${subject.posts.length !== 1 ? "Publicaciones" : "Publicacione"}`}
+                    footer={`${subject.subscribers.length} ${subject.subscribers.length !== 1 ? "subscriptores" : "subscriptor"}`}
+                />
             ))}
         </>
         )

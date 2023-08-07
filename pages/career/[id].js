@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Layout from "../../components/Layout/Layout";
 import axios from "axios";
-import Card from "../../components/Cards/card";
+import Card from "../../components/Cards/Card.js";
 import { Text, Center, Box } from '@chakra-ui/react'
 import HeaderCard from "../../components/Cards/HeaderCard";
 export const getServerSideProps = async (context) => {
@@ -16,8 +16,7 @@ export const getServerSideProps = async (context) => {
 }
 
 
-export default function Home(res) {
-    const {career} = res;
+export default function Home({career}) {
 
 
     const displayCard = () => {
@@ -29,7 +28,7 @@ export default function Home(res) {
                     image={subject.img ? `/uploads/${subject.img.fileName}` : null}
                     description={subject.description}
                     link={`/subject/${subject._id}`}
-                    top={`${subject.posts.length} ${subject.posts.length !== 1 ? "Posts" : "Post"}`} />
+                    top={`${subject.posts.length} ${subject.posts.length !== 1 ? "Asignaturas" : "Asignatura"}`} />
             ))}
         </>
         )
@@ -40,7 +39,8 @@ export default function Home(res) {
                 <title>{career.careerName}</title>
             </Head>
             <Layout>
-                <HeaderCard title={career.careerName} description={career.description} image={career.image} type={"career"} id={career._id}/>
+                {console.log(career.img)}
+                <HeaderCard title={career.careerName} description={career.description} image={career.img} type={"career"} id={career._id}/>
                 <Box p={4}>
                 {displayCard()}
                 </Box>
