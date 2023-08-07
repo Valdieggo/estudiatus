@@ -25,7 +25,7 @@ export default function Profile({ user }) {
 
 export async function getServerSideProps(context) {
     const { id } = context.query;
-    const res = await fetch(`http://localhost:3000/api/user/getOnePopulated/${id}`);
+    const res = await fetch(`http://localhost:${process.env.PORT}/api/user/getOnePopulated/${id}`);
     const data = await res.json();
     if (res.status === 400) {
         return {

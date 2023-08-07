@@ -18,14 +18,6 @@ export default function CommentCard({ comment, setComments, comments }) {
         isCreatorId = session.user.id === creator._id;
     }
 
-    const handleReply = () => {
-        console.log("Reply button clicked");
-    };
-
-    const handleEdit = () => {
-        console.log("Edit button clicked");
-    };
-
     return (
         <Card color="white" width="100%" maxWidth="475px" margin="auto" bg="post.100" borderRadius="md" p={4}
             _hover={{
