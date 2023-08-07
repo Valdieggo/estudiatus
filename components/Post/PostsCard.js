@@ -66,9 +66,6 @@ export default function PostsCard({ post, setAllPosts, allPosts, title,subjectId
                                         </Box>
                                     </Flex>
                                 </Link>
-                                <Tag size={"md"} key={"md"} variant='outline' colorScheme='cyan'>
-                                    {title}
-                                </Tag>
                                 <Text>Publicado {timeAgo}</Text>
                             </Flex>
                         )}

@@ -6,7 +6,7 @@ import { useState } from 'react';
 import PaginationControls from '../components/Post/PaginationControls .js';
 
 
-const Posts = ({ posts, subjects }) => {
+const Posts = ({ posts }) => {
 
   // const { subject } = posts
 
