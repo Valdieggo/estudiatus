@@ -19,8 +19,9 @@ export default async function handler(req, res) {
                 const file = await File.findById(id);
                 const filePath = path.resolve('.','public','uploads',file.fileName);
                 const fileBuffer = fs.readFileSync(filePath);
+                
 
-                res.setHeader('Content-Type', file.mimetype);
+                res.setHeader('Content-Disposition', `attachment; filename=${file.originalName}`);
                 res.send(fileBuffer);
             }
             catch (error) {
