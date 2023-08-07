@@ -42,6 +42,7 @@ const upload = multer({
 export default async (req, res) => {
     await connectToDatabase();
     try {
+        const {creator} = req.body;
         upload(req, res, async (err) => {
             if (err) {
                 return res.status(500).json({ msg: err.message });
@@ -53,6 +54,7 @@ export default async (req, res) => {
                 path,
                 size,
                 mimetype,
+                creator,
             });
             res.status(200).json({success: true,data: File });
         });
