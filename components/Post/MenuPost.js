@@ -4,8 +4,9 @@ import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 import ReportButton from '../Report/ReportButton';
 import DeleteButtonPost from './DeleteButtonPost';
+import EditButtonPost from './EditButtonPost';
 
-export default function MenuPost({ post, allPosts, setAllPosts }) {
+export default function MenuPost({ post, allPosts, setAllPosts,subjectId }) {
     const { creator } = post;
 
     let isCreatorId = false;
@@ -30,6 +31,13 @@ export default function MenuPost({ post, allPosts, setAllPosts }) {
                         <DeleteButtonPost post={post} allPosts={allPosts} setAllPosts={setAllPosts} />
                     </MenuItem>
                 ) : null}
+
+                {isAdmin || isCreatorId ? (
+                    <MenuItem>
+                        <EditButtonPost post={post} allPosts={allPosts} setAllPosts={setAllPosts} subjectId={subjectId}/>
+                    </MenuItem>
+                ) : null}
+
 
                 {
                     post?.creator?._id !== session?.user?.id

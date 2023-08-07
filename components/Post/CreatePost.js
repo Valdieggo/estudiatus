@@ -19,8 +19,6 @@ export default function CreatePost({ allPosts ,setAllPosts, subject }) {
     const [content, setContent] = useState("");
     const [file,setFile] = useState("");
 
-
-
     const handleAddPost = async () => {
         if (status === "authenticated") {
             const idfile = await Upload(file)
@@ -77,13 +75,13 @@ export default function CreatePost({ allPosts ,setAllPosts, subject }) {
         }}
     >
         <Textarea
-            placeholder="Estibe un Titulo"
+            placeholder="Escribe un Titulo"
             value={title}
             onChange={handlerTitle}
             my={4}
         />
         <Textarea
-            placeholder="Estibe tu contenido"
+            placeholder="Escribe tu contenido"
             value={content}
             onChange={handlerContent}
             my={4}
