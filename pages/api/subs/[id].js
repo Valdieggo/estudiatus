@@ -22,8 +22,6 @@ export default async function handler(req, res) {
                 const userSubscribedCareers = await Career.find({ subscribers: { $in: [id] } });
                 const userSubscribedSubjects = await Subject.find({ subscribers: { $in: [id] } });
 
-                console.log(userSubscribedCareers);
-                console.log(userSubscribedSubjects);
                 return res.status(200).json({ 
                     success: true, 
                     data: {
