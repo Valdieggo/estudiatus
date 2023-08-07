@@ -2,7 +2,7 @@ import { Box, Text } from "@chakra-ui/react";
 import Head from "next/head";
 import Layout from "../components/Layout/Layout";
 import axios from "axios";
-import Card from "../components/Cards/card";
+import Card from "../components/Cards/Card";
 
 
 export const getServerSideProps = async () => {
