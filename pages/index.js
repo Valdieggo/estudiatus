@@ -3,7 +3,7 @@ import { ArrowUpIcon, ChatIcon } from '@chakra-ui/icons';
 import Layout from '../components/Layout/Layout';
 import PostsCard from '../components/Post/PostsCard';
 import { useState } from 'react';
-import PaginationControls from '../components/Post/PaginationControls .js';
+import PaginationControls from '../components/Post/PaginationControls.js';
 import PostSearch from '../components/Post/PostSearch';
 
 
