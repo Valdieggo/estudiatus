@@ -19,10 +19,11 @@ export default function SubjectRequest() {
     const [collegeList, setCollegeList] = useState([]);
     const [careerList, setCareerList] = useState([]);
     const { data: session } = useSession();
+    const [selectedCollege, setSelectedCollege] = useState("");
 
     const submitRequest = (data) => {
         console.log("register:", data.subjectName);
-        const response = axios.post("../api/subject_request/create", {
+        axios.post("../api/subject_request/create", {
             subjectName: data.subjectName,
             college: data.college,
             career: data.career,
@@ -77,6 +78,8 @@ export default function SubjectRequest() {
                         <Select
                             placeholder="Selecciona una Universidad"
                             {...register("college", { required: true })}
+                            value={selectedCollege}
+                            onChange={(e) => setSelectedCollege(e.target.value)}
                         >
                             {collegeList.map((college) => (
                                 <option key={college._id} value={college._id}>
@@ -91,11 +94,16 @@ export default function SubjectRequest() {
                             placeholder="Selecciona una carrera"
                             {...register("career", { required: true })}
                         >
-                            {careerList.map((career) => (
-                                <option key={career._id} value={career._id}>
-                                    {career.careerName}
-                                </option>
-                            ))}
+                            {careerList
+                                .filter(
+                                    (career) =>
+                                        career.college === selectedCollege
+                                )
+                                .map((career) => (
+                                    <option key={career._id} value={career._id}>
+                                        {career.careerName}
+                                    </option>
+                                ))}
                         </Select>
                     </FormControl>
                     <FormControl>
