@@ -1,5 +1,6 @@
 import { connectToDatabase } from "../../../utils/db";
 import Post from "../../../models/Post";
+import User from "../../../models/User";
 
 export default async function handler(req, res) {
     const { method } = req;
@@ -46,7 +47,14 @@ export default async function handler(req, res) {
                     creator,
                     subject,
                 },{ new: true });
-                return res.status(200).json({ success: true, data: post });
+
+                const postPopulated = await Post.findById(post._id)
+                        .populate({
+                            path: "creator",
+                            ref: "User",
+                        })
+
+                return res.status(200).json({ success: true, data: postPopulated });
 
             default:
                 return res.status(400).json({ success: false });

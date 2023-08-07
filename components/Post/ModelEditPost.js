@@ -16,7 +16,7 @@ import { useState } from 'react';
 import Upload from '../../components/File/Upload.js';
 import { useRouter } from 'next/router';
 
-export default function ModalDeletePost({ isOpen, onClose, onOpen, post, allPosts, setAllPosts ,subjectId}) {
+export default function ModalEditPost({ isOpen, onClose, onOpen, post, allPosts, setAllPosts ,subjectId}) {
     const { creator } = post;
     const router = useRouter()
 
