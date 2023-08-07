@@ -36,7 +36,6 @@ export default function CreatePost({ allPosts, setAllPosts, subject }) {
         if (status === 'authenticated') {
             // Validate title and content
             if (title.length < 1 || content.length < 1) {
-                // Show error toast for empty fields
                 toast({
                     title: 'Campos vacíos',
                     description: 'El título y el contenido no pueden estar vacíos.',
@@ -47,7 +46,6 @@ export default function CreatePost({ allPosts, setAllPosts, subject }) {
                 return;
             }
             if (title.length > 100) {
-                // Show error toast for title length
                 toast({
                     title: 'Título demasiado largo',
                     description: 'El título no puede tener más de 100 caracteres.',
@@ -58,7 +56,6 @@ export default function CreatePost({ allPosts, setAllPosts, subject }) {
                 return;
             }
             if (title.length < 5) {
-                // Show error toast for title length
                 toast({
                     title: 'Título demasiado corto',
                     description: 'El título debe tener al menos 5 caracteres.',
