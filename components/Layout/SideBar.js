@@ -34,7 +34,7 @@ export default function Sidebar({ onClose, ...rest }) {
                 <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
             </Flex>
             <Text mx="8" my="4" fontWeight="bold" fontSize="xs" letterSpacing="wide" textTransform="uppercase" color="gray.400">Main</Text>
-            <SidebarItem icon={FiHome} link={"/colleges"}>
+            <SidebarItem icon={FiHome} link={"/college"}>
                 Universidades
             </SidebarItem>
             <SidebarItem icon={FiTrendingUp} link={"/calendar"}>
