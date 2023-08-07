@@ -4,13 +4,12 @@ import Layout from '../components/Layout/Layout';
 import PostsCard from '../components/Post/PostsCard';
 import { useState } from 'react';
 import PaginationControls from '../components/Post/PaginationControls .js';
+import PostSearch from '../components/Post/PostSearch';
 
 
 const Posts = ({ posts }) => {
 
-  // const { subject } = posts
-
-  const [allPosts, setAllPosts] = useState(posts)
+  const [allPosts, setAllPosts] = useState(posts);
 
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 5;
@@ -25,19 +24,27 @@ const Posts = ({ posts }) => {
     setCurrentPage(pageNumber);
   };
 
+  const handleSearch = (searchQuery) => {
+    const filteredPosts = posts.filter(
+      (post) =>
+        post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (post.content && post.content.toLowerCase().includes(searchQuery.toLowerCase()))
+    );
+    setAllPosts(filteredPosts);
+    setCurrentPage(1);
+  };
+
   return (
     <Layout>
+      <PostSearch handleSearch={handleSearch} />
       <PaginationControls
         currentPage={currentPage}
         totalPages={totalPages}
         handlePageChange={handlePageChange}
       />
       <Box>
-        <Stack>
-
-        </Stack>
         {currentPosts.map((post) => (
-          <PostsCard key={post.id} post={post} setAllPosts={setAllPosts} allPosts={allPosts} subjectId={post.subject} />
+          <PostsCard key={post._id} post={post} setAllPosts={setAllPosts} allPosts={allPosts} subjectId={post.subject} />
         ))}
       </Box>
       <PaginationControls

@@ -81,6 +81,8 @@ export default function PostsCard({ post, setAllPosts, allPosts, title,subjectId
                 <CardBody>
                     <Text>{post.content}</Text>
                 </CardBody >
+                <Image src={`/api/File/download/${post.file}`} alt="Imagen" />
+
                 {post.file && (
                     <>
                         <CardFooter
@@ -91,7 +93,7 @@ export default function PostsCard({ post, setAllPosts, allPosts, title,subjectId
                                     minW: "140px",
                                 },
                             }}>
-                            {post.file.endsWith(".png") || post.file.endsWith(".jpg") ? (
+                            {post.file.endsWith(".png") || post.file.endsWith(".jpeg") ? (
                                 <Image src={`/api/File/download/${post.file}`} alt="Imagen" />
                             ) : (
                                 <Button
