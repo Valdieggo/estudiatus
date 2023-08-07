@@ -14,7 +14,7 @@ export default async function handler(req, res) {
                 if (!id) {
                     return res.status(400).json({ success: false, message: "Missing fields" });
                 }
-                
+
                 const comment = await Comment.findById(id);
 
                 if (!comment) {
@@ -26,9 +26,9 @@ export default async function handler(req, res) {
                 if (!post) {
                     return res.status(400).json({ success: false, message: "Post not found" });
                 }
-
+                console.log(comment._id)
                 post.comments.pull(id);
-                
+
                 await post.save();
 
 

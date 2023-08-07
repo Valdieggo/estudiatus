@@ -43,6 +43,7 @@ export default function PostCard({ post }) {
                 <CardBody>
                     <Text>
                         {post.content}
+
                     </Text>
                 </CardBody>
                 {post.file && (
