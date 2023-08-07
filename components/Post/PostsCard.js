@@ -28,9 +28,11 @@ import axios from "axios";
 import FavPostButton from "./FavPostButton";
 import MenuPost from "./MenuPost";
 import esLocale from "date-fns/locale/es";
+import { useSession } from "next-auth/react";
 
 export default function PostsCard({ post, setAllPosts, allPosts, title,subjectId }) {
     const { creator } = post;
+    const { data: session, status } = useSession();
 
     const router = useRouter();
     const timeAgo = formatDistanceToNow(new Date(post.createDate), {
@@ -69,12 +71,16 @@ export default function PostsCard({ post, setAllPosts, allPosts, title,subjectId
                                 <Text>Publicado {timeAgo}</Text>
                             </Flex>
                         )}
-                        <MenuPost
+                        { status==="authenticated" ? (
+                            <MenuPost
                             post={post}
                             setAllPosts={setAllPosts}
                             allPosts={allPosts}
                             subjectId={subjectId}
-                        />
+                            />) : null
+
+                        }
+                        
                         <FavPostButton post={post} />
                     </Flex>
                 </CardHeader>
