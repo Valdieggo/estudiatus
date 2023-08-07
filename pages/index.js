@@ -44,7 +44,7 @@ const Posts = ({ posts }) => {
       />
       <Box>
         {currentPosts.map((post) => (
-          <PostsCard key={post.id} post={post} setAllPosts={setAllPosts} allPosts={allPosts} subjectId={post.subject} />
+          <PostsCard key={post._id} post={post} setAllPosts={setAllPosts} allPosts={allPosts} subjectId={post.subject} />
         ))}
       </Box>
       <PaginationControls
