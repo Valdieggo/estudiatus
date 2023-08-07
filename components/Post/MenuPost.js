@@ -4,9 +4,12 @@ import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 import ReportButton from '../Report/ReportButton';
 import DeleteButtonPost from './DeleteButtonPost';
+import LoginModal from '../Auth/LoginModal';
+import { useDisclosure } from '@chakra-ui/react';
 
 export default function MenuPost({ post, allPosts, setAllPosts }) {
     const { creator } = post;
+    const { isOpen, onOpen, onClose } = useDisclosure();
 
     let isCreatorId = false;
     const { data: session, status } = useSession();
@@ -31,14 +34,13 @@ export default function MenuPost({ post, allPosts, setAllPosts }) {
                     </MenuItem>
                 ) : null}
 
-                {
-                    post?.creator?._id !== session?.user?.id
-                    &&
-                    <MenuItem >
-                        <ReportButton post={post} />
-                    </MenuItem>
-                }
+                {post?.creator?._id !== session?.user?.id && session ? (
+                <MenuItem>
+                    <ReportButton post={post} />
+                </MenuItem>
+                ) : null}
             </MenuList>
+            
         </Menu>
     );
 }
