@@ -5,15 +5,19 @@ import Report from "../../../models/Report";
 import mongoose from "mongoose";
 import sendMail from "../../../utils/mail";
 
+
 export default async function handler(req, res) {
     const { method } = req;
-    const {user,type,time,status,report } = req.body;
+    const {user,type,status,report } = req.body;
+    let { time } = req.body;
     connectToDatabase();
 
     switch (method) {
         case "POST":
             const session = await mongoose.startSession();
-
+            if (type === "permanentemente") {
+                time = new Date(3000,1,1);
+            }
             try {
                 session.startTransaction();
                 // Crea el nuevo registro de ban y lo guarda en la base de datos
@@ -33,14 +37,10 @@ export default async function handler(req, res) {
                     <p>Estimado ${ReportUpdate.reportUser.username},</p>
                     <p>El reporte que realizaste ha sido resuelto</p>
                 `);
-                
                 await session.commitTransaction();
                 session.endSession();
                 // Si todo va bien, se devuelve el nuevo ban creado
-                
-                
                 return res.status(201).json({ success: true, data: ReportUpdate });
-                
             }catch (error) {
                 await session.abortTransaction();
                 session.endSession();
