@@ -43,7 +43,7 @@ export default function ModalDeletePost({ isOpen, onClose, onOpen, post, allPost
             <ModalOverlay />
             <ModalContent bg="post.100">
                 <ModalHeader mt="6" color="white" textAlign="center">
-                    Quieres eliminar este comentario?
+                    Quieres eliminar esta publicacion?
                 </ModalHeader>
                 <ModalCloseButton color="white" />
 
