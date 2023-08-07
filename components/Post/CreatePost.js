@@ -13,8 +13,10 @@ import {
     useToast,
     Textarea,
     Spinner,
+    InputGroup,
+    InputRightElement,
 } from '@chakra-ui/react';
-import { ChatIcon } from '@chakra-ui/icons';
+import { ChatIcon, AttachmentIcon } from '@chakra-ui/icons';
 import { useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router';
@@ -150,12 +152,24 @@ export default function CreatePost({ allPosts, setAllPosts, subject }) {
                 onChange={handlerContent}
                 my={4}
             />
-            <Input
-                placeholder="Imagen"
-                type="file"
-                onChange={handlerUpdate}
-                accept=".jpg, .jpeg, .png, .gif, .pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx, .txt"
-            />
+             <InputGroup>
+                <Input
+                    type="file"
+                    accept=".jpg, .jpeg, .png, .gif, .pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx, .txt"
+                    onChange={handlerUpdate}
+                    display="none"
+                />
+                <Input
+                    placeholder="Selecciona un archivo"
+                    value={file ? file.name : ""}
+                    readOnly
+                    pr="4.5rem"
+                    onClick={() => document.querySelector("input[type='file']").click()}
+                />
+                <InputRightElement width="4.5rem">
+                    <AttachmentIcon color="gray.500" />
+                </InputRightElement>
+            </InputGroup>
 
             <Button
                 type="button"
@@ -168,7 +182,7 @@ export default function CreatePost({ allPosts, setAllPosts, subject }) {
                 onClick={handleAddPost}
                 leftIcon={isAddingPost ? <Spinner /> : <ChatIcon />}
             >
-                Publicar un post
+                Publicar
             </Button>
             <LoginModal isOpen={isOpen} onClose={onClose} />
         </Box>
