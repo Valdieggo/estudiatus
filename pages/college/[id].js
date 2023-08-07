@@ -15,7 +15,7 @@ import {
 
 export const getServerSideProps = async (context) => {
     const { id } = context.query;
-    const response = await axios.get(`http://localhost:3000/api/college/getOne/${id}`);
+    const response = await axios.get(`http://localhost:${process.env.PORT}/api/college/getOne/${id}`);
     const college = response.data.data;
     return {
         props: {
@@ -37,7 +37,7 @@ export default function Home(data) {
                         image={"/lol.jpg"}
                         description={career.description}
                         link={`/career/${career._id}`}
-                        top={`${career.subjects.length} ${career.subjects.length !== 1 ? "asignaturas" : "asignatura"}`} />
+                        top={`${career.subjects.length} ${career.subjects.length !== 1 ? "Carreras" : "Carrera"}`} />
                 ))}
             </>
             )

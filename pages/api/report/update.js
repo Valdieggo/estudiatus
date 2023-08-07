@@ -4,14 +4,10 @@ import User from "../../../models/User";
 
 export default async function updateReport(req,res){
     connectToDatabase();
-     const {reportUserId ,reportedUserId, reason, description, id} = req.body;
+     const {id} = req.body;
      try {
-         const updateReport= await Report.findByIdAndUpdate(id, {
-             reportUser:reportUserId,
-             reportedUser:reportedUserId,
-             reason,
-             description},
-               { new: true });
+         const updateReport= await Report.findByIdAndUpdate(id, { status: 'solve' });
+
          if (updateReport) {
              return res.status(200).json({ message: "Report updated" });
          }

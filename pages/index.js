@@ -2,56 +2,49 @@ import { Box, Text, Card, Flex, CardBody, Avatar, CardHeader, CardFooter, Headin
 import { ArrowUpIcon, ChatIcon } from '@chakra-ui/icons';
 import Layout from '../components/Layout/Layout';
 import PostsCard from '../components/Post/PostsCard';
-// import { useSession } from "next-auth/client";
-// import { useDisclosure } from '@chakra-ui/react'
-// import { useState } from 'react';
+import { useState } from 'react';
+import PaginationControls from '../components/Post/PaginationControls .js';
 
 
-// const { data: session, status } = useSession();
-// const {isOpen,onOpen,onClose} = useDisclosure();
-// const [isCreatePost,setIsCreatePost] = useState(false);
-// const [postsContent, setPostContent] = useState("");
-// const [postsTitle, setPostTitle] = useState("");
+const Posts = ({ posts }) => {
 
+  // const { subject } = posts
 
-// const handlerPost = (e) =>{
-//   setPostC(e.target.value);
-// }
+  const [allPosts, setAllPosts] = useState(posts)
 
-// const handlerCreatePost = () =>{
-//   if(status === "authenticated"){
-//     setIsCreatePost(true);
-//     axios.post(`http://localhost:3000/api/post/create`,{
-//       title: postsTitle,
-//       content: postsContent,
-//       creator: session.user.id,
-//     })
-//     .then((res) =>{
-//       setPostTitle("");
-//       setPostContent("");
-//       setIsCreatePost(false);
-//     })
-//     .catch((err) =>{
-//       console.log(err);
-//       setIsCreatePost(false);
-//     });
-//   }else{
-//     onOpen();
-//   }
-// }
+  const [currentPage, setCurrentPage] = useState(1);
+  const postsPerPage = 5;
 
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = allPosts.slice(indexOfFirstPost, indexOfLastPost);
 
-const Posts = ({ posts ,subjects}) => {
+  const totalPages = Math.ceil(allPosts.length / postsPerPage);
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
   return (
     <Layout>
+      <PaginationControls
+        currentPage={currentPage}
+        totalPages={totalPages}
+        handlePageChange={handlePageChange}
+      />
       <Box>
         <Stack>
 
         </Stack>
-        {posts.map((post) => (
-          <PostsCard key={post.id} post={post} />
+        {currentPosts.map((post) => (
+          <PostsCard key={post.id} post={post} setAllPosts={setAllPosts} allPosts={allPosts} subjectId={post.subject} />
         ))}
       </Box>
+      <PaginationControls
+        currentPage={currentPage}
+        totalPages={totalPages}
+        handlePageChange={handlePageChange}
+      />
     </Layout>
   );
 };
@@ -60,7 +53,7 @@ export default Posts;
 
 
 export async function getStaticProps() {
-  const res = await fetch(`http://localhost:3000/api/post/getAll`);
+  const res = await fetch(`http://localhost:${process.env.PORT}/api/post/getAll`);
 
   const data = await res.json();
   if (res.status === 400) {

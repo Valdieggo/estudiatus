@@ -3,6 +3,8 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { connectToDatabase } from "../../../utils/db";
 import User from "../../../models/User";
 import { verifyPassword } from "../../../utils/auth";
+import { isBaned } from "../../../utils/isBaned";
+import {BanError} from "../../auth/error.js";
 
 
 
@@ -29,15 +31,21 @@ export const authOptions = {
                 const user = await User.findOne({ email: credentials.email });
 
                 if (!user) {
-                    throw new Error("No user found");
+                    throw new Error("NO_USER_FOUND");
                 }
 
                 const isValid = await verifyPassword(credentials.password, user.password);
 
                 if (!isValid) {
-                    throw new Error("Could not log you in");
+                    throw new Error("LOGIN_FAILED");
                 }
-               
+
+                const res = await isBaned(user._id);
+                if (res.isBanned) {
+                    throw new Error(`BANNED/${res._id}`);
+
+                }
+
                 return   user ;
 
             },
@@ -73,6 +81,8 @@ export const authOptions = {
     },
     pages: {
         signIn: "/login",
+        error: "/auth/error",
+       
     },
 
   };

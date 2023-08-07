@@ -1,15 +1,12 @@
 import Head from "next/head";
 import Layout from "../../components/Layout/Layout";
 import axios from "axios";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
 import Card from "../../components/Cards/card";
-
 import { Text, Center, Box } from '@chakra-ui/react'
-
+import HeaderCard from "../../components/Cards/HeaderCard";
 export const getServerSideProps = async (context) => {
     const { id } = context.query;
-    const response = await axios.get(`http://localhost:3000/api/career/getOne/${id}`);
+    const response = await axios.get(`http://localhost:${process.env.PORT}/api/career/getOne/${id}`);
     const career = response.data.data;
     return {
         props: {
@@ -26,13 +23,13 @@ export default function Home(res) {
     const displayCard = () => {
         if (career.subjects) return (<>
             {career.subjects.map((subject) => (
-                <Card
+                 <Card
                     key={subject._id}
                     title={subject.subjectName}
-                    image={"/lol.jpg"}
+                    image={subject.img ? `/uploads/${subject.img.fileName}` : null}
                     description={subject.description}
                     link={`/subject/${subject._id}`}
-                    top={`${subject.posts.length} ${subject.posts.length !== 1 ? "publicaciones" : "publicación"}`} />
+                    top={`${subject.posts.length} ${subject.posts.length !== 1 ? "Posts" : "Post"}`} />
             ))}
         </>
         )
@@ -43,11 +40,10 @@ export default function Home(res) {
                 <title>{career.careerName}</title>
             </Head>
             <Layout>
-                <Center>
-                    <Text>{career.careerName}</Text>
-                </Center>
-                <Text>Asignaturas Disponibles</Text>
+                <HeaderCard title={career.careerName} description={career.description} image={career.image} type={"career"} id={career._id}/>
+                <Box p={4}>
                 {displayCard()}
+                </Box>
             </Layout>
         </>
     )

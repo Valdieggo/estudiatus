@@ -5,7 +5,7 @@ import axios from "axios";
 import Card from "../components/Cards/card";
 
 export const getServerSideProps = async () => {
-    const response = await axios.get(`http://localhost:3000/api/career/getAll`);
+    const response = await axios.get(`http://localhost:${process.env.PORT}/api/career/getAll`);
     const careers = response.data.data;
     return {
         props: {
@@ -23,10 +23,9 @@ const Career = (data) => {
                 <Card
                     key={career._id}
                     title={career.careerName}
-                    image={"/lol.jpg"}
                     description={career.description}
                     link={`/career/${career._id}`}
-                    top={`${career.subjects.length} ${career.subjects.length !== 1 ? "publicaciones" : "publicación"}`} />
+                    top={`${career.subjects.length} ${career.subjects.length !== 1 ? "Asignaturas" : "Asignatura"}`} />
             ))}
         </>
         )

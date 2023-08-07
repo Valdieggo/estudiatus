@@ -7,7 +7,7 @@ const banShema = new mongoose.Schema({
     },
     type: {
         type: String,
-        enum: ["ban", "mute", "shadowban"],
+        enum: ["temporalmente", "permanentemente"],
         required: [true, "Please provide a ban type"],
     },
     time : {

@@ -20,7 +20,8 @@ export default function AddCommentCard({ post, setComments, comments }) {
     const handleAddComment = () => {
         if (status === "authenticated") {
             setIsAddingComment(true);
-            axios.post(`http://localhost:3000/api/comment/add/`, {
+            //http://localhost:3000/api/comment/add/ --> ${process.env.NEXT_PUBLIC_URL}:${process.env.NEXT_PUBLIC_PORT}/api/comment/add/
+            axios.post(`${process.env.NEXT_PUBLIC_URL}:${process.env.NEXT_PUBLIC_PORT}/api/comment/add/`, {
                 text: comment,
                 postId: post._id,
                 creator: session.user.id,
@@ -42,7 +43,7 @@ export default function AddCommentCard({ post, setComments, comments }) {
     }
 
     return (
-        <Box color="white" width="100%" maxWidth="500px" margin="auto" bg="post.100" borderRadius="md" p={4} mt={4}
+        <Box color="white" width="100%" maxWidth="500px" margin="auto" bg="post.100" borderRadius="md" p={4}
         _hover={{
             bg: "post.200",
         }}

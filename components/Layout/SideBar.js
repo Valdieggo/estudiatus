@@ -1,65 +1,42 @@
-import React, { useState } from "react";
-import {
-    Avatar,
-    Box,
-    Flex,
-    IconButton,
-    Text,
-    Divider,
-    Stack,
-} from "@chakra-ui/react";
-import { FiMenu } from "react-icons/fi";
+import React, { useState } from 'react';
+import { Avatar, Box, Flex, IconButton, Text, Divider, Stack } from '@chakra-ui/react';
+import { FiMenu } from 'react-icons/fi';
+import MenuItem from './MenuItem';
+import Administrator from '../Admin/Administrator';
 
 const Sidebar = () => {
-    const [navSize, setNavSize] = useState("large");
+    const [navSize, setNavSize] = useState('large');
 
     const changeNavSize = () => {
         setNavSize(navSize === "small" ? "large" : "small");
     };
 
-    const MenuItem = ({ title }) => {
-        return (
-            <Flex w="100%" justifyContent="center" placeItems="center" my="2">
-                {navSize === "small" ? (
-                    <Avatar
-                        bg="post.200"
-                        color="white"
-                        size="sm"
-                        name={title}
-                    />
-                ) : (
-                    <Text>{title}</Text>
-                )}
-            </Flex>
-        );
-    };
 
     return (
-        <Stack mt="2" pos="sticky" top="64">
-            <IconButton
-                color="white"
-                bg="post.100"
-                aria-label="Menu"
-                icon={<FiMenu />}
-                onClick={changeNavSize}
-                borderRightRadius="10px"
-                borderLeftRadius="0"
-                pos="sticky"
-                w="fit-content"
-                _focus={{ boxShadow: "none" }}
-                _hover={{ background: "post.200" }}
-            />
+        <Stack mt="2">
             <Box
                 pos="sticky"
-                top="0"
                 left="5"
                 h="100vh"
                 borderRightRadius="10px"
-                w={navSize === "small" ? "fit" : "150px"}
+                w={navSize === 'small' ? 'fit' : '200px'}
                 bgColor="post.100"
                 overflow="auto"
                 textColor="white"
             >
+                <IconButton
+                    color="white"
+                    bg="post.100"
+                    aria-label="Menu"
+                    icon={<FiMenu />}
+                    onClick={changeNavSize}
+                    borderRightRadius="10px"
+                    borderLeftRadius="0"
+                    pos="sticky"
+                    w="fit-content"
+                    _focus={{ boxShadow: 'none' }}
+                    _hover={{ background: 'post.200' }}
+                />
                 <Stack
                     p="5%"
                     flexDir="column"
@@ -67,14 +44,12 @@ const Sidebar = () => {
                     alignItems="center"
                     as="nav"
                 >
-                    <MenuItem title="Dashboard" />
-                    <MenuItem title="Calendar" />
-                    <MenuItem title="Clients" />
+                    <MenuItem title="Universidades" link={"/college"} navSize={navSize} />
+
+                    <MenuItem title="Calendar" navSize={navSize} />
                     <Divider />
-                    <MenuItem title="Animals" />
-                    <MenuItem title="Stocks" />
-                    <MenuItem title="Reports" />
-                    <MenuItem title="Settings" />
+                    <MenuItem title="Settings" navSize={navSize} />
+                    <Administrator navSize={navSize} />
                 </Stack>
             </Box>
         </Stack>

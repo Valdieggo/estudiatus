@@ -87,7 +87,7 @@ const Posts = ({ posts }) => {
 export default Posts;
 
 export async function getStaticProps() {
-    const res = await fetch(`http://localhost:3000/api/post/getAll`);
+    const res = await fetch(`http://localhost:${process.env.PORT}/api/post/getAll`);
     const data = await res.json();
     if (res.status === 400) {
         return {

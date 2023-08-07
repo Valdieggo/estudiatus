@@ -20,6 +20,8 @@ export default async function handler(req, res) {
                 
                 const user = await User.findById(userId);
 
+                const creatorUser = await User.findById(post.creator);
+
                 if (!user) {
                     return res.status(400).json({ success: false, message: "User not found" });
                 }
@@ -32,15 +34,19 @@ export default async function handler(req, res) {
 
                 if (likesSet.has(userId)) {
                     likesSet.delete(userId);
+                    creatorUser.score = creatorUser.score - 1;
                 } else {
                     likesSet.add(userId);
+                    creatorUser.score = creatorUser.score + 1;
                 }
 
                 post.likes = Array.from(likesSet);
                 post.score = post.likes.length;
 
-                await post.save();
+                await creatorUser.save();
 
+                await post.save();
+                
                 return res.status(200).json({ success: true, data: post.likes });
             } catch (error) {
                 return res.status(400).json({ success: false, message: error });
