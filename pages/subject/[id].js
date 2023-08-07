@@ -10,15 +10,14 @@ import PostsCard from "../../components/Post/PostsCard";
 import CreatePost from "../../components/Post/CreatePost";
 import PaginationControls from "../../components/Post/PaginationControls .js";
 import HeaderCard from "../../components/Cards/HeaderCard";
+import PostSearch from "../../components/Post/PostSearch";
 
 const PostsSubject = ({ posts, subject }) => {
-    const [allPosts, setAllPosts] = useState(posts)
-
-    const [showCreatePost, setShowCreatePost] = useState(false);
-
     const toggleCreatePost = () => {
         setShowCreatePost(!showCreatePost);
     };
+    const [allPosts, setAllPosts] = useState(posts);
+    const [showCreatePost, setShowCreatePost] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const postsPerPage = 5;
 
@@ -32,9 +31,20 @@ const PostsSubject = ({ posts, subject }) => {
         setCurrentPage(pageNumber);
     };
 
+    const handleSearch = (searchQuery) => {
+        const filteredPosts = posts.filter(
+            (post) =>
+                post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                post.content.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+        setAllPosts(filteredPosts);
+        setCurrentPage(1);
+    };
+
 
     return (
         <Layout>
+            <PostSearch handleSearch={handleSearch} />
             <PaginationControls
                 currentPage={currentPage}
                 totalPages={totalPages}

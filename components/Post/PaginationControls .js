@@ -2,7 +2,7 @@ import { Button ,Box} from "@chakra-ui/react";
 
 const PaginationControls = ({ currentPage, totalPages, handlePageChange }) => {
     return (
-        <Box align="center">
+        <Box mb={4} align="center">
             {Array.from({ length: totalPages }, (_, index) => (
                 <Button
                     key={index}

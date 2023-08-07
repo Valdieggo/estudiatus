@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Layout from "../../components/Layout/Layout";
+import DeleteButtonPost from "../../components/Post/DeleteButtonPost";
 
 
 //import styled from "../styles/post.css";
@@ -115,7 +116,7 @@ const PostAdm = () => {
                     <Td>{postFind.createDate}</Td>
                     <Td><Button onClick={() => router.push(`/post/view/${post._id}`)}>View more</Button></Td>
                     <Td><Button colorScheme="teal" onClick={() => router.push(`/post/edit/${postFind._id}`)}>Edit Post</Button></Td>
-                    <Td><Button colorScheme="red" onClick={() => handeleDelete(postFind._id)}>Delete Post</Button></Td>
+                    <Td><DeleteButtonPost post={post} allPosts={allPosts} setAllPosts={setAllPosts} /></Td>
                 </Tr>
             )
         }
