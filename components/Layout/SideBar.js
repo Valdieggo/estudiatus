@@ -3,6 +3,7 @@ import { Avatar, Box, Flex, IconButton, Text, Divider, Stack } from '@chakra-ui/
 import { FiMenu } from 'react-icons/fi';
 import MenuItem from './MenuItem';
 import Administrator from '../Admin/Administrator';
+import SubsList from '../Subscribe/SubsList';
 
 const Sidebar = () => {
     const [navSize, setNavSize] = useState('large');
@@ -19,7 +20,7 @@ const Sidebar = () => {
                 left="5"
                 h="100vh"
                 borderRightRadius="10px"
-                w={navSize === 'small' ? 'fit' : '200px'}
+                w={navSize === 'small' ? 'fit-content' : '15vw'}
                 bgColor="post.100"
                 overflow="auto"
                 textColor="white"
@@ -44,11 +45,16 @@ const Sidebar = () => {
                     alignItems="center"
                     as="nav"
                 >
+                    {
+                        navSize === 'large' &&
+                        <Text fontSize="lg" fontWeight="bold" color="post.300">
+                            Navegación
+                        </Text>
+                    }
                     <MenuItem title="Universidades" link={"/college"} navSize={navSize} />
-
-                    <MenuItem title="Calendar" navSize={navSize} />
                     <Divider />
-                    <MenuItem title="Settings" navSize={navSize} />
+                    <MenuItem title="Calendar" navSize={navSize} />
+                    <SubsList navSize={navSize} />
                     <Administrator navSize={navSize} />
                 </Stack>
             </Box>
