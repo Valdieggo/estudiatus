@@ -21,7 +21,12 @@ const PostSearch = ({ handleSearch }) => {
                 onChange={handleInputChange}
             />
             <Spacer />
-            <Button margin={"5"} colorScheme="teal" onClick={handleSubmit}>
+            <Button
+                margin={"5"}
+                bg="button.100"
+                _hover={{
+                    bg: "button.200",
+                }} onClick={handleSubmit}>
                 Buscar
             </Button>
         </Box>
