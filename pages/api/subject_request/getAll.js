@@ -1,23 +1,44 @@
 import { connectToDatabase } from "../../../utils/db";
 import SubjectRequest from "../../../models/SubjectRequest";
+import Career from "../../../models/Career";
+import College from "../../../models/College";
 
 export default async function handler(req, res) {
-  const { method } = req;
+    const { method } = req;
 
-  await connectToDatabase();
+    await connectToDatabase();
 
-  switch (method) {
-    case "GET":
-      try {
-        const subjectRequests = await SubjectRequest.find({});
+    switch (method) {
+        case "GET":
+            try {
+                const subjectRequests = await SubjectRequest.find({})
+                    .populate("college", "collegeName -_id")
+                    .populate("career", "careerName -_id");
 
-        res.status(200).json({ success: true, data: subjectRequests });
-      } catch (error) {
-        res.status(400).json({ success: false });
-      }
-      break;
-    default:
-      res.status(400).json({ success: false });
-      break;
-  }
+                const formattedSubjectRequests = subjectRequests.map(
+                    (request) => ({
+                        _id: request._id,
+                        subjectName: request.subjectName,
+                        collegeName: request.college?.collegeName,
+                        careerName: request.career?.careerName,
+                        requestingUser: request.requestingUser,
+                        description: request.description,
+                        status: request.status,
+                        date: request.date,
+                        __v: request.__v,
+                    })
+                );
+
+                res.status(200).json({
+                    success: true,
+                    data: formattedSubjectRequests,
+                });
+            } catch (error) {
+                res.status(400).json({ success: false });
+            }
+            break;
+        default:
+            res.status(400).json({ success: false });
+            break;
+    }
 }

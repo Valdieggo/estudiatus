@@ -12,6 +12,7 @@ import {
     Button,
     Avatar,
     Link,
+    Tag
 } from "@chakra-ui/react";
 import {
     ChatIcon,
@@ -28,7 +29,7 @@ import FavPostButton from "./FavPostButton";
 import MenuPost from "./MenuPost";
 import esLocale from "date-fns/locale/es";
 
-export default function PostsCard({ post, setAllPosts, allPosts }) {
+export default function PostsCard({ post, setAllPosts, allPosts, title,subjectId }) {
     const { creator } = post;
 
     const router = useRouter();
@@ -72,6 +73,7 @@ export default function PostsCard({ post, setAllPosts, allPosts }) {
                             post={post}
                             setAllPosts={setAllPosts}
                             allPosts={allPosts}
+                            subjectId={subjectId}
                         />
                         <FavPostButton post={post} />
                     </Flex>
@@ -79,6 +81,8 @@ export default function PostsCard({ post, setAllPosts, allPosts }) {
                 <CardBody>
                     <Text>{post.content}</Text>
                 </CardBody >
+                <Image src={`/api/File/download/${post.file}`} alt="Imagen" />
+
                 {post.file && (
                     <>
                         <CardFooter
@@ -89,7 +93,7 @@ export default function PostsCard({ post, setAllPosts, allPosts }) {
                                     minW: "140px",
                                 },
                             }}>
-                            {post.file.endsWith(".png") || post.file.endsWith(".jpg") ? (
+                            {post.file.endsWith(".png") || post.file.endsWith(".jpeg") ? (
                                 <Image src={`/api/File/download/${post.file}`} alt="Imagen" />
                             ) : (
                                 <Button

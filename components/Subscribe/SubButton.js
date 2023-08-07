@@ -10,7 +10,7 @@ export default function SubButton({ type, id}) {
     const idType = type+'Id';
     useEffect(() => {
         if (session) {
-            const res = axios.post(`http://localhost:3000/api/${type}/getSubscribeUser`, {
+            const res = axios.post(`/api/${type}/getSubscribeUser`, {
                 userId: session.user.id,
                 [idType]: id
             }).then((res) => {
@@ -22,7 +22,7 @@ export default function SubButton({ type, id}) {
     
     const subscribe = () => {
         setIsSubscribing(true);
-        const res = axios.put(`http://localhost:3000/api/${type}/subscribe`, {
+        const res = axios.put(`/api/${type}/subscribe`, {
             userId: session.user.id,
             [idType]: id
         }).then((res) => {

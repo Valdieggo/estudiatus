@@ -1,6 +1,5 @@
-// PostCard.js
-import { VStack, Link, Text, CardBody, IconButton, Box, Heading, Flex, Card, CardHeader, Image, CardFooter, Button, Avatar, Icon } from "@chakra-ui/react";
-import { ChatIcon, ArrowUpIcon, DownloadIcon } from "@chakra-ui/icons";
+import { VStack, Link, Text, CardBody, Box, Heading, Flex, Card, CardHeader, Image, CardFooter, Button, Avatar } from "@chakra-ui/react";
+import { ViewIcon, DownloadIcon } from "@chakra-ui/icons";
 import LikePostButton from "./LikePostButton";
 import MenuPost from "./MenuPost";
 import FavPostButton from "./FavPostButton";
@@ -44,16 +43,24 @@ export default function PostCard({ post }) {
                 <CardBody>
                     <Text>
                         {post.content}
+
                     </Text>
                 </CardBody>
                 {post.file && (
                     <>
-                        <Box align="center">
+                        <CardFooter
+                            justify="space-between"
+                            flexWrap="wrap"
+                            sx={{
+                                "& > button": {
+                                    minW: "140px",
+                                },
+                            }}>
                             {post.file.endsWith(".png") || post.file.endsWith(".jpg") ? (
                                 <Image src={`/api/File/download/${post.file}`} alt="Imagen" />
                             ) : (
                                 <Button
-                                    w={"430px"}
+                                    w={"205px"}
                                     as="a"
                                     bg="button.100"
                                     _hover={{
@@ -66,7 +73,23 @@ export default function PostCard({ post }) {
                                     Descargar Documento
                                 </Button>
                             )}
-                        </Box>
+                            {post.file.endsWith(".png") || post.file.endsWith(".jpg") ? (
+                                <Image src={`/api/File/download/${post.file}`} alt="Imagen" />
+                            ) : (
+                                <Button
+                                    w={"205px"}
+                                    as="a"
+                                    bg="button.100"
+                                    _hover={{
+                                        bg: "button.200",
+                                    }}
+                                    href={`/api/File/download/${post.file}`}
+                                    leftIcon={<ViewIcon />}
+                                >
+                                    Ver Documento
+                                </Button>
+                            )}
+                        </CardFooter>
                     </>
                 )}
 
