@@ -182,7 +182,7 @@ export default function CreatePost({ allPosts, setAllPosts, subject }) {
                 onClick={handleAddPost}
                 leftIcon={isAddingPost ? <Spinner /> : <ChatIcon />}
             >
-                Publicar un post
+                Publicar
             </Button>
             <LoginModal isOpen={isOpen} onClose={onClose} />
         </Box>
