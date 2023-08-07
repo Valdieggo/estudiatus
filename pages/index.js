@@ -43,9 +43,6 @@ const Posts = ({ posts }) => {
         handlePageChange={handlePageChange}
       />
       <Box>
-        <Stack>
-
-        </Stack>
         {currentPosts.map((post) => (
           <PostsCard key={post.id} post={post} setAllPosts={setAllPosts} allPosts={allPosts} subjectId={post.subject} />
         ))}

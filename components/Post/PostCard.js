@@ -1,6 +1,5 @@
-// PostCard.js
-import { VStack, Link, Text, CardBody, IconButton, Box, Heading, Flex, Card, CardHeader, Image, CardFooter, Button, Avatar, Icon } from "@chakra-ui/react";
-import { ChatIcon, ViewIcon, DownloadIcon } from "@chakra-ui/icons";
+import { VStack, Link, Text, CardBody, Box, Heading, Flex, Card, CardHeader, Image, CardFooter, Button, Avatar } from "@chakra-ui/react";
+import { ViewIcon, DownloadIcon } from "@chakra-ui/icons";
 import LikePostButton from "./LikePostButton";
 import MenuPost from "./MenuPost";
 import FavPostButton from "./FavPostButton";
