@@ -20,7 +20,8 @@ export default function AddCommentCard({ post, setComments, comments }) {
     const handleAddComment = () => {
         if (status === "authenticated") {
             setIsAddingComment(true);
-            axios.post(`http://localhost:3000/api/comment/add/`, {
+            //http://localhost:3000/api/comment/add/ --> ${process.env.NEXT_PUBLIC_URL}:${process.env.NEXT_PUBLIC_PORT}/api/comment/add/
+            axios.post(`${process.env.NEXT_PUBLIC_URL}:${process.env.NEXT_PUBLIC_PORT}/api/comment/add/`, {
                 text: comment,
                 postId: post._id,
                 creator: session.user.id,
