@@ -12,6 +12,7 @@ import {
     Button,
     Avatar,
     Link,
+    Tag
 } from "@chakra-ui/react";
 import {
     ChatIcon,
@@ -28,7 +29,7 @@ import FavPostButton from "./FavPostButton";
 import MenuPost from "./MenuPost";
 import esLocale from "date-fns/locale/es";
 
-export default function PostsCard({ post, setAllPosts, allPosts }) {
+export default function PostsCard({ post, setAllPosts, allPosts, title,subjectId }) {
     const { creator } = post;
 
     const router = useRouter();
@@ -65,6 +66,9 @@ export default function PostsCard({ post, setAllPosts, allPosts }) {
                                         </Box>
                                     </Flex>
                                 </Link>
+                                <Tag size={"md"} key={"md"} variant='outline' colorScheme='cyan'>
+                                    {title}
+                                </Tag>
                                 <Text>Publicado {timeAgo}</Text>
                             </Flex>
                         )}
@@ -72,6 +76,7 @@ export default function PostsCard({ post, setAllPosts, allPosts }) {
                             post={post}
                             setAllPosts={setAllPosts}
                             allPosts={allPosts}
+                            subjectId={subjectId}
                         />
                         <FavPostButton post={post} />
                     </Flex>
