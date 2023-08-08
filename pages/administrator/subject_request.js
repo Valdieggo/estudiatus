@@ -33,7 +33,7 @@ const SubjectRequest = (data) => {
     verifyAdmin();
     const { subjectrequest } = data;
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const [subjectRequestId, setSubjectRequestId] = useState({});
+    const [subjectRequestId, setSubjectRequestId] = useState("");
 
     const handleOpenRequest = (id) => {
         setSubjectRequestId(id);
@@ -62,11 +62,13 @@ const SubjectRequest = (data) => {
 
     return (
         <>
-            <ModalSubjectRequest
-                isOpen={isOpen}
-                onClose={onClose}
-                subjectRequestId={subjectRequestId}
-            />
+            {subjectRequestId ? (
+                <ModalSubjectRequest
+                    isOpen={isOpen}
+                    onClose={onClose}
+                    subjectRequestId={subjectRequestId}
+                />
+            ) : null}
             <Head>
                 <title>Solicitudes de asignaturas</title>
             </Head>
