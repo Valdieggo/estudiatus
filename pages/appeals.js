@@ -1,12 +1,8 @@
 import React, {useState, useEffect}from 'react'
 import Layout from "../components/Layout/Layout";
+import { useSession, getSession } from 'next-auth/react';
 import Head from 'next/head';
 import {
-Box,
-Container,
-Heading,
-Button,
-HStack,
 Table,
 Thead,
 Tbody,
@@ -20,10 +16,12 @@ import axios from 'axios';
 
 export default function Appeal() {
 
+  const { data: session } = useSession();
   const [appeal,setAppeals]= useState([])
+
   const getAppeal = async () => {
     try {
-      const response = await axios.get(`/api/appeal/getOneUser/${userid}`);
+      const response = await axios.get(`/api/appeal/getOneUser/${session.user.id}`);
       setAppeals(response.data);
     } catch (error) {
       console.error(error);
