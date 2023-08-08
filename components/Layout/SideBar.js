@@ -1,6 +1,6 @@
 import { Box, Flex, HStack, Text,Image, Link, CloseButton, Divider, VStack } from "@chakra-ui/react";
 import SidebarItem from "./SidebarItem";
-import { FiHome, FiTrendingUp, FiCompass, FiStar, FiSettings } from "react-icons/fi";
+import { FiHome, FiTrendingUp, FiCompass, FiStar, FiSettings, FiCalendar } from "react-icons/fi";
 import AdministratorList from "../Admin/AdministratorList";
 import SubsList from "../Subscribe/SubsList";
 
@@ -10,6 +10,7 @@ const LinkItems = [
     { name: 'Explore', icon: FiCompass },
     { name: 'Favourites', icon: FiStar },
     { name: 'caca', icon: FiSettings },
+    { name: 'Events', icon: FiCalendar },
 ]
 
 export default function Sidebar({ onClose, ...rest }) {
@@ -39,6 +40,9 @@ export default function Sidebar({ onClose, ...rest }) {
             </SidebarItem>
             <SidebarItem icon={FiTrendingUp} link={"/calendar"}>
                 Calendario
+            </SidebarItem>
+            <SidebarItem icon={FiCalendar} link={"/events"}>
+                Eventos
             </SidebarItem>
             <AdministratorList />
             <SubsList />
