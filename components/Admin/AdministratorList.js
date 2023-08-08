@@ -1,6 +1,6 @@
 import SidebarItem from "../Layout/SidebarItem";
 import isAdmin from "../../utils/isAdmin";
-
+import { Divider, Text } from "@chakra-ui/react";
 const list = [
     {
         name: "Asignaturas",
