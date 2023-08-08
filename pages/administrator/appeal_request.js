@@ -28,6 +28,7 @@ import {
   ButtonGroup
 } from "@chakra-ui/react";
 import axios from 'axios';
+import { useRouter } from 'next/router';
 
 export default function appeal_request() {
   verifyAdmin();
@@ -37,23 +38,20 @@ export default function appeal_request() {
     onOpen: onOpenUpdate,
     onClose: onCloseUpdate
 } = useDisclosure()
-
+  const router=useRouter();
   const [appeal,setAppeals]= useState([])
   const getAppeal = async () => {
       try {
         const response = await axios.get("../api/appeal/getAll");
         setAppeals(response.data);
       } catch (error) {
-        console.error(error);
+        console.log(error);
       }
   };
 
   useEffect(()=>{
     getAppeal();
   }, [])
-
-  const [status, setStatus] = useState('');
-
 
 // Caso DELETE
 const onDelete= async(apid)=>{
@@ -128,17 +126,11 @@ const showErrorToast = (message) => {
   })
 }
 
-
 //Caso UPDATE
-const onChange=async(estado,id)=>{
-  setStatus(estado);
-  console.log(estado) 
-  onUpdate(id);
-}
-const onUpdate = async (id) => {
+const onUpdate = async (estado, id) => {
   const messageSuccess = "Estado actualizado con éxito";
   const messageError = "Error al intentar actualizar el estado";
-  const response = await axios.put(`/api/appeal/update/${id}`, {status:status} )
+  const response = await axios.put(`/api/appeal/update/${id}`, {status:estado} )
   if(response.status==200){
     showSuccessToast(messageSuccess);
     getAppeal();
@@ -149,14 +141,13 @@ const onUpdate = async (id) => {
   }
 }
 
-  const handleUpdate = (id, estinit) => {
+  const handleUpdate = (id) => {
     return (
         <>
             <Modal
             isCentered
                 isOpen={isOpenUpdate}
-                onClose={onCloseUpdate
-          }
+                onClose={onCloseUpdate}
                 motionPreset='slideInBottom'
                 size='xl'
                 >
@@ -167,16 +158,16 @@ const onUpdate = async (id) => {
                     <ModalBody pb={6}>
                     <ButtonGroup variant='outline' spacing='6'>
                       <Button colorScheme='red'
-                      onClick={()=>onChange('Rechazada', id)}
+                      onClick={()=>onUpdate('Rechazada', id)}
                       >Rechazada</Button>
                       <Button colorScheme='green'
-                      onClick={()=>onChange('Aceptada',id)}
+                      onClick={()=>onUpdate('Aceptada',id)}
                       >Aceptada</Button>
                       <Button colorScheme='blue'
-                      onClick={()=>onChange('En proceso',id)}
+                      onClick={()=>onUpdate('En proceso',id)}
                       >En proceso</Button>
-                      <Button onClick={onCloseUpdate
-                }>Cancelar</Button>
+                      <Button onClick={onCloseUpdate}
+                      >Cancelar</Button>
                     </ButtonGroup>
                         </ModalBody>
                 </ModalContent>
