@@ -28,11 +28,10 @@ import axios from "axios";
 import FavPostButton from "./FavPostButton";
 import MenuPost from "./MenuPost";
 import esLocale from "date-fns/locale/es";
-import { useSession } from "next-auth/react";
+import ModalImg from "./ModalImg";
 
-export default function PostsCard({ post, setAllPosts, allPosts, title,subjectId }) {
+export default function PostsCard({ post, setAllPosts, allPosts, title, subjectId }) {
     const { creator } = post;
-    const { data: session, status } = useSession();
 
     const router = useRouter();
     const timeAgo = formatDistanceToNow(new Date(post.createDate), {
@@ -41,7 +40,7 @@ export default function PostsCard({ post, setAllPosts, allPosts, title,subjectId
     });
 
     return (
-        <VStack key={post.id} marginBottom={4} spacing={4} align="center">
+        <VStack key={post.id} marginY={4} spacing={4} align="center">
             <Card color="white" width="100%" maxWidth="500px" margin="auto" bg="post.100" borderRadius="md" p={4}
                 _hover={{
                     bg: "post.200",
@@ -71,24 +70,25 @@ export default function PostsCard({ post, setAllPosts, allPosts, title,subjectId
                                 <Text>Publicado {timeAgo}</Text>
                             </Flex>
                         )}
-                        { status==="authenticated" ? (
-                            <MenuPost
+                        <MenuPost
                             post={post}
                             setAllPosts={setAllPosts}
                             allPosts={allPosts}
                             subjectId={subjectId}
-                            />) : null
-
-                        }
-                        
+                        />
                         <FavPostButton post={post} />
                     </Flex>
                 </CardHeader>
                 <CardBody>
                     <Text>{post.content}</Text>
                 </CardBody >
-                <Image src={`/api/File/download/${post.file}`}/>
-
+                <Box align={"center"}>
+                    {post.file ? (
+                        <ModalImg post={post}></ModalImg>
+                    ) : (
+                        <></>
+                    )}
+                </Box>
                 {post.file && (
                     <>
                         <CardFooter
@@ -99,39 +99,33 @@ export default function PostsCard({ post, setAllPosts, allPosts, title,subjectId
                                     minW: "140px",
                                 },
                             }}>
-                            {post.file.endsWith(".png") || post.file.endsWith(".jpeg") ? (
-                                <Image src={`/api/File/download/${post.file}`} alt="Imagen" />
-                            ) : (
-                                <Button
-                                    w={"205px"}
-                                    as="a"
-                                    bg="button.100"
-                                    _hover={{
-                                        bg: "button.200",
-                                    }}
-                                    download={`/api/File/download/${post.file}`}
-                                    href={`/api/File/download/${post.file}`}
-                                    leftIcon={<DownloadIcon />}
-                                >
-                                    Descargar Documento
-                                </Button>
-                            )}
-                            {post.file.endsWith(".png") || post.file.endsWith(".jpg") ? (
-                                <Image src={`/api/File/download/${post.file}`} alt="Imagen" />
-                            ) : (
-                                <Button
-                                    w={"205px"}
-                                    as="a"
-                                    bg="button.100"
-                                    _hover={{
-                                        bg: "button.200",
-                                    }}
-                                    href={`/api/File/download/${post.file}`}
-                                    leftIcon={<ViewIcon />}
-                                >
-                                    Ver Documento
-                                </Button>
-                            )}
+
+                            <Button
+                                w={"205px"}
+                                as="a"
+                                bg="button.100"
+                                _hover={{
+                                    bg: "button.200",
+                                }}
+                                download={`/api/File/download/${post.file}`}
+                                href={`/api/File/download/${post.file}`}
+                                leftIcon={<DownloadIcon />}
+                            >
+                                Descargar Documento
+                            </Button>
+
+                            <Button
+                                w={"205px"}
+                                as="a"
+                                bg="button.100"
+                                _hover={{
+                                    bg: "button.200",
+                                }}
+                                href={`/api/File/download/${post.file}`}
+                                leftIcon={<ViewIcon />}
+                            >
+                                Ver Documento
+                            </Button>
                         </CardFooter>
                     </>
                 )}
