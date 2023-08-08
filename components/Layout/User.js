@@ -37,7 +37,6 @@ export default function User() {
                 <MenuGroup color="#000">
                   <MenuItem>Perfil</MenuItem>
                   <MenuItem>Configuración</MenuItem>
-                  <MenuItem><Link href="/appeals" >Mis apelaciones</Link></MenuItem>
                 </MenuGroup>
                 <MenuDivider />
                 <MenuGroup color="#000">

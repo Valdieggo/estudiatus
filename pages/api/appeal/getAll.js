@@ -6,9 +6,9 @@ import Ban from "../../../models/Ban";
 export default async function getAppeals(req,res){
     await connectToDatabase();
     const { method } = req;
-    const appeals = await Appeal.find({}).populate("appealer","-password -favs").populate("ban","-user");
     if(method=="GET"){
         try {
+                const appeals = await Appeal.find({}).populate("appealer","username , email").populate("ban","type , user");
                 if (appeals) {
                     return res.status(200).json({ appeals });
                 }

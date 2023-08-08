@@ -16,7 +16,8 @@ const appealSchema = new mongoose.Schema({
     },
     ban: {
         type: mongoose.Schema.Types.ObjectId,
-        ref:"Ban"
+        ref:"Ban",
+        required: true
     },
     appealer: {
         type: mongoose.Schema.Types.ObjectId,
@@ -24,7 +25,7 @@ const appealSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum:["En proceso","Aprovada", "Rechazada"],
+        enum:["En proceso", "Aprovada", "Rechazada"],
         default: "En proceso"
     }
 
