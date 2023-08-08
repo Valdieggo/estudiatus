@@ -5,9 +5,12 @@ import { useState } from 'react';
 import ReportButton from '../Report/ReportButton';
 import DeleteButtonPost from './DeleteButtonPost';
 import EditButtonPost from './EditButtonPost';
+import LoginModal from '../Auth/LoginModal';
+import { useDisclosure } from '@chakra-ui/react';
 
 export default function MenuPost({ post, allPosts, setAllPosts,subjectId }) {
     const { creator } = post;
+    const { isOpen, onOpen, onClose } = useDisclosure();
 
     let isCreatorId = false;
     const { data: session, status } = useSession();
@@ -32,21 +35,13 @@ export default function MenuPost({ post, allPosts, setAllPosts,subjectId }) {
                     </MenuItem>
                 ) : null}
 
-                {isAdmin || isCreatorId ? (
-                    <MenuItem>
-                        <EditButtonPost post={post} allPosts={allPosts} setAllPosts={setAllPosts} subjectId={subjectId}/>
-                    </MenuItem>
+                {post?.creator?._id !== session?.user?.id && session ? (
+                <MenuItem>
+                    <ReportButton post={post} />
+                </MenuItem>
                 ) : null}
-
-
-                {
-                    post?.creator?._id !== session?.user?.id
-                    &&
-                    <MenuItem >
-                        <ReportButton post={post} />
-                    </MenuItem>
-                }
             </MenuList>
+            
         </Menu>
     );
 }

@@ -5,8 +5,10 @@ import MenuPost from "./MenuPost";
 import FavPostButton from "./FavPostButton";
 import { formatDistanceToNow } from "date-fns";
 import esLocale from "date-fns/locale/es";
+import { useSession } from 'next-auth/react';
 
 export default function PostCard({ post }) {
+    const { data: session, status } = useSession();
 
     const timeAgo = formatDistanceToNow(new Date(post.createDate), {
         addSuffix: true,
@@ -37,7 +39,11 @@ export default function PostCard({ post }) {
                             <Text>Publicado {timeAgo}</Text>
                         </Flex>
                         <FavPostButton post={post} />
-                        <MenuPost post={post} />
+                        { status==="authenticated" ?
+                            <MenuPost post={post} />
+                            : null
+                        }
+
                     </Flex>
                 </CardHeader>
                 <CardBody>
