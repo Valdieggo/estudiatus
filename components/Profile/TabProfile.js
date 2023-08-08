@@ -9,13 +9,12 @@ export default function TabProfile({ user }) {
     return (
     <Box
       width="100%"
-      margin="auto"
-      bg="post.100"
-      borderRadius="md"
-      p={4}
+      margin="auto"      
+      mt={4}
     >
-      <Tabs variant="soft-rounded" isFitted >
-        <TabList mb="1em" gap={2}>
+      <Tabs w="full" variant="soft-rounded" isFitted >
+        <TabList  gap={2} bg="post.100"
+      borderRadius="md" p={4}>
           <Tab
              textColor={"white"}
              _hover={{
