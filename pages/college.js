@@ -3,7 +3,7 @@ import Head from "next/head";
 import Layout from "../components/Layout/Layout";
 import axios from "axios";
 import Card from "../components/Cards/Card.js";
-
+import NavigationCard from "../components/Cards/NavigationCard";
 export const getServerSideProps = async () => {
     const response = await axios.get(`http://localhost:${process.env.PORT}/api/college/getAll`);
     const colleges = response.data.data;
@@ -19,7 +19,7 @@ const College = ({colleges}) => {
     const displayCard = () => {
         return (<>
             {colleges.map((college) => (
-                <Card
+                <NavigationCard
                     key={college._id}
                     title={college.collegeName}
                     image={college.img}
