@@ -3,7 +3,7 @@ import Head from "next/head";
 import Layout from "../components/Layout/Layout";
 import axios from "axios";
 import Card from "../components/Cards/Card.js";
-
+import NavigationCard from "../components/Cards/NavigationCard";
 
 export const getServerSideProps = async () => {
     const response = await axios.get(`http://localhost:${process.env.PORT}/api/subject/getAll`);
@@ -20,7 +20,7 @@ const Subject = ({ subjects }) => {
     const displayCard = () => {
         return (<>
             {subjects.map((subject) => (
-                <Card
+                <NavigationCard
                     key={subject._id}
                     title={subject.subjectName}
                     image={subject.img ? `/uploads/${subject.img.fileName}` : null}

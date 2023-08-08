@@ -2,7 +2,7 @@ import Head from "next/head";
 import Layout from "../../components/Layout/Layout";
 import axios from "axios";
 import Card from "../../components/Cards/Card.js";
-
+import NavigationCard from "../../components/Cards/NavigationCard";
 
 import {
     Box,
@@ -30,7 +30,7 @@ export default function Home({college}) {
     const displayCard = () => {
             return (<>
                 {college.careers.map((career) => (
-                    <Card
+                    <NavigationCard
                         key={career._id}
                         title={career.careerName}
                         image={career.img}

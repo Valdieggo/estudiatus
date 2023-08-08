@@ -3,7 +3,7 @@ import Head from "next/head";
 import Layout from "../components/Layout/Layout";
 import axios from "axios";
 import Card from "../components/Cards/Card.js";
-
+import NavigationCard from "../components/Cards/NavigationCard";
 export const getServerSideProps = async () => {
     const response = await axios.get(`http://localhost:${process.env.PORT}/api/career/getAll`);
     const careers = response.data.data;
@@ -19,7 +19,7 @@ const Career = ({ careers }) => {
     const displayCard = () => {
         return (<>
             {careers.map((career) => (
-                <Card
+                <NavigationCard
                     key={career._id}
                     title={career.careerName}
                     description={career.description}

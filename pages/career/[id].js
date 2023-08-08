@@ -2,6 +2,7 @@ import Head from "next/head";
 import Layout from "../../components/Layout/Layout";
 import axios from "axios";
 import Card from "../../components/Cards/Card.js";
+import NavigationCard from "../../components/Cards/NavigationCard";
 import { Text, Center, Box } from '@chakra-ui/react'
 import HeaderCard from "../../components/Cards/HeaderCard";
 export const getServerSideProps = async (context) => {
@@ -22,7 +23,7 @@ export default function Home({career}) {
     const displayCard = () => {
         if (career.subjects) return (<>
             {career.subjects.map((subject) => (
-                 <Card
+                 <NavigationCard
                     key={subject._id}
                     title={subject.subjectName}
                     image={subject.img ? `/uploads/${subject.img.fileName}` : null}
