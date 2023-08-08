@@ -28,8 +28,9 @@ import axios from "axios";
 import FavPostButton from "./FavPostButton";
 import MenuPost from "./MenuPost";
 import esLocale from "date-fns/locale/es";
+import ModalImg from "./ModalImg";
 
-export default function PostsCard({ post, setAllPosts, allPosts, title,subjectId }) {
+export default function PostsCard({ post, setAllPosts, allPosts, title, subjectId }) {
     const { creator } = post;
 
     const router = useRouter();
@@ -81,8 +82,13 @@ export default function PostsCard({ post, setAllPosts, allPosts, title,subjectId
                 <CardBody>
                     <Text>{post.content}</Text>
                 </CardBody >
-                <Image src={`/api/File/download/${post.file}`} alt="Imagen" />
-
+                <Box align={"center"}>
+                    {post.file ? (
+                        <ModalImg post={post}></ModalImg>
+                    ) : (
+                        <></>
+                    )}
+                </Box>
                 {post.file && (
                     <>
                         <CardFooter
@@ -93,39 +99,33 @@ export default function PostsCard({ post, setAllPosts, allPosts, title,subjectId
                                     minW: "140px",
                                 },
                             }}>
-                            {post.file.endsWith(".png") || post.file.endsWith(".jpeg") ? (
-                                <Image src={`/api/File/download/${post.file}`} alt="Imagen" />
-                            ) : (
-                                <Button
-                                    w={"205px"}
-                                    as="a"
-                                    bg="button.100"
-                                    _hover={{
-                                        bg: "button.200",
-                                    }}
-                                    download={`/api/File/download/${post.file}`}
-                                    href={`/api/File/download/${post.file}`}
-                                    leftIcon={<DownloadIcon />}
-                                >
-                                    Descargar Documento
-                                </Button>
-                            )}
-                            {post.file.endsWith(".png") || post.file.endsWith(".jpg") ? (
-                                <Image src={`/api/File/download/${post.file}`} alt="Imagen" />
-                            ) : (
-                                <Button
-                                    w={"205px"}
-                                    as="a"
-                                    bg="button.100"
-                                    _hover={{
-                                        bg: "button.200",
-                                    }}
-                                    href={`/api/File/download/${post.file}`}
-                                    leftIcon={<ViewIcon />}
-                                >
-                                    Ver Documento
-                                </Button>
-                            )}
+
+                            <Button
+                                w={"205px"}
+                                as="a"
+                                bg="button.100"
+                                _hover={{
+                                    bg: "button.200",
+                                }}
+                                download={`/api/File/download/${post.file}`}
+                                href={`/api/File/download/${post.file}`}
+                                leftIcon={<DownloadIcon />}
+                            >
+                                Descargar Documento
+                            </Button>
+
+                            <Button
+                                w={"205px"}
+                                as="a"
+                                bg="button.100"
+                                _hover={{
+                                    bg: "button.200",
+                                }}
+                                href={`/api/File/download/${post.file}`}
+                                leftIcon={<ViewIcon />}
+                            >
+                                Ver Documento
+                            </Button>
                         </CardFooter>
                     </>
                 )}
