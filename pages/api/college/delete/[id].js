@@ -21,7 +21,7 @@ export default async function handler(req, res) {
                 if(reqCollege.careers.length > 0){
                     //await Career.deleteMany({ _id: { $in: reqCollege.careers } });
                     Promise.all(reqCollege.careers.map(async (career) => {
-                        await axios.delete(`http://localhost:${process.env.PORT}/api/career/delete/${career._id}`);
+                        await axios.delete(`${process.env.NEXT_PUBLIC_URL}:${process.env.PORT}/api/career/delete/${career._id}`);
                     }));
                 }
                 if(reqCollege.img){
