@@ -33,6 +33,23 @@ export default function ModalSubjectRequest({
         }
     };
 
+    const handleReject = () => {
+        console.log("Rechazar solicitud:", subjectRequestId);
+        onClose();
+    };
+
+    const handleCreate = async () => {
+        if (subjectRequest) {
+            const response = await axios.post(`/api/subject/create`, {
+                subjectName: subjectRequest.subjectName,
+                career: subjectRequest.careerId,
+                description: subjectRequest.description,
+            });
+            axios.delete(`/api/subject_request/delete/${subjectRequestId}`);
+            onClose();
+        }
+    };
+
     useEffect(() => {
         getSubjectRequest();
     }, [subjectRequestId]);
@@ -62,10 +79,12 @@ export default function ModalSubjectRequest({
                     </VStack>
                 </ModalBody>
                 <ModalFooter>
-                    <Button colorScheme="red" mr={3} onClick={onClose}>
+                    <Button colorScheme="red" mr={3} onClick={handleReject}>
                         Rechazar
                     </Button>
-                    <Button colorScheme="green">Crear</Button>
+                    <Button colorScheme="green" onClick={handleCreate}>
+                        Crear
+                    </Button>
                 </ModalFooter>
             </ModalContent>
         </Modal>
