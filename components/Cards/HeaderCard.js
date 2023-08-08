@@ -2,7 +2,7 @@ import { Card, CardBody, CardFooter, Heading, Image, Stack, Text, Button } from 
 import SubscribeButton from '../Subscribe/SubButton';
 
 export default function HeaderCard({ title, image, description, type, id }) {
-    const defaultImage = "/default/landscape.jpg";
+    const defaultImage = "/estudiatus-pattern.svg";
     if(!image) image = defaultImage;
     console.log(image)
     return (

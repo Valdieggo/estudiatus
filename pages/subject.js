@@ -1,5 +1,6 @@
 import { Box, Text } from "@chakra-ui/react";
 import Head from "next/head";
+import { Wrap, WrapItem } from '@chakra-ui/react'
 import Layout from "../components/Layout/Layout";
 import axios from "axios";
 import Card from "../components/Cards/Card.js";
@@ -20,6 +21,7 @@ const Subject = ({ subjects }) => {
     const displayCard = () => {
         return (<>
             {subjects.map((subject) => (
+                <WrapItem>
                 <NavigationCard
                     key={subject._id}
                     title={subject.subjectName}
@@ -29,6 +31,7 @@ const Subject = ({ subjects }) => {
                     top={`${subject.posts.length} ${subject.posts.length !== 1 ? "Publicaciones" : "Publicacione"}`}
                     footer={`${subject.subscribers.length} ${subject.subscribers.length !== 1 ? "subscriptores" : "subscriptor"}`}
                 />
+                </WrapItem>
             ))}
         </>
         )
@@ -40,9 +43,10 @@ const Subject = ({ subjects }) => {
             </Head>
             <Layout>
                 <Box>
-                    <Text>Subjects</Text>
-                    <Text>Todas las asignaturas disponibles</Text>
+                    <Text fontSize='4xl' fontWeight='bold' textAlign='center' color='white'>Todas las Asignaturas</Text>
+                    <Wrap spacing="20px" justify="center" mt='4'>
                     {displayCard()}
+                    </Wrap>
                 </Box>
             </Layout>
         </>

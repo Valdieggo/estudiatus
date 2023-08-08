@@ -1,7 +1,7 @@
 import { Card, Link, Image, Stack, Heading, Text, Divider, ButtonGroup, Button, CardHeader, CardBody, CardFooter, HStack } from '@chakra-ui/react'
 import { useState } from 'react';
 export default function NavigationCard({ title, image, description, link, top, footer }) {
-    const defaultImage = "/default/landscape.jpg";
+    const defaultImage = "/estudiatus-pattern.svg";
 
     if(!image) image = defaultImage;
 
@@ -12,7 +12,13 @@ export default function NavigationCard({ title, image, description, link, top, f
     }
     
     return (
-        <Card maxW='sm' bg="post.100" color="white">
+        <Card minW=
+        {
+            {
+                base: '400px',
+                sm: '400px',
+            }
+        } overflow='hidden' bg="post.100" textColor="white" _hover={{ bg: 'post.200' }}>
         <CardBody>
             <Image
                 src={imageSrc}
