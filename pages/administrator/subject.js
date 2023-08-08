@@ -120,7 +120,11 @@ export default function Home(data) {
 
     // *****************************************************
 
+    useEffect(() => {
+        setfilteredSubjects(subjects);
+    }, [subjects]);
 
+    // *****************************************************
 
 
 
@@ -148,6 +152,15 @@ export default function Home(data) {
         setName(name);
         setDescription(description);
         onOpen();
+    }
+
+    const nullify = () => {
+        console.log("nullify")
+        setId("");
+        setName("");
+        setDescription("");
+        setCareer("");
+        setImage("");
     }
 
     const SuccessToast = (title, description) => {
@@ -181,16 +194,18 @@ export default function Home(data) {
         } else {
             setfilteredSubjects(subjects);
         }
-
     }
 
     const deleteSubject = async (id) => {
         await axios.delete(`/api/subject/delete/${id}`).then((res) => {
-            setSubjects(subjects.filter((subject) => subject._id !== id));
+            setSubjects(subjects.filter((subject) => {
+                return subject._id !== id;
+                }));
             SuccessToast(texto.success, texto.messageSubjectDeleteSuccess);
         }).catch((err) => {
             ErrorToast(texto.error, texto.messageSubjectDeleteError);
         })
+        nullify();
     };
 
     const handleUpdate = async () => {
@@ -219,6 +234,7 @@ export default function Home(data) {
             ErrorToast(texto.messageSubjectUpdateError);
             //html: err.response.data.message,
         })
+        nullify();
         onClose();
     }
 
@@ -235,6 +251,7 @@ export default function Home(data) {
         }).catch((err) => {
             ErrorToast(texto.error, texto.messageSubjectCreateError);
         })
+        nullify();
         onCloseCreate();
     }
 
