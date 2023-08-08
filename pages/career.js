@@ -1,4 +1,5 @@
-import { Box } from "@chakra-ui/react";
+import { Box, SimpleGrid, Text } from "@chakra-ui/react";
+import { Wrap, WrapItem } from '@chakra-ui/react'
 import Head from "next/head";
 import Layout from "../components/Layout/Layout";
 import axios from "axios";
@@ -19,12 +20,15 @@ const Career = ({ careers }) => {
     const displayCard = () => {
         return (<>
             {careers.map((career) => (
+                <WrapItem>
                 <NavigationCard
                     key={career._id}
                     title={career.careerName}
                     description={career.description}
                     link={`/career/${career._id}`}
+                    image={career.image}
                     top={`${career.subjects.length} ${career.subjects.length !== 1 ? "Asignaturas" : "Asignatura"}`} />
+                </WrapItem>
             ))}
         </>
         )
@@ -37,8 +41,11 @@ const Career = ({ careers }) => {
             </Head>
             <Layout>
                 <Box>
-                    <h1>Todas las carreras</h1>
+                    <Text fontSize='4xl' fontWeight='bold' textAlign='center' color='white'>Todas las carreras</Text>
+                    <Wrap spacing="20px" justify="center" mt='4'>
+
                     {displayCard()}
+                    </Wrap>
                 </Box>
             </Layout>
         </>
