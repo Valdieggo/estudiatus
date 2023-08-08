@@ -38,8 +38,8 @@ import { set } from "date-fns";
 
 
 export const getServerSideProps = async () => {
-    const resSubject = await axios.get(`http://localhost:${process.env.PORT}/api/subject/getAll`);
-    const resCareer = await axios.get(`http://localhost:${process.env.PORT}/api/career/getAll`);
+    const resSubject = await axios.get(`${process.env.NEXT_PUBLIC_URL}:${process.env.PORT}/api/subject/getAll`);
+    const resCareer = await axios.get(`${process.env.NEXT_PUBLIC_URL}:${process.env.PORT}/api/career/getAll`);
     const subjects = resSubject.data.data;
     const careers = resCareer.data.data;
     return {
@@ -147,8 +147,9 @@ export default function Home(data) {
         setCareer(e.target.value);
     }
 
-    const handleOpenEdit = (key, name, description) => {
+    const handleOpenEdit = (key, name, description, idCareer) => {
         setId(key);
+        setCareer(idCareer)
         setName(name);
         setDescription(description);
         onOpen();
@@ -200,7 +201,7 @@ export default function Home(data) {
         await axios.delete(`/api/subject/delete/${id}`).then((res) => {
             setSubjects(subjects.filter((subject) => {
                 return subject._id !== id;
-                }));
+            }));
             SuccessToast(texto.success, texto.messageSubjectDeleteSuccess);
         }).catch((err) => {
             ErrorToast(texto.error, texto.messageSubjectDeleteError);
@@ -216,6 +217,7 @@ export default function Home(data) {
             subjectName: name,
             description: description,
             img: idImage,
+            career: career
 
         }).then((res) => {
             setSubjects(subjects.map((subject) => {
@@ -264,7 +266,7 @@ export default function Home(data) {
                     isOpen={isOpen}
                     onClose={() => {
                         onClose();
-                        SucessToast("a", 2);
+                        SuccessToast("a", 2);
                     }}
                 >
                     <ModalOverlay />
@@ -281,10 +283,22 @@ export default function Home(data) {
                                 <FormLabel>{texto.description}</FormLabel>
                                 <Input placeholder={texto.description} onChange={handleDescriptionChange} />
                             </FormControl>
+                            <FormControl mt={4}>
+                                <FormLabel>{texto.career}</FormLabel>
+                                <Select placeholder={texto.selectCareer} onChange={handleCareerChange}>
+                                    {careers.map((careerA) => {
+                                        console.log(careerA)
+                                        return (
+                                            <option key={careerA._id} value={careerA._id}>{careerA.careerName}</option>
+                                        )
+                                    })}
+                                </Select>
+                            </FormControl>
                             <FormControl>
                                 <FormLabel>{texto.image}</FormLabel>
                                 <Input placeholder={texto.image} type="file" onChange={handleImageChange} accept="image/*" />
                             </FormControl>
+                            
 
                         </ModalBody>
 
@@ -400,7 +414,7 @@ export default function Home(data) {
                                     <Td><button onClick={() => deleteSubject(subject._id)}>{texto.delete}</button></Td>
                                     <Td>
                                         <Button onClick={() => {
-                                            handleOpenEdit(subject._id, subject.subjectName, subject.description);
+                                            handleOpenEdit(subject._id, subject.subjectName, subject.description, subject.career._id);
                                         }}>
                                             <Image src={`/edit.svg`} alt={`Edit`} width="20px" height="20px" />
                                         </Button>

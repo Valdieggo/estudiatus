@@ -15,7 +15,7 @@ import {
 
 export const getServerSideProps = async (context) => {
     const { id } = context.query;
-    const response = await axios.get(`http://localhost:${process.env.PORT}/api/college/getOne/${id}`);
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_URL}:${process.env.PORT}/api/college/getOne/${id}`);
     const college = response.data.data;
     return {
         props: {
