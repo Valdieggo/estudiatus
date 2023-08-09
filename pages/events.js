@@ -10,13 +10,11 @@ import axios from 'axios';
 import Layout from '../components/Layout/Layout';
 import CreateEvent from '../components/Events/CreateEvent';
 import EventDetailsModal from '../components/Events/EventDetailsModal';
-import { useHistory } from 'react-router-dom';
 
 const EventsPage = () => {
   const [events, setEvents] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
-  const history = useHistory();
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -38,7 +36,7 @@ const EventsPage = () => {
 
   const handleCreateEventSuccess = () => {
     setIsCreateModalOpen(false);
-    history.push('/events');
+    fetchEvents();
   };
 
   return (
