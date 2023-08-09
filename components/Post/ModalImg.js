@@ -17,8 +17,6 @@ export default function ModalImg({ post }) {
             <Image
                 id="myImg"
                 src={`/api/File/download/${post.file}`}
-                width="300px"
-                height="300px"
                 onClick={openModal}
                 style={{ borderRadius: '5px', cursor: 'pointer', transition: '0.3s', opacity: modalVisible ? '0.7' : '1' }}
             />

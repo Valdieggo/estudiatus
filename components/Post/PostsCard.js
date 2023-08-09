@@ -82,13 +82,7 @@ export default function PostsCard({ post, setAllPosts, allPosts, title, subjectI
                 <CardBody>
                     <Text>{post.content}</Text>
                 </CardBody >
-                <Box align={"center"}>
-                    {post.file ? (
-                        <ModalImg post={post}></ModalImg>
-                    ) : (
-                        <></>
-                    )}
-                </Box>
+                {console.log(post)}
                 {post.file && (
                     <>
                         <CardFooter
@@ -99,7 +93,6 @@ export default function PostsCard({ post, setAllPosts, allPosts, title, subjectI
                                     minW: "140px",
                                 },
                             }}>
-
                             <Button
                                 w={"205px"}
                                 as="a"
