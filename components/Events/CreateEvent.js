@@ -77,7 +77,7 @@ const CreateEvent = () => {
       };
 
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_URL}:${process.env.PORT}/api/event/create`,
+        `/api/event/create`,
         eventData
       );
 
