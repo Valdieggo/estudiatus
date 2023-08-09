@@ -18,7 +18,6 @@ import {
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 
 export default function ModalSubjectRequest({
@@ -26,23 +25,20 @@ export default function ModalSubjectRequest({
     onClose,
     onOpen,
     careerId,
+    collegeId,
 }) {
     const { register, handleSubmit, reset } = useForm();
-    const [collegeList, setCollegeList] = useState([]);
-    const [careerList, setCareerList] = useState([]);
     const { data: session } = useSession();
-    const [selectedCollege, setSelectedCollege] = useState("");
     const toast = useToast();
 
     const submitRequest = async (data) => {
         const response = await axios.post("/api/subject_request/create", {
             subjectName: data.subjectName,
-            college: data.college,
+            college: collegeId,
             career: careerId,
             description: data.description,
             requestingUser: session.user.id,
         });
-        toast({ title: "no" });
 
         if (response.status === 201) {
             onClose();
@@ -54,26 +50,16 @@ export default function ModalSubjectRequest({
                 isClosable: true,
             });
             reset();
-            setSelectedCollege("");
+        } else {
+            toast({
+                title: "Error al enviar la solicitud",
+                description: "No se ha podido enviar la solicitud",
+                status: "error",
+                duration: 3000,
+                isClosable: true,
+            });
         }
     };
-
-    const handleCollege = async () => {
-        const response = await axios.get("/api/college/getAll");
-        const collegeList = response.data.data;
-        setCollegeList(collegeList);
-    };
-
-    const handleCareer = async () => {
-        const response = await axios.get("/api/career/getAll");
-        const careerList = response.data.data;
-        setCareerList(careerList);
-    };
-
-    useEffect(() => {
-        handleCollege();
-        handleCareer();
-    }, []);
 
     return (
         <Modal isOpen={isOpen} onClose={onClose}>

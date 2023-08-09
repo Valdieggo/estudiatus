@@ -34,8 +34,12 @@ export default function ModalSubjectRequestAdmin({
         }
     };
 
-    const handleReject = () => {
+    const handleReject = async () => {
         console.log("Rechazar solicitud:", subjectRequestId);
+        await axios.put(`/api/subject_request/update/`, {
+            id: subjectRequestId,
+            status: "Rechazada",
+        });
         onClose();
     };
 
@@ -102,7 +106,6 @@ export default function ModalSubjectRequestAdmin({
                     <Button
                         colorScheme="green"
                         onClick={handleCreate}
-                        isD
                         isabled={buttonsDisabled}
                     >
                         Crear

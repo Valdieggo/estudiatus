@@ -75,7 +75,8 @@ export default function Home({ career }) {
                                 <ModalSubjectRequest
                                     isOpen={isOpen}
                                     onClose={onClose}
-                                    careerId={career.id}
+                                    careerId={career._id}
+                                    collegeId={career.college}
                                 />
                             ) : (
                                 <LoginModal isOpen={isOpen} onClose={onClose} />
