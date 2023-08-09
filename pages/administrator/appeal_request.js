@@ -55,8 +55,8 @@ export default function appeal_request() {
 
 // Caso DELETE
 const onDelete= async(apid)=>{
-  const messageSuccess = "Appeal deleted successfully";
-  const messageError = "Error while trying to delete";
+  const messageSuccess = "Apelacion eliminada con exito";
+  const messageError = "Error el intenta eliminar la apelacion";
   const response = await axios.delete(`/api/appeal/delete/${apid}`)
     if(response.status == 204){
       showSuccessToast(messageSuccess);

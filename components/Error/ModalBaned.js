@@ -39,7 +39,7 @@ const BannedModal = ({ isOpen, onClose, idBan }) => {
         </ModalBody>
         <ModalFooter>
           <HStack>
-          <Button colorScheme="whiteAlpha" onClick={()=> router.push(`../../pages/appealForm/${idBan}`)}>Appeal</Button>
+          <Button colorScheme="whiteAlpha" onClick={()=> router.push(`../../pages/appealForm/${idBan}`)}>Apelar</Button>
           <Button colorScheme="blue" onClick={onClose}>Close</Button> 
           </HStack>
         </ModalFooter>
