@@ -21,6 +21,7 @@ export default function ModalSubjectRequestAdmin({
     subjectRequestId,
 }) {
     const [subjectRequest, setSubjectRequest] = useState({});
+    const [buttonsDisabled, setButtonsDisabled] = useState(false); // Estado para deshabilitar los botones
 
     const getSubjectRequest = async () => {
         try {
@@ -39,14 +40,25 @@ export default function ModalSubjectRequestAdmin({
     };
 
     const handleCreate = async () => {
-        if (subjectRequest) {
-            const response = await axios.post(`/api/subject/create`, {
-                subjectName: subjectRequest.subjectName,
-                career: subjectRequest.careerId,
-                description: subjectRequest.description,
-            });
-            axios.delete(`/api/subject_request/delete/${subjectRequestId}`);
-            onClose();
+        if (subjectRequest && !buttonsDisabled) {
+            // Verifica si los botones ya están deshabilitados
+            try {
+                setButtonsDisabled(true); // Deshabilita los botones
+                const response = await axios.post(`/api/subject/create`, {
+                    subjectName: subjectRequest.subjectName,
+                    career: subjectRequest.careerId,
+                    description: subjectRequest.description,
+                });
+                await axios.put(`/api/subject_request/update/`, {
+                    id: subjectRequestId,
+                    status: "Aceptada",
+                });
+                onClose();
+            } catch (error) {
+                console.error("Error creating subject:", error);
+            } finally {
+                setButtonsDisabled(false); // Habilita los botones nuevamente
+            }
         }
     };
 
@@ -79,10 +91,19 @@ export default function ModalSubjectRequestAdmin({
                     </VStack>
                 </ModalBody>
                 <ModalFooter textAlign={"center"}>
-                    <Button colorScheme="red" mr={3} onClick={handleReject}>
+                    <Button
+                        colorScheme="red"
+                        mr={3}
+                        onClick={handleReject}
+                        disabled={buttonsDisabled}
+                    >
                         Rechazar
                     </Button>
-                    <Button colorScheme="green" onClick={handleCreate}>
+                    <Button
+                        colorScheme="green"
+                        onClick={handleCreate}
+                        disabled={buttonsDisabled}
+                    >
                         Crear
                     </Button>
                 </ModalFooter>

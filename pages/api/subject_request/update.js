@@ -2,33 +2,51 @@ import { connectToDatabase } from "../../../utils/db";
 import SubjectRequest from "../../../models/SubjectRequest";
 
 export default async function handler(req, res) {
-  const { method } = req;
+    const { method } = req;
+    const { id, status } = req.body;
 
-  await connectToDatabase();
+    if (!id || !status) {
+        return res
+            .status(400)
+            .json({ success: false, message: "ID o estado no ingresado" });
+    }
 
-  switch (method) {
-    case "PUT":
-      try {
-        const subjectRequest = await SubjectRequest.findByIdAndUpdate(
-          req.body._id,
-          req.body,
-          {
-            new: true,
-            runValidators: true,
-          }
-        );
+    await connectToDatabase();
 
-        if (!subjectRequest) {
-          return res.status(400).json({ success: false });
-        }
+    switch (method) {
+        case "PUT":
+            try {
+                if (status !== "Aceptada" && status !== "Rechazada") {
+                    return res.status(400).json({
+                        success: false,
+                        message: "Estado no válido",
+                    });
+                }
 
-        res.status(200).json({ success: true, data: subjectRequest });
-      } catch (error) {
-        res.status(400).json({ success: false });
-      }
-      break;
-    default:
-      res.status(400).json({ success: false });
-      break;
-  }
+                const updatedSubjectRequest =
+                    await SubjectRequest.findByIdAndUpdate(
+                        id,
+                        { status },
+                        { new: true }
+                    );
+
+                if (!updatedSubjectRequest) {
+                    return res.status(400).json({ success: false });
+                }
+
+                return res.status(200).json({
+                    success: true,
+                    data: updatedSubjectRequest,
+                });
+            } catch (error) {
+                console.error("Error updating subject request:", error);
+                return res.status(400).json({
+                    success: false,
+                    message: "Error al actualizar la solicitud",
+                });
+            }
+
+        default:
+            return res.status(400).json({ success: false });
+    }
 }
