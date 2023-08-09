@@ -51,7 +51,7 @@ export default async function handler(req, res) {
                 const postPopulated = await Post.findById(post._id)
                         .populate({
                             path: "creator",
-                            ref: "User",
+                            ref: User,
                         })
 
                 return res.status(200).json({ success: true, data: postPopulated });
