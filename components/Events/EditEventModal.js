@@ -73,10 +73,9 @@ export default function EditEventModal({ isOpen, onClose, event }) {
         });
         return;
       }
-  
+
       const isAdmin = session?.user.role === 'admin';
-    
-  
+
       if (!isAdmin) {
         toast({
           title: 'Permiso Denegado',
@@ -87,7 +86,7 @@ export default function EditEventModal({ isOpen, onClose, event }) {
         });
         return;
       }
-  
+
       const eventData = {
         eventName: eventName,
         eventDate: eventDate,
@@ -99,7 +98,7 @@ export default function EditEventModal({ isOpen, onClose, event }) {
   
       try {
         const response = await axios.put(
-          `/api/event/update/${event._id}`,
+          `${process.env.NEXT_PUBLIC_URL}:${process.env.PORT}/api/event/update/${event._id}`,
           eventData
         );
   

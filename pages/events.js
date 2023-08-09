@@ -15,13 +15,14 @@ import EventDetailsModal from '../components/Events/EventDetailsModal';
 const EventsPage = () => {
   const [events, setEvents] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
-  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false); // State for create event modal
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const history = useHistory(); 
 
   useEffect(() => {
     const fetchEvents = async () => {
       try {
         const response = await axios.get(`/api/event/getAll`);
-        console.log('API Response:', response.data); // Adjust the endpoint
+        console.log('API Response:', response.data);
         setEvents(response.data.events);
       } catch (error) {
         console.error('Error fetching events:', error);
@@ -37,14 +38,14 @@ const EventsPage = () => {
 
   const handleCreateEventSuccess = () => {
     setIsCreateModalOpen(false);
-    window.location.reload();
+    history.push('/events');
   };
 
   return (
     <Layout>
       <VStack spacing={4} align="center">
         <Heading as="h2" size="md" mb={4}>
-          Events List
+          Lista de Eventos
         </Heading>
         {events.map((event) => (
           <Box w="500px"
