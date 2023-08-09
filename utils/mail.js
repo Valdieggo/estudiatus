@@ -2,7 +2,7 @@ import nodemailer from "nodemailer";
 
 export default function sendMail(email, name, subject, htmlMessage) {
     const token = process.env.PW;
-    const user = process.env.USER;
+    const user = process.env.MAIL_USER;
 
     let transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",

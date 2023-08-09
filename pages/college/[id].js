@@ -1,8 +1,9 @@
 import Head from "next/head";
 import Layout from "../../components/Layout/Layout";
 import axios from "axios";
-import Card from "../../components/Cards/card";
-
+import Card from "../../components/Cards/Card.js";
+import NavigationCard from "../../components/Cards/NavigationCard";
+import { Wrap, WrapItem } from '@chakra-ui/react'
 
 import {
     Box,
@@ -25,19 +26,20 @@ export const getServerSideProps = async (context) => {
 }
 
 //obtiene la informacion de un determinado college
-export default function Home(data) {
-   const {college} = data;
+export default function Home({college}) {
 
     const displayCard = () => {
             return (<>
                 {college.careers.map((career) => (
-                    <Card
+                    <WrapItem>
+                    <NavigationCard
                         key={career._id}
                         title={career.careerName}
-                        image={"/lol.jpg"}
+                        image={career.img}
                         description={career.description}
                         link={`/career/${career._id}`}
-                        top={`${career.subjects.length} ${career.subjects.length !== 1 ? "Carreras" : "Carrera"}`} />
+                        top={`${career.subjects.length} ${career.subjects.length !== 1 ? "Asignaturas" : "Asignatura"}`} />
+                    </WrapItem>
                 ))}
             </>
             )
@@ -48,10 +50,12 @@ export default function Home(data) {
                 <title>{college.collegeName}</title>
             </Head>
             <Layout>
-                <Center>
-                    <Text>{college.collegeName}</Text>
-                </Center>
-                {displayCard()}
+                <Box>
+                    <Text fontSize='4xl' fontWeight='bold' textAlign='center' color='white'>{college.collegeName}</Text>
+                    <Wrap spacing="20px" justify="center" mt='4'>
+                        {displayCard()}
+                    </Wrap>
+                </Box>
             </Layout>
         </>
     )

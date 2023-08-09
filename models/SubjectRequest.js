@@ -31,8 +31,8 @@ const SubjectRequestSchema = mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ["pending", "accepted", "rejected"],
-        default: "pending",
+        enum: ["Pendiente", "Aceptada", "Rechazada"],
+        default: "Pendiente",
     },
 });
 

@@ -30,7 +30,7 @@ export default function ModalDeletePost({ isOpen, onClose, onOpen, post, allPost
     const handleDeletePost = () => {
         if (isAdmin || isCreatorId) {
             axios
-                .delete(`http://localhost:3000/api/post/delete/${post._id}`)
+                .delete(`${process.env.NEXT_PUBLIC_URL}:${process.env.NEXT_PUBLIC_PORT}/api/post/delete/${post._id}`)
                 .then((res) => {
                     console.log(res.data.data);
                     setAllPosts(allPosts.filter((post) => post._id !== res.data.data._id));

@@ -13,7 +13,7 @@ export default async function handler(req, res) {
 
     //comprueba si ya existe otro con el mismo nombre y distinta id
     console.log(subjectName, id, career)
-    if (await Subject.findOne({ subjectName, _id: { $ne: id } })) {
+    if (await Subject.findOne({ subjectName, _id: { $ne: id }, career })) {
         return res.status(409).json({ success: false, message: "Subject already exists" });
     }
 
@@ -43,10 +43,15 @@ export default async function handler(req, res) {
                     career,
                     img
                 });
-                return res.status(200).json({ success: true, message: query });
+
+                const subject = await query.populate({
+                    path: "career",
+                    model: "Career",
+                    select: "careerName"
+                });
+                return res.status(200).json({ success: true, data: subject });
             }
             catch (error) {
-                console.log(error)
                 return res.status(400).json({ success: false, message: error });
             }
         default:
