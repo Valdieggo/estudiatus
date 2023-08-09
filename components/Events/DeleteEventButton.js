@@ -18,7 +18,7 @@ export default function DeleteButtonEvent({ event, allEvents, eventId, setAllEve
       <DeleteEventModal
         isOpen={isOpen}
         onClose={onClose}
-        eventId={eventId}
+        eventId={event._id}
         allEvents={allEvents}
         setAllEvents={setAllEvents}
       />
