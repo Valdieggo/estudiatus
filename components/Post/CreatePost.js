@@ -71,7 +71,7 @@ export default function CreatePost({ allPosts, setAllPosts, subject }) {
             const idfile = await Upload(file);
             setIsAddingPost(true);
             axios
-                .post(`${process.env.NEXT_PUBLIC_URL}:3000/api/post/create`, {
+                .post(`${process.env.NEXT_PUBLIC_URL}:${process.env.NEXT_PUBLIC_PORT}/api/post/create`, {
                     title: title,
                     content: content,
                     creator: session.user.id,
