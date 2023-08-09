@@ -11,10 +11,10 @@ import {
     Th,
     Td,
     TableContainer,
+    useDisclosure,
 } from "@chakra-ui/react";
 import axios from "axios";
-import ModalSubjectRequest from "../../components/Admin/ModalSubjectRequest";
-import { useDisclosure } from "@chakra-ui/react";
+import ModalSubjectRequestAdmin from "../../components/SubjectRequest/ModalSubjectRequestAdmin";
 import { useState } from "react";
 
 export const getServerSideProps = async () => {
@@ -33,7 +33,7 @@ const SubjectRequest = (data) => {
     verifyAdmin();
     const { subjectrequest } = data;
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const [subjectRequestId, setSubjectRequestId] = useState({});
+    const [subjectRequestId, setSubjectRequestId] = useState("");
 
     const handleOpenRequest = (id) => {
         setSubjectRequestId(id);
@@ -62,11 +62,13 @@ const SubjectRequest = (data) => {
 
     return (
         <>
-            <ModalSubjectRequest
-                isOpen={isOpen}
-                onClose={onClose}
-                subjectRequestId={subjectRequestId}
-            />
+            {subjectRequestId ? (
+                <ModalSubjectRequestAdmin
+                    isOpen={isOpen}
+                    onClose={onClose}
+                    subjectRequestId={subjectRequestId}
+                />
+            ) : null}
             <Head>
                 <title>Solicitudes de asignaturas</title>
             </Head>

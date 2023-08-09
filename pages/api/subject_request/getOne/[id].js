@@ -19,12 +19,14 @@ export default async function handler(req, res) {
         case "GET":
             try {
                 const subjectRequest = await SubjectRequest.findById(id);
+
                 if (!subjectRequest) {
                     return res.status(400).json({
                         success: false,
                         message: "Solicitud no encontrada",
                     });
                 }
+
                 const college = await College.findById(subjectRequest.college);
                 const career = await Career.findById(subjectRequest.career);
 
@@ -46,6 +48,7 @@ export default async function handler(req, res) {
                     data: subjectRequestWithNames,
                 });
             } catch (error) {
+                console.log(id);
                 console.error("Error fetching subject request data:", error);
                 return res.status(400).json({
                     success: false,

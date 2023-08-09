@@ -14,7 +14,7 @@ import { Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-export default function ModalSubjectRequest({
+export default function ModalSubjectRequestAdmin({
     isOpen,
     onClose,
     onOpen,
@@ -78,7 +78,7 @@ export default function ModalSubjectRequest({
                         </Text>
                     </VStack>
                 </ModalBody>
-                <ModalFooter>
+                <ModalFooter textAlign={"center"}>
                     <Button colorScheme="red" mr={3} onClick={handleReject}>
                         Rechazar
                     </Button>
