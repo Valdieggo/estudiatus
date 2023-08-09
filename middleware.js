@@ -21,7 +21,6 @@ export const config = {
     "/api/career/delete:path",
     "/api/career/create:path",
     "/api/career/update:path",
-    "/api/career/subscribe:path",
     
     "/api/subject/delete:path",
     "/api/subject/create:path",
