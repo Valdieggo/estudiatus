@@ -1,11 +1,12 @@
-import { Box } from "@chakra-ui/react";
+import { Box, SimpleGrid, Text } from "@chakra-ui/react";
+import { Wrap, WrapItem } from '@chakra-ui/react'
 import Head from "next/head";
 import Layout from "../components/Layout/Layout";
 import axios from "axios";
-import Card from "../components/Cards/card";
-
+import Card from "../components/Cards/Card.js";
+import NavigationCard from "../components/Cards/NavigationCard";
 export const getServerSideProps = async () => {
-    const response = await axios.get(`http://localhost:${process.env.PORT}/api/career/getAll`);
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_URL}:${process.env.PORT}/api/career/getAll`);
     const careers = response.data.data;
     return {
         props: {
@@ -14,24 +15,25 @@ export const getServerSideProps = async () => {
     };
 }
 
-const Career = (data) => {
-    const {careers} = data;
-    
+const Career = ({ careers }) => {
+
     const displayCard = () => {
         return (<>
             {careers.map((career) => (
-                <Card
+                <WrapItem>
+                <NavigationCard
                     key={career._id}
                     title={career.careerName}
-                    image={"/lol.jpg"}
                     description={career.description}
                     link={`/career/${career._id}`}
-                    top={`${career.subjects.length} ${career.subjects.length !== 1 ? "publicaciones" : "publicación"}`} />
+                    image={career.image}
+                    top={`${career.subjects.length} ${career.subjects.length !== 1 ? "Asignaturas" : "Asignatura"}`} />
+                </WrapItem>
             ))}
         </>
         )
     }
-    
+
     return (
         <>
             <Head>
@@ -39,8 +41,11 @@ const Career = (data) => {
             </Head>
             <Layout>
                 <Box>
-                    <h1>Todas las carreras</h1>
+                    <Text fontSize='4xl' fontWeight='bold' textAlign='center' color='white'>Todas las carreras</Text>
+                    <Wrap spacing="20px" justify="center" mt='4'>
+
                     {displayCard()}
+                    </Wrap>
                 </Box>
             </Layout>
         </>

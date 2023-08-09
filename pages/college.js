@@ -1,11 +1,12 @@
 import { Box, Text } from "@chakra-ui/react";
 import Head from "next/head";
+import { Wrap, WrapItem } from '@chakra-ui/react'
 import Layout from "../components/Layout/Layout";
 import axios from "axios";
-import Card from "../components/Cards/card";
-
+import Card from "../components/Cards/Card.js";
+import NavigationCard from "../components/Cards/NavigationCard";
 export const getServerSideProps = async () => {
-    const response = await axios.get(`http://localhost:${process.env.PORT}/api/college/getAll`);
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_URL}:${process.env.PORT}/api/college/getAll`);
     const colleges = response.data.data;
     return {
         props: {
@@ -14,19 +15,20 @@ export const getServerSideProps = async () => {
     };
 }
 
-const College = (data) => {
-    const { colleges } = data
+const College = ({colleges}) => {
 
     const displayCard = () => {
         return (<>
             {colleges.map((college) => (
-                <Card
+                <WrapItem>
+                <NavigationCard
                     key={college._id}
                     title={college.collegeName}
-                    image={"/lol.jpg"}
+                    image={college.img}
                     description={college.description}
                     link={`/college/${college._id}`}
-                    top={`${college.careers.length} ${college.careers.length !== 1 ? "carreras" : "carrera"}`} />
+                    top={`${college.careers.length} ${college.careers.length !== 1 ? "Carreras" : "Carrera"}`} />
+                </WrapItem>
             ))}
         </>
         )
@@ -38,9 +40,10 @@ const College = (data) => {
             </Head>
             <Layout>
                 <Box>
-                    <Text>Colleges</Text>
-                    <Text>Todas las carreras disponibles</Text>
+                    <Text fontSize='4xl' fontWeight='bold' textAlign='center' color='white'>Todas las universidades</Text>
+                    <Wrap spacing="20px" justify="center" mt='4'>
                     {displayCard()}
+                    </Wrap>
                 </Box>
             </Layout>
         </>

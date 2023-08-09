@@ -54,8 +54,8 @@ export default function LikeCommentButton({ comment }) {
     return (
         <Button type="button"
             bg={buttonColor}
-            width="48%"
             onClick={handleLike}
+            w="100%"
             isDisabled={isLiking}
             _hover={{
                 bg: "button.200",
