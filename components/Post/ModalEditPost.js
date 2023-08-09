@@ -84,7 +84,7 @@ export default function ModalEditPost({ isOpen, onClose, onOpen, post, allPosts,
             const idfile = await Upload(file);
             setIsEditPost(true);
             axios
-                .put(`${process.env.NEXT_PUBLIC_URL}:${process.env.NEXT_PUBLIC_PORT}/api/post/update`, {
+                .put(`/api/post/update`, {
                     id: post._id,
                     title: title,
                     content: content,

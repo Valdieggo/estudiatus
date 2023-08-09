@@ -60,7 +60,7 @@ export default Posts;
 
 
 export async function getServerSideProps() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_URL}:${process.env.PORT}/api/post/getAll`);
+  const res = await fetch(`http://localhost:${process.env.PORT}/api/post/getAll`);
 
   const data = await res.json();
   if (res.status === 400) {
