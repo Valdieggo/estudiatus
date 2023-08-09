@@ -52,6 +52,31 @@ export default function AddCommentCard({ post, setComments, comments }) {
             onOpen();
         }
     };
+    if(status === "unauthenticated") {
+        return (
+        <Box color="white" width="100%" maxWidth="500px" margin="auto" bg="post.100" borderRadius="md" p={4}
+        _hover={{
+            bg: "post.200",
+        }}
+        >
+            <Textarea 
+                placeholder="Escribe un comentario..."
+                mb={4}
+            />
+            <Button
+            onClick={onOpen}
+            bg="button.100"
+            width="100%"
+            _hover={{
+                bg: "button.200",
+            }}
+            >
+                Añadir comentario
+            </Button>
+            <LoginModal isOpen={isOpen} onClose={onClose} />
+        </Box>
+    );
+    }
 
     return (
         <Box color="white" width="100%" maxWidth="500px" margin="auto" bg="post.100" borderRadius="md" p={4}
