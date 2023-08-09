@@ -21,11 +21,10 @@ export default async function handler(req, res) {
                             model: User,
                         },
                     }
-                    .populate({
+                ).populate({
                         path: "file",
                         model: File,
                     })
-                )
                 .sort({ createDate: -1 });
                 return res.status(200).json({ success: true, data: posts });
             }
