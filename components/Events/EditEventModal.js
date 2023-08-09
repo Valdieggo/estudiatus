@@ -101,7 +101,7 @@ export default function EditEventModal({ isOpen, onClose, event }) {
   
       try {
         const response = await axios.put(
-          `http://localhost:3000/api/event/update/${event._id}`,
+          `${process.env.NEXT_PUBLIC_URL}:${process.env.PORT}/api/event/update/${event._id}`,
           eventData
         );
   

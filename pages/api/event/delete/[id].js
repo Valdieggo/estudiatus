@@ -1,11 +1,11 @@
 import { connectToDatabase } from "../../../../utils/db";
-//import Event from "../../../../models/Event";
+import Event from "../../../../models/Event";
 
 export default async function handler(req, res) {
   const { method, query } = req;
 
   if (method !== "DELETE") {
-    return res.status(400).json({ success: false, message: "Invalid method" });
+    return res.status(400).json({ success: false, message: "Método Inválido" });
   }
 
   const { id } = query;
@@ -15,9 +15,9 @@ export default async function handler(req, res) {
   try {
     const deletedEvent = await Event.findByIdAndDelete(id);
     if (!deletedEvent) {
-      return res.status(404).json({ success: false, message: "Event not found" });
+      return res.status(404).json({ success: false, message: "Evento no encontrado" });
     }
-    res.status(200).json({ success: true, message: "Event deleted" });
+    res.status(200).json({ success: true, message: "Evento borrado" });
   } catch (error) {
     res.status(400).json({ success: false, message: error.message });
   }
