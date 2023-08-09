@@ -6,6 +6,7 @@ import FavPostButton from "./FavPostButton";
 import { formatDistanceToNow } from "date-fns";
 import esLocale from "date-fns/locale/es";
 import { useSession } from 'next-auth/react';
+import ModalImg from "./ModalImg";
 
 export default function PostCard({ post }) {
     const { data: session, status } = useSession();
