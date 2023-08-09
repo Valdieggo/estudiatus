@@ -59,7 +59,7 @@ const Posts = ({ posts }) => {
 export default Posts;
 
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const res = await fetch(`${process.env.NEXT_PUBLIC_URL}:${process.env.PORT}/api/post/getAll`);
 
   const data = await res.json();
