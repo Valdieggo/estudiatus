@@ -368,7 +368,10 @@ export default function Home(data) {
     }
 
     const formatDate = (date) => {
-        return date.substring(0, 10);
+        // fecha YYYY-MM-DD
+        //return date.substring(0, 10);
+        // fecha DD-MM-YYYY
+        return date.substring(8, 10) + "-" + date.substring(5, 7) + "-" + date.substring(0, 4);
     }
 
 
