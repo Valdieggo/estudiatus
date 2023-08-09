@@ -85,7 +85,11 @@ export default function PostsCard({ post, setAllPosts, allPosts, title, subjectI
                 {console.log(post)}
                 {post.file && (
                     <>
-
+                        {post.file.originalName.endsWith(".png") || post.file.originalName.endsWith(".jpg") || post.file.originalName.endsWith(".jpeg") ? (
+                            <Box align={"center"}>
+                            <ModalImg post={post} />
+                            </Box>
+                        ) : (
                             <CardFooter
                                 justify="space-between"
                                 flexWrap="wrap"
@@ -101,8 +105,8 @@ export default function PostsCard({ post, setAllPosts, allPosts, title, subjectI
                                     _hover={{
                                         bg: "button.200",
                                     }}
-                                    download={`/api/File/download/${post.file}`}
-                                    href={`/api/File/download/${post.file}`}
+                                    download={`/api/File/download/${post.file._id}`}
+                                    href={`/api/File/download/${post.file._id}`}
                                     leftIcon={<DownloadIcon />}
                                 >
                                     Descargar Documento
@@ -115,12 +119,13 @@ export default function PostsCard({ post, setAllPosts, allPosts, title, subjectI
                                     _hover={{
                                         bg: "button.200",
                                     }}
-                                    href={`/api/File/download/${post.file}`}
+                                    href={`/api/File/download/${post.file._id}`}
                                     leftIcon={<ViewIcon />}
                                 >
                                     Ver Documento
                                 </Button>
                             </CardFooter>
+                        )}
                     </>
                 )}
 

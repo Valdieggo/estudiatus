@@ -10,12 +10,15 @@ import {
     Textarea,
     Input,
     useToast,
+    InputGroup,
+    InputRightElement,
 } from '@chakra-ui/react';
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
 import { useState, useEffect } from 'react';
 import Upload from '../../components/File/Upload.js';
 import { useRouter } from 'next/router';
+import { AttachmentIcon } from '@chakra-ui/icons';
 
 export default function ModalEditPost({ isOpen, onClose, onOpen, post, allPosts, setAllPosts, subjectId }) {
     const { creator } = post;
@@ -165,12 +168,24 @@ export default function ModalEditPost({ isOpen, onClose, onOpen, post, allPosts,
                     onChange={handlerContent}
                     my={4}
                 />
-                <Input
-                    placeholder="Imagen"
-                    type="file"
-                    onChange={handlerUpdate}
-                    accept=".jpg, .jpeg, .png, .gif, .pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx, .txt"
-                />
+                        <InputGroup>
+                            <Input
+                                type="file"
+                                accept=".jpg, .jpeg, .png, .gif, .pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx, .txt"
+                                onChange={handlerUpdate}
+                                display="none"
+                            />
+                            <Input
+                                placeholder="Selecciona un archivo"
+                                value={file ? file.name : ""}
+                                readOnly
+                                pr="4.5rem"
+                                onClick={() => document.querySelector("input[type='file']").click()}
+                            />
+                            <InputRightElement width="4.5rem">
+                                <AttachmentIcon color="gray.500" />
+                            </InputRightElement>
+                        </InputGroup>
 
                 <ModalFooter>
                     <Flex direction="row" w="full" justifyContent="center" alignItems="center" gap={2}>

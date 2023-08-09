@@ -152,7 +152,7 @@ export default function CreatePost({ allPosts, setAllPosts, subject }) {
                 onChange={handlerContent}
                 my={4}
             />
-             <InputGroup>
+            <InputGroup>
                 <Input
                     type="file"
                     accept=".jpg, .jpeg, .png, .gif, .pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx, .txt"
