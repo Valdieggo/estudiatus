@@ -25,7 +25,7 @@ export default function ModalSubjectRequestAdmin({
     const getSubjectRequest = async () => {
         try {
             const response = await axios.get(
-                `http://localhost:3000/api/subject_request/getOne/${subjectRequestId}`
+                `/api/subject_request/getOne/${subjectRequestId}`
             );
             setSubjectRequest(response.data.data);
         } catch (error) {
