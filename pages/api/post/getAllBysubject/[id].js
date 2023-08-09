@@ -35,7 +35,6 @@ export default async function handler(req, res) {
                             model: User,
                         },
                     })
-                    .populate("file")
                     .populate({
                         path: "file",
                         model: File,
