@@ -25,20 +25,19 @@ export default async function handler(req, res) {
                 await newBan.save();
                 // Actualiza el usuario en el campo de isBanned
                 const bannedUser = await User.findByIdAndUpdate(user, { isBanned: true }, { session });
-                console.log(bannedUser);
                 // Actualiza el reporte en el campo de estatus a "solved"
-                const ReportUpdate = await Report.findByIdAndUpdate(report, { status: 'solved' }, { session });
-                sendMail( bannedUser.email, bannedUser.username, "Sancion", `
-                    <p>Estimado ${bannedUser.username},</p>
-                    <p>Haz sido baneado lo lamentamos</p>
-                    <p>La ducion del ban es hasta ${time}</p>
-                `);
-                sendMail( ReportUpdate.reportUser.email, ReportUpdate.reportUser.username, "Reporte", `
-                    <p>Estimado ${ReportUpdate.reportUser.username},</p>
-                    <p>El reporte que realizaste ha sido resuelto</p>
-                `);
+                const ReportUpdate = await Report.findByIdAndUpdate(report, { status: 'solved' }, { session }, { new: true }).populate("reportUser");
                 await session.commitTransaction();
                 session.endSession();
+                sendMail( bannedUser.email, bannedUser.username, "Sancion", `
+                <p>Estimado ${bannedUser.username},</p>
+                <p>Haz sido baneado lo lamentamos</p>
+                <p>La duracion del ban es hasta ${time}</p>
+                 `);
+                sendMail( ReportUpdate.reportUser.email, ReportUpdate.reportUser.username, "Reporte", `
+                    <p>Estimado ${ReportUpdate.reportUser.username},</p>
+                    <p>El reporte que haz realizado a tenido concecuencias , gracias por la retroalimentacion</p>
+                `);
                 // Si todo va bien, se devuelve el nuevo ban creado
                 return res.status(201).json({ success: true, data: ReportUpdate });
             }catch (error) {
