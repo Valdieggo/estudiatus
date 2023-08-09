@@ -42,7 +42,7 @@ export default function appeal_request() {
   const [appeal,setAppeals]= useState([])
   const getAppeal = async () => {
       try {
-        const response = await axios.get("../api/appeal/getAll");
+        const response = await axios.get("http://localhost:3000/api/appeal/getAll");
         setAppeals(response.data);
       } catch (error) {
         console.log(error);
