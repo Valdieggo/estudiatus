@@ -35,7 +35,7 @@ export default function EditEventModal({ isOpen, onClose, event }) {
 
   const fetchEventDetails = async (eventId) => {
     try {
-      const response = await axios.get(`http://localhost:3000/api/event/getById/${eventId}`);
+      const response = await axios.get(`/api/event/getById/${eventId}`);
       const eventData = response.data.data;
       setEventFields(eventData);
     } catch (error) {
@@ -99,7 +99,7 @@ export default function EditEventModal({ isOpen, onClose, event }) {
   
       try {
         const response = await axios.put(
-          `${process.env.NEXT_PUBLIC_URL}:${process.env.PORT}/api/event/update/${event._id}`,
+          `/api/event/update/${event._id}`,
           eventData
         );
   

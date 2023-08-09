@@ -20,7 +20,7 @@ const EventsPage = () => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_URL}:${process.env.PORT}/api/event/getAll`);
+        const response = await axios.get(`/api/event/getAll`);
         console.log('API Response:', response.data); // Adjust the endpoint
         setEvents(response.data.events);
       } catch (error) {
