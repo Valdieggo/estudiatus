@@ -11,10 +11,10 @@ import {
     Th,
     Td,
     TableContainer,
+    useDisclosure,
 } from "@chakra-ui/react";
 import axios from "axios";
-import ModalSubjectRequest from "../../components/Admin/ModalSubjectRequest";
-import { useDisclosure } from "@chakra-ui/react";
+import ModalSubjectRequestAdmin from "../../components/SubjectRequest/ModalSubjectRequestAdmin";
 import { useState } from "react";
 
 export const getServerSideProps = async () => {
@@ -63,7 +63,7 @@ const SubjectRequest = (data) => {
     return (
         <>
             {subjectRequestId ? (
-                <ModalSubjectRequest
+                <ModalSubjectRequestAdmin
                     isOpen={isOpen}
                     onClose={onClose}
                     subjectRequestId={subjectRequestId}
