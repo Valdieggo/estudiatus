@@ -6,6 +6,7 @@ import FavPostButton from "./FavPostButton";
 import { formatDistanceToNow } from "date-fns";
 import esLocale from "date-fns/locale/es";
 import { useSession } from 'next-auth/react';
+import ModalImg from "./ModalImg";
 
 export default function PostCard({ post }) {
     const { data: session, status } = useSession();
@@ -39,7 +40,7 @@ export default function PostCard({ post }) {
                             <Text>Publicado {timeAgo}</Text>
                         </Flex>
                         <FavPostButton post={post} />
-                        { status==="authenticated" ?
+                        {status === "authenticated" ?
                             <MenuPost post={post} />
                             : null
                         }
@@ -54,17 +55,19 @@ export default function PostCard({ post }) {
                 </CardBody>
                 {post.file && (
                     <>
-                        <CardFooter
-                            justify="space-between"
-                            flexWrap="wrap"
-                            sx={{
-                                "& > button": {
-                                    minW: "140px",
-                                },
-                            }}>
-                            {post.file.endsWith(".png") || post.file.endsWith(".jpg") ? (
-                                <Image src={`/api/File/download/${post.file}`} alt="Imagen" />
-                            ) : (
+                        {post.file.originalName.endsWith(".png") || post.file.originalName.endsWith(".jpg") || post.file.originalName.endsWith(".jpeg") ? (
+                            <Box align={"center"}>
+                                <ModalImg post={post} />
+                            </Box>
+                        ) : (
+                            <CardFooter
+                                justify="space-between"
+                                flexWrap="wrap"
+                                sx={{
+                                    "& > button": {
+                                        minW: "140px",
+                                    },
+                                }}>
                                 <Button
                                     w={"205px"}
                                     as="a"
@@ -72,16 +75,13 @@ export default function PostCard({ post }) {
                                     _hover={{
                                         bg: "button.200",
                                     }}
-                                    download={`/api/File/download/${post.file}`}
-                                    href={`/api/File/download/${post.file}`}
+                                    download={`/api/File/download/${post.file._id}`}
+                                    href={`/api/File/download/${post.file._id}`}
                                     leftIcon={<DownloadIcon />}
                                 >
                                     Descargar Documento
                                 </Button>
-                            )}
-                            {post.file.endsWith(".png") || post.file.endsWith(".jpg") ? (
-                                <Image src={`/api/File/download/${post.file}`} alt="Imagen" />
-                            ) : (
+
                                 <Button
                                     w={"205px"}
                                     as="a"
@@ -89,13 +89,13 @@ export default function PostCard({ post }) {
                                     _hover={{
                                         bg: "button.200",
                                     }}
-                                    href={`/api/File/download/${post.file}`}
+                                    href={`/api/File/download/${post.file._id}`}
                                     leftIcon={<ViewIcon />}
                                 >
                                     Ver Documento
                                 </Button>
-                            )}
-                        </CardFooter>
+                            </CardFooter>
+                        )}
                     </>
                 )}
 

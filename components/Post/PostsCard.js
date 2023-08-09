@@ -82,51 +82,50 @@ export default function PostsCard({ post, setAllPosts, allPosts, title, subjectI
                 <CardBody>
                     <Text>{post.content}</Text>
                 </CardBody >
-                <Box align={"center"}>
-                    {post.file ? (
-                        <ModalImg post={post}></ModalImg>
-                    ) : (
-                        <></>
-                    )}
-                </Box>
+                {console.log(post)}
                 {post.file && (
                     <>
-                        <CardFooter
-                            justify="space-between"
-                            flexWrap="wrap"
-                            sx={{
-                                "& > button": {
-                                    minW: "140px",
-                                },
-                            }}>
+                        {post.file.originalName.endsWith(".png") || post.file.originalName.endsWith(".jpg") || post.file.originalName.endsWith(".jpeg") ? (
+                            <Box align={"center"}>
+                            <ModalImg post={post} />
+                            </Box>
+                        ) : (
+                            <CardFooter
+                                justify="space-between"
+                                flexWrap="wrap"
+                                sx={{
+                                    "& > button": {
+                                        minW: "140px",
+                                    },
+                                }}>
+                                <Button
+                                    w={"205px"}
+                                    as="a"
+                                    bg="button.100"
+                                    _hover={{
+                                        bg: "button.200",
+                                    }}
+                                    download={`/api/File/download/${post.file._id}`}
+                                    href={`/api/File/download/${post.file._id}`}
+                                    leftIcon={<DownloadIcon />}
+                                >
+                                    Descargar Documento
+                                </Button>
 
-                            <Button
-                                w={"205px"}
-                                as="a"
-                                bg="button.100"
-                                _hover={{
-                                    bg: "button.200",
-                                }}
-                                download={`/api/File/download/${post.file}`}
-                                href={`/api/File/download/${post.file}`}
-                                leftIcon={<DownloadIcon />}
-                            >
-                                Descargar Documento
-                            </Button>
-
-                            <Button
-                                w={"205px"}
-                                as="a"
-                                bg="button.100"
-                                _hover={{
-                                    bg: "button.200",
-                                }}
-                                href={`/api/File/download/${post.file}`}
-                                leftIcon={<ViewIcon />}
-                            >
-                                Ver Documento
-                            </Button>
-                        </CardFooter>
+                                <Button
+                                    w={"205px"}
+                                    as="a"
+                                    bg="button.100"
+                                    _hover={{
+                                        bg: "button.200",
+                                    }}
+                                    href={`/api/File/download/${post.file._id}`}
+                                    leftIcon={<ViewIcon />}
+                                >
+                                    Ver Documento
+                                </Button>
+                            </CardFooter>
+                        )}
                     </>
                 )}
 

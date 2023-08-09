@@ -6,7 +6,7 @@ export default function DeleteButtonEvent({ event, allEvents, setAllEvents }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const handleDeleteButtonClick = (event) => {
-    event.stopPropagation(); // Prevent event propagation
+    event.stopPropagation();
     onOpen();
   };
 

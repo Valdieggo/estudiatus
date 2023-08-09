@@ -9,7 +9,6 @@ export default async function handler(req, res) {
   try {
     const db = await connectToDatabase();
 
-    // Fetch all events from the database using your Event model
     const events = await Event.find();
 
     return res.status(200).json({ events });

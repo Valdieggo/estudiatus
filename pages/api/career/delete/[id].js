@@ -26,7 +26,7 @@ export default async function handler(req, res) {
 
                 if (reqCareer.subjects.length > 0) {
                     Promise.all(reqCareer.subjects.map(async (subject) => {
-                        await axios.delete(`${process.env.NEXT_PUBLIC_URL}:${process.env.PORT}/api/subject/delete/${subject._id}`);
+                        await axios.delete(`http://localhost:${process.env.PORT}/api/subject/delete/${subject._id}`);
                     }));
                 }
 

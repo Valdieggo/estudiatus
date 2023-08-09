@@ -20,7 +20,7 @@ const EventsPage = () => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/event/getAll');
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_URL}:${process.env.PORT}/api/event/getAll`);
         console.log('API Response:', response.data); // Adjust the endpoint
         setEvents(response.data.events);
       } catch (error) {
@@ -35,8 +35,9 @@ const EventsPage = () => {
     setSelectedEvent(event);
   };
 
-  const handleCloseCreateModal = () => {
+  const handleCreateEventSuccess = () => {
     setIsCreateModalOpen(false);
+    window.location.reload();
   };
 
   return (
@@ -62,7 +63,7 @@ const EventsPage = () => {
           <EventDetailsModal event={selectedEvent} onClose={() => setSelectedEvent(null)} />
         )}
         <Center>
-          <CreateEvent isOpen={isCreateModalOpen} onClose={handleCloseCreateModal}/>
+          <CreateEvent onSuccess={handleCreateEventSuccess} isOpen={isCreateModalOpen} onClose={() => setIsCreateModalOpen(false)}/>
         </Center>
       </VStack>
     </Layout>

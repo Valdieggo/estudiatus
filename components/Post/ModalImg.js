@@ -16,7 +16,8 @@ export default function ModalImg({ post }) {
         <div>
             <Image
                 id="myImg"
-                src={`/api/File/download/${post.file}`}
+                src={`/api/File/download/${post.file._id}`}
+                alt=""
                 width="300px"
                 height="300px"
                 onClick={openModal}
@@ -29,7 +30,7 @@ export default function ModalImg({ post }) {
                     </Button>
                     <Image
                         className="modal-content"
-                        src={`/api/File/download/${post.file}`}
+                        src={`/api/File/download/${post.file._id}`}
                         style={{ margin: 'auto', display: 'block', width: '80%', maxWidth: '700px', animation: 'zoom 0.6s' }}
                     />
                     <div id="caption" style={{ margin: 'auto', display: 'block', width: '80%', maxWidth: '700px', textAlign: 'center', color: '#ccc', padding: '10px 0', height: '150px' }}>

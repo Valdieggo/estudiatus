@@ -22,14 +22,12 @@ export default function DeleteEventModal({
 }) {
   const { data: session } = useSession();
   const isAdmin = session?.user.role === 'admin';
-  const isEventCreator = session?.user.id === eventCreatorId;
-
   const toast = useToast();
 
   const handleDeleteEvent = async () => {
-    if (isAdmin || isEventCreator) {
+    if (isAdmin) {
       axios
-        .delete(`http://localhost:3000/api/event/delete/${eventId}`)
+        .delete(`${process.env.NEXT_PUBLIC_URL}:${process.env.PORT}/api/event/delete/${eventId}`)
         .then((res) => {
           setAllEvents(allEvents.filter((event) => event.id !== eventId));
 
@@ -55,7 +53,13 @@ export default function DeleteEventModal({
           });
         });
     } else {
-      console.log('No tienes los permisos necesarios.');
+      toast({
+        title: 'Permiso Denegado',
+        description: 'Solo los administradores pueden eliminar eventos.',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
     }
   };
 

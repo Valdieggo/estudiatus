@@ -2,6 +2,7 @@ import { connectToDatabase } from "../../../../utils/db";
 import User from "../../../../models/User";
 import Post from "../../../../models/Post";
 import Comment from "../../../../models/Comment";
+import File from "../../../../models/File";
 
 export default async function handler(req, res) {
     const { method } = req;
@@ -15,19 +16,28 @@ export default async function handler(req, res) {
                 const user = await User.findById(id)
                     .populate({
                         path: "favs",
-                        model: "Post",
-                        populate: {
+                        model: Post,
+                        populate: [{
                             path: "creator",
-                            model: "User",
+                            model: User,
                         },
-                    })
-                    .populate({
+                        {
+                            path: "file",
+                            model: File,
+                        }]
+
+                    }).populate({
                         path: "posts",
-                        model: "Post",
-                        populate: {
+                        model: Post,
+                        populate: [{
                             path: "creator",
-                            model: "User",
+                            model: User,
                         },
+                        {
+                            path: "file",
+                            model: File,
+                        }
+                        ]
                     })
 
                 if (!user) {
