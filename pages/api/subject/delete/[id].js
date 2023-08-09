@@ -25,7 +25,7 @@ export default async function handler(req, res) {
                 //elimina todos los post relacionados al subject
                 if(reqSubject.posts.length > 0){
                     Promise.all(reqSubject.posts.map(async (post) => {
-                        await axios.delete(`${process.env.NEXT_PUBLIC_URL}:${process.env.PORT}/api/post/delete/${post._id}`);
+                        await axios.delete(`http://localhost:${process.env.PORT}/api/post/delete/${post._id}`);
                     }));
                 }
                 const subject = await Subject.findByIdAndRemove(id);
