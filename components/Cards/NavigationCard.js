@@ -25,7 +25,7 @@ export default function NavigationCard({ title, image, description, link, top, f
                 alt="Imagen principal"
                 fill
                 priority={true}
-                sizes="(max-width: 100%) , (max-width: 100%)"
+                maxW='100%'
                 onError={() => handleImageError()}
                 borderRadius='lg'
             />
