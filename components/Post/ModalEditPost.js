@@ -9,21 +9,20 @@ import {
     Flex,
     Textarea,
     Input,
-} from '@chakra-ui/react'
+    useToast,
+    InputGroup,
+    InputRightElement,
+} from '@chakra-ui/react';
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Upload from '../../components/File/Upload.js';
 import { useRouter } from 'next/router';
+import { AttachmentIcon } from '@chakra-ui/icons';
 
-export default function ModalEditPost({ isOpen, onClose, onOpen, post, allPosts, setAllPosts ,subjectId}) {
+export default function ModalEditPost({ isOpen, onClose, onOpen, post, allPosts, setAllPosts, subjectId }) {
     const { creator } = post;
-    const router = useRouter()
-
-    console.log(creator._id)
-    console.log(post.creator._id)
-    console.log(post._id)
-    console.log(subjectId)
+    const router = useRouter();
 
     let isCreatorId = false;
 
@@ -33,46 +32,110 @@ export default function ModalEditPost({ isOpen, onClose, onOpen, post, allPosts,
         isCreatorId = session.user.id === creator._id;
     }
 
-    const isAdmin = session?.user.role === "admin";
+    const isAdmin = session?.user.role === 'admin';
     const [isEditPost, setIsEditPost] = useState(false);
-    const [title, setTitle] = useState("");
-    const [content, setContent] = useState("");
-    const [file, setFile] = useState("");
+    const [title, setTitle] = useState('');
+    const [content, setContent] = useState('');
+    const [file, setFile] = useState('');
+
+    const toast = useToast();
+
+    useEffect(() => {
+        if (isOpen) {
+            setTitle(post.title);
+            setContent(post.content);
+        }
+    }, [isOpen, post.title, post.content]);
 
     const handleUpdate = async () => {
-        const idfile = await Upload(file);
-
         if (isAdmin || isCreatorId) {
+            // Validate title and content
+            if (title.length < 1 || content.length < 1) {
+                // Show error toast for empty fields
+                toast({
+                    title: 'Campos vacíos',
+                    description: 'El título y el contenido no pueden estar vacíos.',
+                    status: 'error',
+                    duration: 5000,
+                    isClosable: true,
+                });
+                return;
+            }
+            if (title.length > 100) {
+                // Show error toast for title length
+                toast({
+                    title: 'Título demasiado largo',
+                    description: 'El título no puede tener más de 100 caracteres.',
+                    status: 'error',
+                    duration: 5000,
+                    isClosable: true,
+                });
+                return;
+            }
+            if (title.length < 5) {
+                // Show error toast for title length
+                toast({
+                    title: 'Título demasiado corto',
+                    description: 'El título debe tener al menos 5 caracteres.',
+                    status: 'error',
+                    duration: 5000,
+                    isClosable: true,
+                });
+                return;
+            }
+
+            const idfile = await Upload(file);
             setIsEditPost(true);
-            axios.put(`http://localhost:3000/api/post/update`, {
-                id: post._id,
-                title: title,
-                content: content,
-                creator: post.creator._id,
-                subject: subjectId,
-                file: idfile,
-            })
+            axios
+                .put(`/api/post/update`, {
+                    id: post._id,
+                    title: title,
+                    content: content,
+                    creator: post.creator._id,
+                    subject: subjectId,
+                    file: idfile,
+                })
                 .then((res) => {
                     console.log(res.data.data);
-                    setTitle("");
-                    setContent("");
-                    setAllPosts(allPosts.filter(post => post._id !== res.data.data._id));
-                    setAllPosts((allPosts) => [res.data.data, ...allPosts]);
+                    setAllPosts((prevPosts) =>
+                        prevPosts.map((prevPost) =>
+                            prevPost._id === res.data.data._id ? res.data.data : prevPost
+                        )
+                    );
+
+                    // Show success toast
+                    toast({
+                        title: 'Publicación editada',
+                        description: 'La publicación ha sido editada exitosamente.',
+                        status: 'success',
+                        duration: 5000,
+                        isClosable: true,
+                    });
+
                     setIsEditPost(false);
-                    // router.reload();
+                    onClose();
                 })
                 .catch((err) => {
-                    console.log(err)
+                    console.log(err);
                     setIsEditPost(false);
+
+                    // Show error toast
+                    toast({
+                        title: 'Error al editar',
+                        description: 'Ha ocurrido un error al intentar editar la publicación.',
+                        status: 'error',
+                        duration: 5000,
+                        isClosable: true,
+                    });
                 });
         } else {
-            console.log("No tienes los permisos necesarios.");
+            console.log('No tienes los permisos necesarios.');
         }
-    }
+    };
 
     const handlerUpdate = (e) => {
         setFile(e.target.files[0]);
-    }
+    };
 
     const handlerTitle = (e) => {
         setTitle(e.target.value);
@@ -87,39 +150,63 @@ export default function ModalEditPost({ isOpen, onClose, onOpen, post, allPosts,
             <ModalOverlay />
             <ModalContent bg="post.100">
                 <ModalHeader mt="6" color="white" textAlign="center">
-                    Quieres editar esta publicacion?
+                    ¿Quieres editar esta publicación?
                 </ModalHeader>
                 <ModalCloseButton color="white" />
 
                 <Textarea
-                    placeholder="Escribe un Titulo"
+                    textColor={'white'}
+                    placeholder="Escribe un Título"
                     value={title}
                     onChange={handlerTitle}
                     my={4}
                 />
                 <Textarea
+                    textColor={'white'}
                     placeholder="Escribe tu contenido"
                     value={content}
                     onChange={handlerContent}
                     my={4}
                 />
-                <Input placeholder="Image" type="file" onChange={handlerUpdate} accept=".jpg, .jpeg, .png, .gif, .pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx, .txt"
-                />
+                        <InputGroup>
+                            <Input
+                                type="file"
+                                accept=".jpg, .jpeg, .png, .gif, .pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx, .txt"
+                                onChange={handlerUpdate}
+                                display="none"
+                            />
+                            <Input
+                                placeholder="Selecciona un archivo"
+                                value={file ? file.name : ""}
+                                readOnly
+                                pr="4.5rem"
+                                onClick={() => document.querySelector("input[type='file']").click()}
+                            />
+                            <InputRightElement width="4.5rem">
+                                <AttachmentIcon color="gray.500" />
+                            </InputRightElement>
+                        </InputGroup>
 
                 <ModalFooter>
                     <Flex direction="row" w="full" justifyContent="center" alignItems="center" gap={2}>
-                        <Button color="white" bg="button.100" w="full"
+                        <Button
+                            color="white"
+                            bg="button.100"
+                            w="full"
                             onClick={onClose}
                             _hover={{
-                                bg: "button.200",
+                                bg: 'button.200',
                             }}
                         >
                             Cancelar
                         </Button>
-                        <Button color="white" bg="red.600" w="full"
+                        <Button
+                            color="white"
+                            bg="red.600"
+                            w="full"
                             onClick={handleUpdate}
                             _hover={{
-                                bg: "cyan.200",
+                                bg: 'cyan.200',
                             }}
                         >
                             Editar
@@ -128,5 +215,5 @@ export default function ModalEditPost({ isOpen, onClose, onOpen, post, allPosts,
                 </ModalFooter>
             </ModalContent>
         </Modal>
-    )
+    );
 }

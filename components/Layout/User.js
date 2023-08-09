@@ -13,63 +13,63 @@ import {
     MenuDivider,
     Text,
     Avatar,
+    VStack,
+    useColorModeValue
 } from "@chakra-ui/react";
+import { FiChevronDown } from "react-icons/fi";
+import { useRouter } from "next/router";
 
 export default function User() {
     const { data: session, status } = useSession();
+    const router = useRouter()
+    const callbackUrl = router.asPath
     if (status === "authenticated") {
         return (
             <Menu>
-                <MenuButton
-                    as="button"
-                    color="post.200"
-                    px="6"
-                    py="3"
-                    borderradius="full"
-                    max-width="fit-content"
-                    _hover={{
-                        bg: "post.200",
-                    }}
-                >
+                <MenuButton py={2} transition="all 0.3s" _focus={{ boxShadow: 'none' }}>
                     <Flex alignItems="center">
                         <Avatar
                             size="sm"
-                            mr="2"
                             name={session.user.username}
                             src={session.user.image}
                         />
-                        <Text color="white"> {session.user.username} </Text>
+                        <VStack
+                            display={{ base: 'none', md: 'flex' }}
+                            alignItems="flex-start"
+                            spacing="1px"
+                            ml={2}
+                            mr={2}>
+                            <Text fontSize="md">{session.user.username}</Text>
+                        </VStack>
+                        <Box display={{ base: 'none', md: 'flex' }}>
+                            <FiChevronDown />
+                        </Box>
                     </Flex>
                 </MenuButton>
 
-                <MenuList color="#67686B">
-                    <MenuGroup color="#000">
-                        <Link href={`/profile/${session.user.id}`} >
-                            <MenuItem>
-                                Perfil
-                            </MenuItem>
-                        </Link>
-                        <MenuItem>Configuración</MenuItem>
+                <MenuList
+                    bg={useColorModeValue('white', 'gray.900')}
+                    textColor="bg.100"
+                >
+                    <Link href={`/profile/${session.user.id}`} passHref>
                         <MenuItem>
-                            <Link href="/appeals" w="full">Mis apelaciones</Link>
+                            Perfil
                         </MenuItem>
-                    </MenuGroup>
+                    </Link>
+
                     <MenuDivider />
-                    <MenuGroup color="#000">
-                        <MenuItem
-                            onClick={() => signOut({ callbackUrl: "/login" })}
-                        >
-                            Cerrar sesión
-                        </MenuItem>
-                    </MenuGroup>
+                    <MenuItem
+                        onClick={() => signOut({ callbackUrl: callbackUrl })}
+                    >
+                        Cerrar sesión
+                    </MenuItem>
                 </MenuList>
             </Menu>
         );
     } else {
         return (
-            <Link href="/login">
+            <Link href="/login" passHref>
                 <Box
-                    bg="post.100"
                     px="6"
                     py="3"
                     borderRadius="full"

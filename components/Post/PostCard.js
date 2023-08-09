@@ -1,13 +1,15 @@
-// PostCard.js
-import { VStack, Link, Text, CardBody, IconButton, Box, Heading, Flex, Card, CardHeader, Image, CardFooter, Button, Avatar, Icon } from "@chakra-ui/react";
-import { ChatIcon, ViewIcon, DownloadIcon } from "@chakra-ui/icons";
+import { VStack, Link, Text, CardBody, Box, Heading, Flex, Card, CardHeader, Image, CardFooter, Button, Avatar } from "@chakra-ui/react";
+import { ViewIcon, DownloadIcon } from "@chakra-ui/icons";
 import LikePostButton from "./LikePostButton";
 import MenuPost from "./MenuPost";
 import FavPostButton from "./FavPostButton";
 import { formatDistanceToNow } from "date-fns";
 import esLocale from "date-fns/locale/es";
+import { useSession } from 'next-auth/react';
+import ModalImg from "./ModalImg";
 
 export default function PostCard({ post }) {
+    const { data: session, status } = useSession();
 
     const timeAgo = formatDistanceToNow(new Date(post.createDate), {
         addSuffix: true,
@@ -38,27 +40,34 @@ export default function PostCard({ post }) {
                             <Text>Publicado {timeAgo}</Text>
                         </Flex>
                         <FavPostButton post={post} />
-                        <MenuPost post={post} />
+                        {status === "authenticated" ?
+                            <MenuPost post={post} />
+                            : null
+                        }
+
                     </Flex>
                 </CardHeader>
                 <CardBody>
                     <Text>
                         {post.content}
+
                     </Text>
                 </CardBody>
                 {post.file && (
                     <>
-                        <CardFooter
-                            justify="space-between"
-                            flexWrap="wrap"
-                            sx={{
-                                "& > button": {
-                                    minW: "140px",
-                                },
-                            }}>
-                            {post.file.endsWith(".png") || post.file.endsWith(".jpg") ? (
-                                <Image src={`/api/File/download/${post.file}`} alt="Imagen" />
-                            ) : (
+                        {post.file.originalName.endsWith(".png") || post.file.originalName.endsWith(".jpg") || post.file.originalName.endsWith(".jpeg") || post.file.originalName.endsWith(".gif") ? (
+                            <Box align={"center"}>
+                                <ModalImg post={post} />
+                            </Box>
+                        ) : (
+                            <CardFooter
+                                justify="space-between"
+                                flexWrap="wrap"
+                                sx={{
+                                    "& > button": {
+                                        minW: "140px",
+                                    },
+                                }}>
                                 <Button
                                     w={"205px"}
                                     as="a"
@@ -66,16 +75,13 @@ export default function PostCard({ post }) {
                                     _hover={{
                                         bg: "button.200",
                                     }}
-                                    download={`/api/File/download/${post.file}`}
-                                    href={`/api/File/download/${post.file}`}
+                                    download={`/api/File/download/${post.file._id}`}
+                                    href={`/api/File/download/${post.file._id}`}
                                     leftIcon={<DownloadIcon />}
                                 >
                                     Descargar Documento
                                 </Button>
-                            )}
-                            {post.file.endsWith(".png") || post.file.endsWith(".jpg") ? (
-                                <Image src={`/api/File/download/${post.file}`} alt="Imagen" />
-                            ) : (
+
                                 <Button
                                     w={"205px"}
                                     as="a"
@@ -83,13 +89,13 @@ export default function PostCard({ post }) {
                                     _hover={{
                                         bg: "button.200",
                                     }}
-                                    href={`/api/File/download/${post.file}`}
+                                    href={`/api/File/download/${post.file._id}`}
                                     leftIcon={<ViewIcon />}
                                 >
                                     Ver Documento
                                 </Button>
-                            )}
-                        </CardFooter>
+                            </CardFooter>
+                        )}
                     </>
                 )}
 

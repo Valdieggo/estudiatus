@@ -30,7 +30,7 @@ export default function ModalSubjectRequest({ isOpen, onClose, onOpen }) {
     const toast = useToast();
 
     const submitRequest = async (data) => {
-        const response = await axios.post("../api/subject_request/create", {
+        const response = await axios.post("/api/subject_request/create", {
             subjectName: data.subjectName,
             college: data.college,
             career: data.career,
@@ -53,7 +53,7 @@ export default function ModalSubjectRequest({ isOpen, onClose, onOpen }) {
 
     const handleCollege = async () => {
         const response = await axios.get(
-            "http://localhost:3000/api/college/getAll"
+            "/api/college/getAll"
         );
         const collegeList = response.data.data;
         setCollegeList(collegeList);
@@ -61,7 +61,7 @@ export default function ModalSubjectRequest({ isOpen, onClose, onOpen }) {
 
     const handleCareer = async () => {
         const response = await axios.get(
-            "http://localhost:3000/api/career/getAll"
+            "/api/career/getAll"
         );
         const careerList = response.data.data;
         setCareerList(careerList);

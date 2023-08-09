@@ -1,6 +1,9 @@
 import { connectToDatabase } from "../../../../utils/db";
 import Subject from "../../../../models/Subject";
 import Career from "../../../../models/Career";
+import Post from "../../../../models/Post";
+import File from "../../../../models/File";
+import axios from "axios";
 
 export default async function handler(req, res) {
     const { method } = req;
@@ -15,6 +18,16 @@ export default async function handler(req, res) {
     switch (method) {
         case "DELETE":
             try {
+                const reqSubject = await Subject.findById(id);
+                if(reqSubject.img){
+                    await File.findByIdAndDelete(reqSubject.img);
+                }
+                //elimina todos los post relacionados al subject
+                if(reqSubject.posts.length > 0){
+                    Promise.all(reqSubject.posts.map(async (post) => {
+                        await axios.delete(`http://localhost:${process.env.PORT}/api/post/delete/${post._id}`);
+                    }));
+                }
                 const subject = await Subject.findByIdAndRemove(id);
                 await Career.findByIdAndUpdate(subject.career, {
                     $pull: { subjects: subject._id }

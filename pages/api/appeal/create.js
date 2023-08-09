@@ -4,13 +4,13 @@ import Appeal from "../../../models/Appeal";
 
 export default async function handler(req, res) {
     const { method } = req;
-    const { name, description, ban, appealer, status} = req.body;
+    const { name, description, ban, appealer} = req.body;
     connectToDatabase();
 
     if (method=="POST") {
             try {
-                const newAppeal = new Appeal({ name, description, ban, appealer, status });
-                await newAppeal.save().populate("appealer","-password -favs").populate("ban","-user");
+                const newAppeal = new Appeal({ name, description, ban, appealer });
+                await newAppeal.save()
                 if (newAppeal) {
                     return res.status(201).json({ message: "Appeal created", appeal: newAppeal} );
                 }

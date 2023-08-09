@@ -10,19 +10,34 @@ import {
       Heading,
       Button,
       Flex,
+    useToast,
   } from '@chakra-ui/react'
 import axios from 'axios';
   export default function ModalDeleteComment({ isOpen, onClose, onOpen, comment, comments, setComments }) {
-
+    const toast = useToast();
     const handleDelete = () => {
         axios.delete(`/api/comment/delete/${comment._id}`)
             .then((res) => {
                 setComments(comments.filter((comment) => comment._id !== res.data.data));
                 onClose();
+                toast({
+                    title: 'Comentario eliminado',
+                    description: '',
+                    status: 'success',
+                    duration: 5000,
+                    isClosable: true,
+                });
             }
         )
         .catch((err) => {
             console.log(err);
+            toast({
+                title: 'Error al eliminar comentario',
+                description: 'Ha ocurrido un error inesperado',
+                status: 'error',
+                duration: 5000,
+                isClosable: true,
+            });
         }
         );
     };

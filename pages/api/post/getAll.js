@@ -1,8 +1,8 @@
 import { connectToDatabase } from "../../../utils/db";
-
 import Post from "../../../models/Post";
 import Comment from "../../../models/Comment";
 import User from "../../../models/User";
+import File from "../../../models/File";
 
 export default async function handler(req, res) {
     const { method } =req;
@@ -15,13 +15,16 @@ export default async function handler(req, res) {
                 const posts = await Post.find({}).populate(
                     "creator").populate({
                         path: "comments",
-                        model: "Comment",
+                        model: Comment,
                         populate: {
                             path: "creator",
-                            model: "User",
+                            model: User,
                         },
                     }
-                )
+                ).populate({
+                        path: "file",
+                        model: File,
+                    })
                 .sort({ createDate: -1 });
                 return res.status(200).json({ success: true, data: posts });
             }

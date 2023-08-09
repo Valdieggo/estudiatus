@@ -7,6 +7,7 @@ import LoginModal from "../Auth/LoginModal.js";
 import { set } from "mongoose";
 import { ChatIcon } from "@chakra-ui/icons";
 import { useForm } from "react-hook-form";
+import { useToast } from "@chakra-ui/react";
 
 export default function AddCommentCard({ post, setComments, comments }) {
     const { data: session, status } = useSession();
@@ -14,7 +15,7 @@ export default function AddCommentCard({ post, setComments, comments }) {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [isAddingComment, setIsAddingComment] = useState(false);
     const { register, reset, handleSubmit, formState: { errors } } = useForm();
-
+    const toast = useToast();
 
     const onSubmit = data => {
         if (status === "authenticated") {
@@ -28,15 +29,54 @@ export default function AddCommentCard({ post, setComments, comments }) {
                     reset();  // reset form fields
                     setComments((comments) => [...comments, res.data.data]);
                     setIsAddingComment(false);
+                    toast({
+                        title: 'Comentario añadido',
+                        description: '',
+                        status: 'success',
+                        duration: 5000,
+                        isClosable: true,
+                    });
                 })
                 .catch((err) => {
                     console.log(err);
                     setIsAddingComment(false);
+                    toast({
+                        title: 'Error al comentar',
+                        description: 'Ha ocurrido un error inesperado',
+                        status: 'error',
+                        duration: 5000,
+                        isClosable: true,
+                    });
                 });
         } else {
             onOpen();
         }
     };
+    if(status === "unauthenticated") {
+        return (
+        <Box color="white" width="100%" maxWidth="500px" margin="auto" bg="post.100" borderRadius="md" p={4}
+        _hover={{
+            bg: "post.200",
+        }}
+        >
+            <Textarea 
+                placeholder="Escribe un comentario..."
+                mb={4}
+            />
+            <Button
+            onClick={onOpen}
+            bg="button.100"
+            width="100%"
+            _hover={{
+                bg: "button.200",
+            }}
+            >
+                Añadir comentario
+            </Button>
+            <LoginModal isOpen={isOpen} onClose={onClose} />
+        </Box>
+    );
+    }
 
     return (
         <Box color="white" width="100%" maxWidth="500px" margin="auto" bg="post.100" borderRadius="md" p={4}
