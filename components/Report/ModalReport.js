@@ -1,4 +1,4 @@
-import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, ModalFooter, Text, Stack, Grid, Button, Spinner, Center, useToast } from "@chakra-ui/react";
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, ModalFooter, Text, Stack, Grid, Button, Spinner, Center, useToast, Box, Divider } from "@chakra-ui/react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import ConfirmationPopover from "./PopOverReport";
@@ -112,22 +112,40 @@ export  default function ModalReport({ isOpen, onClose, reportId ,  setReports, 
     <Modal isOpen={isOpen} onClose={onClose} size="xl" closeOnOverlayClick={false}>
       <ModalOverlay  bg='blackAlpha.400'  backdropBlur="2px" />
       <ModalContent background="bg.100" color="white">
-        <ModalHeader>Report Details</ModalHeader>
         <ModalCloseButton background="red" onClick={onClose} />
         <ModalBody>
           {report ? (
             <>
-              <Stack spacing={1}>
-                <Text fontWeight="bold">Usuario reportado:</Text>
-                <Grid templateColumns="auto 1fr" columnGap="50%">
-                  <Text>{report.reportedUser.username}</Text>
-                  <Text>{report.reportedUser.email}</Text>
-                </Grid>
-                <Text fontWeight="bold">Razon:</Text>
-                <Text>{report.reason}</Text>
-                <Text fontWeight="bold">Descripcion:</Text>
-                <Text>{report.description}</Text>
-              </Stack>
+            <Stack spacing={3}>
+              <Text fontWeight="semibold" fontSize="lg">Reporte</Text>
+
+              <Text fontWeight="bold">Información usuario reportado:</Text>
+              <Grid templateColumns="repeat(2, 1fr)" gap={4}>
+                  <Box>
+                      <Text fontSize="sm" color="gray.500">Nombre de usuario:</Text>
+                      <Text>{report.reportedUser.username}</Text>
+                  </Box>
+                  <Box>
+                      <Text fontSize="sm" color="gray.500">Email:</Text>
+                      <Text>{report.reportedUser.email}</Text>
+                  </Box>
+              </Grid>
+
+              <Text  fontSize="sm" color="gray.500">Razón:</Text>
+              <Text>{report.reason}</Text>
+
+              <Text  fontSize="sm" color="gray.500">Descripción:</Text>
+              <Text>{report.description}</Text>
+              <Divider />
+              <Text fontWeight="bold">Acerca del Post:</Text>
+              <Box pl={4}>
+                  <Text fontSize="sm" color="gray.500">Título:</Text>
+                  <Text>{report.post.title}</Text>
+
+                  <Text fontSize="sm" color="gray.500" mt={2}>Contenido:</Text>
+                  <Text>{report.post.content}</Text>
+              </Box>
+            </Stack>
             </>
           ) : (
             <Stack spacing={4} alignItems="center">
