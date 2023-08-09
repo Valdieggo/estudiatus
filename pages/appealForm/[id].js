@@ -42,6 +42,7 @@ export default function appealForm({ban}){
             [e.target.name]:e.target.value
         })
     }
+    const router=useRouter()
 //toast
     const toast = useToast();
     const showSuccessToast = (message) => {
@@ -66,18 +67,18 @@ export default function appealForm({ban}){
     }
 //send handler
     const onSend = async (e)=>{  
-        e.prevent.default()
+        e.preventDefault()
         const messageSuccess = "Apelacion enviada correctamente, pronto recibirá una respuesta";
         const messageError = "Error al enviar la apelacion, intente nuevamente";
         console.log(appeal)
         try{
         const response= await axios.post('/api/appeal/create', appeal)
-            if(response.status==200){
+        console.log(appeal)
+            if(response.status==201){
                 showSuccessToast(messageSuccess);
                 router.push('/');
             }else{
                 showErrorToast(messageError);
-                router.push('/');
             }
         }catch(error){
             console.log(error)
@@ -89,9 +90,10 @@ return(
     <Layout>
     <Container maxW="container.md">
     <Heading textAlign={"center"} my={10}>Formulario de apelación</Heading>
-    <Text>Su baneo es de tipo:</Text>
-    <Text>A continuacion llene el formulario para hacer su apelacion</Text>
-
+    <Box padding='20px'>
+        <Text padding= '3px' >Su baneo esta fijado {ban.type}</Text>
+        <Text padding= '3px' >A continuacion llene el formulario para hacer su apelacion</Text>
+    </Box>
     <FormControl isRequired>
     <FormLabel>Razon de su apelacion</FormLabel>
     <Input placeholder='Porqué desea apelar?' type={"text"} onChange={onChange} name="name"/>
@@ -102,8 +104,8 @@ return(
     <Input placeholder='Proporcione todos los detalles que considere necesarios para su apelación'type={"text"} 
     onChange={onChange} name="description" />
     </FormControl>
-    <HStack>
-            <Button colorScheme='red' type="submit" onClick={()=>onSend()}>Enviar</Button>
+    <HStack padding='10px' >
+            <Button colorScheme='red' onClick={onSend}>Enviar</Button>
         <Button onClick={()=>{router.push('/')}}>Cancelar</Button>
         </HStack>
     </Container>
