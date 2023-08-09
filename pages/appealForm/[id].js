@@ -7,22 +7,16 @@ import { useToast } from '@chakra-ui/react'
 import Layout from "../../components/Layout/Layout";
 
 export const getServerSideProps = async (context) => {
-    try{
     const { id } = context.query
     const response = await axios.get(`/api/ban/getOne/${id}`)
     const ban = response.data.data
-    return {
+        return {
         props: {
             ban,
         },
-    };}catch(err){
-        return {
-            redirect: {
-                destination: '/',
-                permanent: true
-        }
-    }}
-}
+    }
+    }
+
 export default function appealForm({ban}){
 
     const [appeal, setAppeal] = useState({
