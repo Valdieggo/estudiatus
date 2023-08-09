@@ -141,7 +141,7 @@ export default function PostsCard({ post, setAllPosts, allPosts, title, subjectI
                         }}
                         leftIcon={<ChatIcon />}
                     >
-                        Comentar
+                        Ver más
                     </Button>
                 </CardFooter>
             </Card>
