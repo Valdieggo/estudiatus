@@ -84,7 +84,7 @@ export default function PostsCard({ post, setAllPosts, allPosts, title, subjectI
                 </CardBody >
                 {post.file && (
                     <>
-                        {post.file.originalName.endsWith(".png") || post.file.originalName.endsWith(".jpg") || post.file.originalName.endsWith(".jpeg") ? (
+                        {post.file.originalName.endsWith(".png") || post.file.originalName.endsWith(".jpg") || post.file.originalName.endsWith(".jpeg") || post.file.originalName.endsWith(".gif") ? (
                             <Box align={"center"}>
                             <ModalImg post={post} />
                             </Box>
