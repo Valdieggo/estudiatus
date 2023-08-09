@@ -18,7 +18,9 @@ const BanError = () => {
     if (error) {
       // Muestra el modal correspondiente en función del tipo de error
       if (error.startsWith("BANNED/")) {
-        const banIdFromQuery = error.substring("BANNED/".length); // Extraer el ID del ban del query string
+        
+        const banIdFromQuery = error.substring("BANNED/".length); 
+        console.log(banIdFromQuery)// Extraer el ID del ban del query string
         setIdBan(banIdFromQuery);
         setShowBannedModal(true);
       } else {
