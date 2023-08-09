@@ -33,14 +33,14 @@ export default function SubsList({navSize}) {
         <Text mx="8" my="4" fontWeight="bold" fontSize="xs" letterSpacing="wide" textTransform="uppercase" color="gray.400">Subs</Text>
         {
           careerSubs.map((career) => (
-            <SidebarItem key={career.id} icon={null} navSize={navSize} link={`/career/${career._id}`}>
+            <SidebarItem key={career.id} icon={null} link={`/career/${career._id}`}>
               {career.careerName}
             </SidebarItem>
           ))
         }
         {
           subjectSubs.map((subject) => (
-            <SidebarItem key={subject.id} icon={null} navSize={navSize} link={`/subject/${subject._id}`}>
+            <SidebarItem key={subject.id} icon={null} link={`/subject/${subject._id}`}>
               {subject.subjectName}
             </SidebarItem>
           ))
