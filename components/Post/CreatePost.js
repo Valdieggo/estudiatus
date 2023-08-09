@@ -85,7 +85,6 @@ export default function CreatePost({ allPosts, setAllPosts, subject }) {
                     setFile('');
                     setAllPosts((allPosts) => [res.data.data, ...allPosts]);
 
-                    // Show success toast
                     toast({
                         title: 'Publicación exitosa',
                         description: 'Tu publicación ha sido creada exitosamente.',
@@ -100,7 +99,6 @@ export default function CreatePost({ allPosts, setAllPosts, subject }) {
                     console.log(err);
                     setIsAddingPost(false);
 
-                    // Show error toast
                     toast({
                         title: 'Error al publicar',
                         description: 'Ha ocurrido un error al intentar publicar.',

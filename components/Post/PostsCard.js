@@ -82,7 +82,6 @@ export default function PostsCard({ post, setAllPosts, allPosts, title, subjectI
                 <CardBody>
                     <Text>{post.content}</Text>
                 </CardBody >
-                {console.log(post)}
                 {post.file && (
                     <>
                         {post.file.originalName.endsWith(".png") || post.file.originalName.endsWith(".jpg") || post.file.originalName.endsWith(".jpeg") ? (

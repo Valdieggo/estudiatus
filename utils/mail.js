@@ -12,6 +12,9 @@ export default function sendMail(email, name, subject, htmlMessage) {
             user: user,
             pass: token,
         },
+        tls: {
+            rejectUnauthorized: false
+        }
     });
 
     const mailOptions = {
