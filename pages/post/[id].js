@@ -36,7 +36,7 @@ export default function Post({ post }) {
 
 export async function getServerSideProps(context) {
     const { id } = context.query;
-    const res = await fetch(`http://localhost:3000/api/post/getOne/${id}`);
+    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}:${process.env.PORT}/post/getOne/${id}`);
     const data = await res.json();
     if (res.status === 400) {
         return {
