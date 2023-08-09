@@ -22,11 +22,11 @@ export default async function handler(req, res) {
                             model: User,
                         },
                     }
-                    .populate({
-                        path: "file",
-                        model: File,
-                    })
-                );
+                )
+                .populate({
+                    path: "file",
+                    model: File,
+                });
 
 
                 if (!post) {
