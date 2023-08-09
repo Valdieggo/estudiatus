@@ -85,7 +85,6 @@ export default function PostsCard({ post, setAllPosts, allPosts, title, subjectI
                 {console.log(post)}
                 {post.file && (
                     <>
-
                             <CardFooter
                                 justify="space-between"
                                 flexWrap="wrap"
