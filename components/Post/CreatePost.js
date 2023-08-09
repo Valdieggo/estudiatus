@@ -71,7 +71,7 @@ export default function CreatePost({ allPosts, setAllPosts, subject }) {
             const idfile = await Upload(file);
             setIsAddingPost(true);
             axios
-                .post(`http://localhost:3000/api/post/create`, {
+                .post(`/api/post/create`, {
                     title: title,
                     content: content,
                     creator: session.user.id,

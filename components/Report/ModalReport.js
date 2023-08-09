@@ -1,4 +1,4 @@
-import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, ModalFooter, Text, Stack, Grid, Button, Spinner, Center } from "@chakra-ui/react";
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, ModalFooter, Text, Stack, Grid, Button, Spinner, Center, useToast } from "@chakra-ui/react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import ConfirmationPopover from "./PopOverReport";
@@ -7,6 +7,7 @@ import ConfirmationPopover from "./PopOverReport";
 export  default function ModalReport({ isOpen, onClose, reportId ,  setReports, reports}) {
   const [report, setReport] = useState(null);
   const [showPopover, setShowPopover] = useState(false);
+  const toast = useToast();
 
   useEffect(() => {
     const fetchReport = async () => {
@@ -36,10 +37,32 @@ export  default function ModalReport({ isOpen, onClose, reportId ,  setReports, 
             report: report._id,
           })
           if (response.status===201){
+            toast({
+              title: "Usuario sancionado",
+              description: "El usuario ha sido sancionado exitosamente.",
+              status: "success",
+              duration: 3000,
+              isClosable: true,
+            });
+
             setReports(prevReports => prevReports.filter(report => report._id !== reportId))
+          }else{
+            toast({
+              title: "Error al sancionar",
+              description: "Ha ocurrido un error al intentar sancionar al usuario.",
+              status: "error",
+              duration: 3000,
+              isClosable: true,
+            });
           }
         } catch (error) {
-          console.error(error);
+         toast({
+            title: "Error al sancionar",
+            description: "Ha ocurrido un error al intentar sancionar al usuario.",
+            status: "error",
+            duration: 3000,
+            isClosable: true,
+          });
         }
         onClose();
       };
@@ -52,11 +75,28 @@ export  default function ModalReport({ isOpen, onClose, reportId ,  setReports, 
       try {
         const response = await axios.put(`../api/report/update`, {
           id: report._id,
-        }).then(
-          setReports(prevReports => prevReports.filter(report => report._id !== reportId))
+        }).then((res) => {
+          if (res.status === 200) {
+            toast({
+              title: "Reporte actualizado",
+              description: "El reporte ha sido actualizado exitosamente.",
+              status: "success",
+              duration: 3000,
+              isClosable: true,
+            });
+            setReports(prevReports => prevReports.filter(report => report._id !== reportId))
+          }else{
+            toast({
+              title: "Error al actualizar el reporte",
+              description: "Ha ocurrido un error al intentar actualizar el reporte.",
+              status: "error",
+              duration: 3000,
+              isClosable: true,
+            });
+          }
+        }
         );
-        
-        console.log(response.data);
+
       } catch (error) {
         console.error(error);
       }

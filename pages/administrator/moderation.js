@@ -46,7 +46,7 @@ export default function Moderation({ listReport }) {
 }
 
 export async function getServerSideProps() {
-  const res = await axios.get("http://localhost:3000/api/report/getAll");
+  const res = await axios.get(`http://localhost:${process.env.PORT}/api/report/getAll`);
   const data = await res.data.reports;
   if (res.status === 400) {
       return {

@@ -52,7 +52,7 @@ const PostsSubject = ({ posts, subject }) => {
             />
             <Box width="100%" maxW="500px" margin="auto">
                 <Stack>
-                    <HeaderCard title={subject.subjectName} description={subject.description} image={subject.img ? `/uploads/${subject.img.fileName}` : '/default/landscape.jpg'}
+                    <HeaderCard title={subject.subjectName} description={subject.description} image={subject.img ? `/uploads/${subject.img.fileName}` : '/estudiatus-pattern.svg'}
                         type={"subject"} id={subject._id}
                     />
                     <Box display="flex" justifyContent="center">
@@ -93,10 +93,10 @@ export default PostsSubject;
 export const getServerSideProps = async (context) => {
     const { id } = context.query;
     const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_URL}:${process.env.PORT}/api/post/getAllBysubject/${id}`
+        `http://localhost:${process.env.PORT}/api/post/getAllBysubject/${id}`
     );
     const res2 = await axios.get(
-        `${process.env.NEXT_PUBLIC_URL}:${process.env.PORT}/api/subject/getOne/${id}`
+        `http://localhost:${process.env.PORT}/api/subject/getOne/${id}`
     );
 
     const subject = res2.data.data;

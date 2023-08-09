@@ -38,8 +38,8 @@ import { set } from "date-fns";
 
 
 export const getServerSideProps = async () => {
-    const resSubject = await axios.get(`${process.env.NEXT_PUBLIC_URL}:${process.env.PORT}/api/subject/getAll`);
-    const resCareer = await axios.get(`${process.env.NEXT_PUBLIC_URL}:${process.env.PORT}/api/career/getAll`);
+    const resSubject = await axios.get(`http://localhost:${process.env.PORT}/api/subject/getAll`);
+    const resCareer = await axios.get(`http://localhost:${process.env.PORT}/api/career/getAll`);
     const subjects = resSubject.data.data;
     const careers = resCareer.data.data;
     return {
@@ -409,7 +409,7 @@ export default function Home(data) {
                                 <Tr key={subject._id} color="white">
                                     <Td><Link href={`/subject/${subject._id}`}>{subject.subjectName}</Link></Td>
                                     <Td>{subject.description}</Td>
-                                    <Td>{moment(subject.date).format('DD/MM/YYYY')}</Td>
+                                    <Td>{subject.date}</Td>
                                     <Td><Link href={`/career/${subject.career._id}`}>{subject.career.careerName}</Link></Td>
                                     <Td><button onClick={() => deleteSubject(subject._id)}>{texto.delete}</button></Td>
                                     <Td>

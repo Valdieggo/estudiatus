@@ -8,6 +8,7 @@ import {
     VStack,
     Select,
     Button,
+    useToast,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
@@ -15,21 +16,33 @@ import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 
 export default function SubjectRequest() {
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit, reset } = useForm();
     const [collegeList, setCollegeList] = useState([]);
     const [careerList, setCareerList] = useState([]);
     const { data: session } = useSession();
     const [selectedCollege, setSelectedCollege] = useState("");
+    const toast = useToast();
 
-    const submitRequest = (data) => {
-        console.log("register:", data.subjectName);
-        axios.post("../api/subject_request/create", {
+    const submitRequest = async (data) => {
+        const response = await axios.post("../api/subject_request/create", {
             subjectName: data.subjectName,
             college: data.college,
             career: data.career,
             description: data.description,
             requestingUser: session.user.id,
         });
+
+        if (response.status === 201) {
+            toast({
+                title: "Solicitud enviada",
+                description: "Se ha enviado la solicitud correctamente",
+                status: "success",
+                duration: 3000,
+                isClosable: true,
+            });
+            reset();
+            setSelectedCollege("");
+        }
     };
 
     const handleCollege = async () => {

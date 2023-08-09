@@ -28,8 +28,9 @@ import axios from "axios";
 import FavPostButton from "./FavPostButton";
 import MenuPost from "./MenuPost";
 import esLocale from "date-fns/locale/es";
+import ModalImg from "./ModalImg";
 
-export default function PostsCard({ post, setAllPosts, allPosts, title,subjectId }) {
+export default function PostsCard({ post, setAllPosts, allPosts, title, subjectId }) {
     const { creator } = post;
 
     const router = useRouter();
@@ -81,21 +82,18 @@ export default function PostsCard({ post, setAllPosts, allPosts, title,subjectId
                 <CardBody>
                     <Text>{post.content}</Text>
                 </CardBody >
-                <Image src={`/api/File/download/${post.file}`}/>
-
+                {console.log(post)}
                 {post.file && (
                     <>
-                        <CardFooter
-                            justify="space-between"
-                            flexWrap="wrap"
-                            sx={{
-                                "& > button": {
-                                    minW: "140px",
-                                },
-                            }}>
-                            {post.file.endsWith(".png") || post.file.endsWith(".jpeg") ? (
-                                <Image src={`/api/File/download/${post.file}`} alt="Imagen" />
-                            ) : (
+
+                            <CardFooter
+                                justify="space-between"
+                                flexWrap="wrap"
+                                sx={{
+                                    "& > button": {
+                                        minW: "140px",
+                                    },
+                                }}>
                                 <Button
                                     w={"205px"}
                                     as="a"
@@ -109,10 +107,7 @@ export default function PostsCard({ post, setAllPosts, allPosts, title,subjectId
                                 >
                                     Descargar Documento
                                 </Button>
-                            )}
-                            {post.file.endsWith(".png") || post.file.endsWith(".jpg") ? (
-                                <Image src={`/api/File/download/${post.file}`} alt="Imagen" />
-                            ) : (
+
                                 <Button
                                     w={"205px"}
                                     as="a"
@@ -125,8 +120,7 @@ export default function PostsCard({ post, setAllPosts, allPosts, title,subjectId
                                 >
                                     Ver Documento
                                 </Button>
-                            )}
-                        </CardFooter>
+                            </CardFooter>
                     </>
                 )}
 
