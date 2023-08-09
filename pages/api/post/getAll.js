@@ -1,5 +1,4 @@
 import { connectToDatabase } from "../../../utils/db";
-
 import Post from "../../../models/Post";
 import Comment from "../../../models/Comment";
 import User from "../../../models/User";
@@ -15,10 +14,10 @@ export default async function handler(req, res) {
                 const posts = await Post.find({}).populate(
                     "creator").populate({
                         path: "comments",
-                        model: "Comment",
+                        model: Comment,
                         populate: {
                             path: "creator",
-                            model: "User",
+                            model: User,
                         },
                     }
                 )
