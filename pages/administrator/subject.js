@@ -409,7 +409,7 @@ export default function Home(data) {
                                 <Tr key={subject._id} color="white">
                                     <Td><Link href={`/subject/${subject._id}`}>{subject.subjectName}</Link></Td>
                                     <Td>{subject.description}</Td>
-                                    <Td>{moment(subject.date).format('DD/MM/YYYY')}</Td>
+                                    <Td>{subject.date}</Td>
                                     <Td><Link href={`/career/${subject.career._id}`}>{subject.career.careerName}</Link></Td>
                                     <Td><button onClick={() => deleteSubject(subject._id)}>{texto.delete}</button></Td>
                                     <Td>

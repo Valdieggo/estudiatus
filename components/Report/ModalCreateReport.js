@@ -18,7 +18,8 @@ import {
     Spinner,
     Stack,
     Grid,
-    Select
+    Select,
+    useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useSession } from "next-auth/react";
@@ -29,6 +30,7 @@ import { useForm } from "react-hook-form";
 export default function ModalCreateReport({ isOpen, onClose, post }) {
     const { data: session, status } = useSession();
     const [loading, setLoading] = useState(false);
+    const toast = useToast();
     const { register, handleSubmit, formState: { errors } } = useForm();
 
     const onSubmit = async (data) => {
@@ -39,15 +41,32 @@ export default function ModalCreateReport({ isOpen, onClose, post }) {
                 reason:data.reason,
                 description: data.description,
                 post: post._id,
-            })
-            
-            if(response.status === 201) {
+            }).then((res) => {
+                if (res.status === 201) {
+                    toast({
+                        title: "Reporte enviado",
+                        description: "El reporte ha sido enviado exitosamente.",
+                        status: "success",
+                        duration: 3000,
+                        isClosable: true,
+                    });
+                }
+
                 setLoading(false);
                 onClose();
-            } else {
-                console.log("Error al crear reporte");
-            }
-            
+            }).catch((err) => {
+                console.log(err);
+                toast({
+                    title: "Error al enviar el reporte",
+                    description: "Ha ocurrido un error al intentar enviar el reporte.",
+                    status: "error",
+                    duration: 3000,
+                    isClosable: true,
+                });
+
+                setLoading(false);
+            });
+
         } catch (error) {
             setLoading(false);
         }
