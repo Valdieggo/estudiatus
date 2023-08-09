@@ -6,21 +6,21 @@ export default async function handler(req, res) {
     const { method } = req;
     const { subjectName, career, description, img } = req.body;
     if (!subjectName) {
-        return res.status(400).json({ success: false, message: "Empty subjectName" });
+        return res.status(400).json({ success: false, message: "Nombre vacío" });
+    }
+    
+    if (!description) {
+        return res.status(400).json({ success: false, message: "Sin descripción" });
     }
     if (!career) {
-        return res.status(400).json({ success: false, message: "Empty career" });
-    }
-
-    if (!description) {
-        return res.status(400).json({ success: false, message: "Empty description" });
+        return res.status(400).json({ success: false, message: "Carrera vacía" });
     }
 
     await connectToDatabase();
 
     // verifica si existe career
     if (!await Career.findById(career)) {
-        return res.status(409).json({ success: false, message: "Career not exists" });
+        return res.status(409).json({ success: false, message: "La carrera no existe" });
     }
 
 
@@ -30,7 +30,7 @@ export default async function handler(req, res) {
 
     for (let i = 0; i < subjects.length; i++) {
         if (subjects[i].subjectName == subjectName) {
-            return res.status(409).json({ success: false, message: "Subject already exists" });
+            return res.status(409).json({ success: false, message: "Ya existe una asignatura con el mismo nombre en la misma carrera" });
         }
     }
     
