@@ -27,10 +27,10 @@ export default function Moderation({ listReport }) {
           <TableCaption>Reported Users</TableCaption>
           <Thead>
             <Tr>
-              <Th>Username</Th>
-              <Th>Report Reason</Th>
-              <Th>Desription</Th>
-              <Th>Option</Th>
+              <Th>Nombre Usuario</Th>
+              <Th>Razón</Th>
+              <Th>Descripción</Th>
+              <Th>Opción</Th>
             </Tr>
           </Thead>
           <Tbody>
