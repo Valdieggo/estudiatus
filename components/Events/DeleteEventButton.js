@@ -2,7 +2,7 @@ import { Flex, Text, Button } from '@chakra-ui/react';
 import { useDisclosure } from '@chakra-ui/react';
 import DeleteEventModal from './DeleteEventModal';
 
-export default function DeleteButtonEvent({ event, allEvents, setAllEvents }) {
+export default function DeleteButtonEvent({ event, allEvents, eventId, setAllEvents }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const handleDeleteButtonClick = (event) => {
