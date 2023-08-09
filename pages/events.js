@@ -35,8 +35,9 @@ const EventsPage = () => {
     setSelectedEvent(event);
   };
 
-  const handleCloseCreateModal = () => {
+  const handleCreateEventSuccess = () => {
     setIsCreateModalOpen(false);
+    window.location.reload();
   };
 
   return (
@@ -62,7 +63,7 @@ const EventsPage = () => {
           <EventDetailsModal event={selectedEvent} onClose={() => setSelectedEvent(null)} />
         )}
         <Center>
-          <CreateEvent isOpen={isCreateModalOpen} onClose={handleCloseCreateModal}/>
+          <CreateEvent onSuccess={handleCreateEventSuccess} isOpen={isCreateModalOpen} onClose={() => setIsCreateModalOpen(false)}/>
         </Center>
       </VStack>
     </Layout>
