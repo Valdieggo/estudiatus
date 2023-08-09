@@ -10,7 +10,7 @@ export default async function handler(req, res) {
     if (method=="POST") {
             try {
                 const newAppeal = new Appeal({ name, description, ban, appealer, status });
-                await newAppeal.save().populate("appealer","-password -favs").populate("ban","-user");
+                await newAppeal.save()
                 if (newAppeal) {
                     return res.status(201).json({ message: "Appeal created", appeal: newAppeal} );
                 }

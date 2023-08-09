@@ -1,8 +1,9 @@
 import React from "react";
-import { Box, Heading, Text, Button } from "@chakra-ui/react";
+import { Box, Heading, Text, Button, HStack } from "@chakra-ui/react";
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalFooter, ModalCloseButton } from "@chakra-ui/react";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 
 const BannedModal = ({ isOpen, onClose, idBan }) => {
@@ -21,6 +22,8 @@ const BannedModal = ({ isOpen, onClose, idBan }) => {
     }
   }, [isOpen, idBan]);
 
+  const router= useRouter();
+
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="md">
@@ -35,9 +38,10 @@ const BannedModal = ({ isOpen, onClose, idBan }) => {
           <Text mt="4">Contact support for more information.</Text>
         </ModalBody>
         <ModalFooter>
-          <Button colorScheme="blue" onClick={onClose}>
-            Close
-          </Button>
+          <HStack>
+          <Button colorScheme="whiteAlpha" onClick={()=> router.push(`../../pages/appealForm/${idBan}`)}>Appeal</Button>
+          <Button colorScheme="blue" onClick={onClose}>Close</Button> 
+          </HStack>
         </ModalFooter>
       </ModalContent>
     </Modal>
