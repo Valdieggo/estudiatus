@@ -35,6 +35,12 @@ export default function MenuPost({ post, allPosts, setAllPosts,subjectId }) {
                     </MenuItem>
                 ) : null}
 
+                {isAdmin || isCreatorId ? (
+                    <MenuItem>
+                        <EditButtonPost post={post} />
+                    </MenuItem>
+                ) : null}
+
                 {post?.creator?._id !== session?.user?.id && session ? (
                 <MenuItem>
                     <ReportButton post={post} />
