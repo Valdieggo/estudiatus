@@ -4,7 +4,7 @@ import DeleteEventButton from './DeleteEventButton';
 import EditEventButton from './EditEventButton';
 import { useSession } from 'next-auth/react';
 
-const EventDetailsModal = ({ event, onClose }) => {
+const EventDetailsModal = ({ event, onClose, selectedEvent, events, setEvents }) => {
   const { data: session } = useSession();
 
   return (
