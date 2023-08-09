@@ -7,7 +7,7 @@ const list = [
         link: "/administrator/subject",
     },
     {
-        name: "Moderation",
+        name: "Moderación",
         link: "/administrator/moderation",
     },
     {
