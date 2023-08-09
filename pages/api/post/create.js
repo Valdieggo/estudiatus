@@ -51,18 +51,14 @@ export default async function handler(req, res) {
                     $push: { posts: post._id },
                 });
 
-                // Retrieve subject's subscribers
                 const subjectInfo = await Subject.findById(subject).populate("subscribers");
-                // console.log(subjectInfo)
 
                 subjectInfo.subscribers.forEach( (subscriber) => {
-                    console.log("Aqui 1")
-                    console.log(subscriber.email)
 
                     sendMail(subscriber.email, subscriber.username, "Un nuevo post", `
                         <p>Por ${subscriber.username},</p>
-                        <p>El nuevo post se titula "${title}" Fue creado por "${subjectInfo.subjectName}".</p>
-                        <p>Revisalo en <a href="${process.env.BASE_URL}/posts/${post._id}">Aqui</a>.</p>
+                        <p>El nuevo post se titula "${title}" Fue creado en la Agnatura en la cual se subscribio: "${subjectInfo.subjectName}".</p>
+                        <p>Revisalo en <a href="${process.env.NEXT_PUBLIC_URL}:${process.env.PORT}/post/${post._id}">Aqui</a>.</p>
                     `);
                 });
 

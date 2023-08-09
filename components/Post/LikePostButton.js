@@ -59,7 +59,7 @@ export default function LikePostButton({ post, isList}) {
             isDisabled={isLiking}
             _hover={{
                 bg: "button.200",
-            }} 
+            }}
             leftIcon={isLiking ? <Spinner /> : <ArrowUpIcon />}>
             Like {likeCount}
             <LoginModal isOpen={isOpen} onClose={onClose} />
