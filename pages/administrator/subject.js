@@ -55,7 +55,7 @@ export default function Home(data) {
     //mas adelante se puede exportar a otro archivo de idioma
     const texto = {
         "title": "Administración de asignaturas",
-        "error": "Error",
+        "errorMessage": "Error",
         "success": "Éxito",
         "subtitle": "Lista de asignaturas",
         "create": "Crear asignatura",
@@ -94,7 +94,6 @@ export default function Home(data) {
         "messageSubjectDeleteError": "Error al eliminar la asignatura",
     }
     //cambio formato fecha
-    const moment = require('moment');
     const toast = useToast()
 
     // para editar
@@ -156,7 +155,6 @@ export default function Home(data) {
     }
 
     const nullify = () => {
-        console.log("nullify")
         setId("");
         setName("");
         setDescription("");
@@ -176,6 +174,7 @@ export default function Home(data) {
     }
 
     const ErrorToast = (title, description) => {
+        console.log(title, description);
         toast({
             title: title,
             description: description,
@@ -204,7 +203,7 @@ export default function Home(data) {
             }));
             SuccessToast(texto.success, texto.messageSubjectDeleteSuccess);
         }).catch((err) => {
-            ErrorToast(texto.error, texto.messageSubjectDeleteError);
+            ErrorToast(texto.errorMessage, err.response.data.message);
         })
         nullify();
     };
@@ -233,7 +232,7 @@ export default function Home(data) {
             }));
             SuccessToast(texto.messageSubjectUpdateSuccess);
         }).catch((err) => {
-            ErrorToast(texto.messageSubjectUpdateError);
+            ErrorToast(texto.errorMessage, err.response.data.message);
             //html: err.response.data.message,
         })
         nullify();
@@ -251,7 +250,7 @@ export default function Home(data) {
             subjects.push(res.data.data);
             SuccessToast(texto.success, texto.messageSubjectCreateSuccess);
         }).catch((err) => {
-            ErrorToast(texto.error, texto.messageSubjectCreateError);
+            ErrorToast(texto.errorMessage, err.response.data.message);
         })
         nullify();
         onCloseCreate();
@@ -287,7 +286,6 @@ export default function Home(data) {
                                 <FormLabel>{texto.career}</FormLabel>
                                 <Select placeholder={texto.selectCareer} onChange={handleCareerChange}>
                                     {careers.map((careerA) => {
-                                        console.log(careerA)
                                         return (
                                             <option key={careerA._id} value={careerA._id}>{careerA.careerName}</option>
                                         )
@@ -298,7 +296,7 @@ export default function Home(data) {
                                 <FormLabel>{texto.image}</FormLabel>
                                 <Input placeholder={texto.image} type="file" onChange={handleImageChange} accept="image/*" />
                             </FormControl>
-                            
+
 
                         </ModalBody>
 
@@ -369,6 +367,10 @@ export default function Home(data) {
         )
     }
 
+    const formatDate = (date) => {
+        const newDate = new Date(date);
+        return newDate.toLocaleDateString()
+    }
 
 
     return (
@@ -409,7 +411,7 @@ export default function Home(data) {
                                 <Tr key={subject._id} color="white">
                                     <Td><Link href={`/subject/${subject._id}`}>{subject.subjectName}</Link></Td>
                                     <Td>{subject.description}</Td>
-                                    <Td>{subject.date}</Td>
+                                    <Td>{formatDate(subject.date)}</Td>
                                     <Td><Link href={`/career/${subject.career._id}`}>{subject.career.careerName}</Link></Td>
                                     <Td><button onClick={() => deleteSubject(subject._id)}>{texto.delete}</button></Td>
                                     <Td>
