@@ -38,8 +38,8 @@ import { set } from "date-fns";
 
 
 export const getServerSideProps = async () => {
-    const resSubject = await axios.get(`${process.env.NEXT_PUBLIC_URL}:${process.env.PORT}/api/subject/getAll`);
-    const resCareer = await axios.get(`${process.env.NEXT_PUBLIC_URL}:${process.env.PORT}/api/career/getAll`);
+    const resSubject = await axios.get(`http://localhost:${process.env.PORT}/api/subject/getAll`);
+    const resCareer = await axios.get(`http://localhost:${process.env.PORT}/api/career/getAll`);
     const subjects = resSubject.data.data;
     const careers = resCareer.data.data;
     return {

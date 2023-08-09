@@ -9,7 +9,7 @@ import HeaderCard from "../../components/Cards/HeaderCard";
 
 export const getServerSideProps = async (context) => {
     const { id } = context.query;
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_URL}:${process.env.PORT}/api/career/getOne/${id}`);
+    const response = await axios.get(`http://localhost:${process.env.PORT}/api/career/getOne/${id}`);
     const career = response.data.data;
     return {
         props: {

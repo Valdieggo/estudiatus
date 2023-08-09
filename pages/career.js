@@ -6,7 +6,7 @@ import axios from "axios";
 import Card from "../components/Cards/Card.js";
 import NavigationCard from "../components/Cards/NavigationCard";
 export const getServerSideProps = async () => {
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_URL}:${process.env.PORT}/api/career/getAll`);
+    const response = await axios.get(`http://localhost:${process.env.PORT}/api/career/getAll`);
     const careers = response.data.data;
     return {
         props: {
