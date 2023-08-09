@@ -85,41 +85,42 @@ export default function PostsCard({ post, setAllPosts, allPosts, title, subjectI
                 {console.log(post)}
                 {post.file && (
                     <>
-                        <CardFooter
-                            justify="space-between"
-                            flexWrap="wrap"
-                            sx={{
-                                "& > button": {
-                                    minW: "140px",
-                                },
-                            }}>
-                            <Button
-                                w={"205px"}
-                                as="a"
-                                bg="button.100"
-                                _hover={{
-                                    bg: "button.200",
-                                }}
-                                download={`/api/File/download/${post.file}`}
-                                href={`/api/File/download/${post.file}`}
-                                leftIcon={<DownloadIcon />}
-                            >
-                                Descargar Documento
-                            </Button>
 
-                            <Button
-                                w={"205px"}
-                                as="a"
-                                bg="button.100"
-                                _hover={{
-                                    bg: "button.200",
-                                }}
-                                href={`/api/File/download/${post.file}`}
-                                leftIcon={<ViewIcon />}
-                            >
-                                Ver Documento
-                            </Button>
-                        </CardFooter>
+                            <CardFooter
+                                justify="space-between"
+                                flexWrap="wrap"
+                                sx={{
+                                    "& > button": {
+                                        minW: "140px",
+                                    },
+                                }}>
+                                <Button
+                                    w={"205px"}
+                                    as="a"
+                                    bg="button.100"
+                                    _hover={{
+                                        bg: "button.200",
+                                    }}
+                                    download={`/api/File/download/${post.file}`}
+                                    href={`/api/File/download/${post.file}`}
+                                    leftIcon={<DownloadIcon />}
+                                >
+                                    Descargar Documento
+                                </Button>
+
+                                <Button
+                                    w={"205px"}
+                                    as="a"
+                                    bg="button.100"
+                                    _hover={{
+                                        bg: "button.200",
+                                    }}
+                                    href={`/api/File/download/${post.file}`}
+                                    leftIcon={<ViewIcon />}
+                                >
+                                    Ver Documento
+                                </Button>
+                            </CardFooter>
                     </>
                 )}
 
