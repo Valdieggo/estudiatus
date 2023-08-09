@@ -19,7 +19,7 @@ import { useState } from "react";
 
 export const getServerSideProps = async () => {
     const response = await axios.get(
-        `http://localhost:3000/api/subject_request/getAll`
+        `http://localhost:${process.env.PORT}/api/subject_request/getAll`
     );
     const subjectrequest = response.data.data;
     return {
