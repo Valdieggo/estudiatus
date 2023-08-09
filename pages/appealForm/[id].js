@@ -5,17 +5,27 @@ import { useRouter } from "next/router";
 import Head from "next/head";
 import { useToast } from '@chakra-ui/react'
 import Layout from "../../components/Layout/Layout";
+import { Box, Heading, Text, Button, HStack, VStack, Input, Textarea, Container } from "@chakra-ui/react";
+import { FormControl, FormLabel, FormErrorMessage, FormHelperText } from "@chakra-ui/react"
 
-export const getServerSideProps = async (context) => {
+
+export async function getServerSideProps(context) {
     const { id } = context.query
-    const response = await axios.get(`/api/ban/getOne/${id}`)
-    const ban = response.data.data
-        return {
+    const response = await axios.get(`http://localhost:3000/api/ban/getOne/${id}`)
+        .then((response) => {
+            return response.data
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+    const ban = response.ban
+    return {
         props: {
             ban,
         },
     }
-    }
+}
+
 
 export default function appealForm({ban}){
 
