@@ -64,7 +64,6 @@ export default function EditEventModal({ isOpen, onClose, event }) {
   const handleUpdateEvent = async () => {
     try {
       if (!session) {
-        // User is not logged in
         toast({
           title: 'Acceso Denegado',
           description: 'Debes iniciar sesión para editar un evento.',
@@ -76,13 +75,12 @@ export default function EditEventModal({ isOpen, onClose, event }) {
       }
   
       const isAdmin = session?.user.role === 'admin';
-      const isEventEditor = isAdmin || (event?.creator && session?.user?.id === event.creator._id);
     
   
-      if (!isEventEditor) {
+      if (!isAdmin) {
         toast({
           title: 'Permiso Denegado',
-          description: 'No tienes permiso para editar este evento.',
+          description: 'Solo los administradores pueden editar eventos.',
           status: 'error',
           duration: 5000,
           isClosable: true,
