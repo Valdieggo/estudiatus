@@ -16,7 +16,7 @@ export default function ReportTr({ report, reports, setReports }) {
                 onClick={onOpen}
                 size="sm"
                 >
-                Details
+                Detalle
                 </Button>
             </Td>
             <ModalReport isOpen={isOpen} onClose={onClose} onOpen={onOpen} reportId={report._id}  setReports={setReports} reports={reports} />
