@@ -90,7 +90,7 @@ export default function AddCommentCard({ post, setComments, comments }) {
                 {...register("comment", {
                     required: "Debes escribir un comentario", 
                     minLength: { value: 10, message: "El comentario debe tener al menos 10 caracteres" },
-                    maxLength: { value: 200, message: "El comentario debe tener menos de 200 caracteres" },
+                    maxLength: { value: 100, message: "El comentario debe tener menos de 200 caracteres" },
                 })}
                 mb={4}
             />
