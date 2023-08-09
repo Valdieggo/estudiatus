@@ -134,18 +134,16 @@ export default function PostsCard({ post, setAllPosts, allPosts, title, subjectI
                     }}
                 >
                     <LikePostButton post={post} isList={true} />
-                    <Link href={`/post/${post._id}`}>
-                        <Button
-                            bg="button.100"
-                            width="48%"
-                            _hover={{
-                                bg: "button.200",
-                            }}
-                            leftIcon={<ChatIcon />}
-                        >
-                            Ver más
-                        </Button>
-                    </Link>
+                    <Button onClick={() => router.push(`/post/${post._id}`)} type="button"
+                        bg="button.100"
+                        width="48%"
+                        _hover={{
+                            bg: "button.200",
+                        }}
+                        leftIcon={<ChatIcon />}
+                    >
+                        Ver más
+                    </Button>
                 </CardFooter>
             </Card>
         </VStack>
