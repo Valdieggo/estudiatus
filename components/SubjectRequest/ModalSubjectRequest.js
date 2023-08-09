@@ -21,7 +21,12 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 
-export default function ModalSubjectRequest({ isOpen, onClose, onOpen }) {
+export default function ModalSubjectRequest({
+    isOpen,
+    onClose,
+    onOpen,
+    careerId,
+}) {
     const { register, handleSubmit, reset } = useForm();
     const [collegeList, setCollegeList] = useState([]);
     const [careerList, setCareerList] = useState([]);
@@ -33,12 +38,14 @@ export default function ModalSubjectRequest({ isOpen, onClose, onOpen }) {
         const response = await axios.post("/api/subject_request/create", {
             subjectName: data.subjectName,
             college: data.college,
-            career: data.career,
+            career: careerId,
             description: data.description,
             requestingUser: session.user.id,
         });
+        toast({ title: "no" });
 
         if (response.status === 201) {
+            onClose();
             toast({
                 title: "Solicitud enviada",
                 description: "Se ha enviado la solicitud correctamente",
@@ -52,17 +59,13 @@ export default function ModalSubjectRequest({ isOpen, onClose, onOpen }) {
     };
 
     const handleCollege = async () => {
-        const response = await axios.get(
-            "/api/college/getAll"
-        );
+        const response = await axios.get("/api/college/getAll");
         const collegeList = response.data.data;
         setCollegeList(collegeList);
     };
 
     const handleCareer = async () => {
-        const response = await axios.get(
-            "/api/career/getAll"
-        );
+        const response = await axios.get("/api/career/getAll");
         const careerList = response.data.data;
         setCareerList(careerList);
     };
@@ -81,7 +84,11 @@ export default function ModalSubjectRequest({ isOpen, onClose, onOpen }) {
                 </ModalHeader>
                 <ModalCloseButton color="white" />
                 <ModalBody>
-                    <VStack as="form" onSubmit={handleSubmit(submitRequest)}>
+                    <VStack
+                        as="form"
+                        onSubmit={handleSubmit(submitRequest)}
+                        pb="6"
+                    >
                         <FormControl color={"white"}>
                             <FormLabel>Nombre de la asignatura</FormLabel>
                             <Input
@@ -89,48 +96,7 @@ export default function ModalSubjectRequest({ isOpen, onClose, onOpen }) {
                                 {...register("subjectName", { required: true })}
                             />
                         </FormControl>
-                        <FormControl color={"white"}>
-                            <FormLabel>Universidad</FormLabel>
-                            <Select
-                                placeholder="Selecciona una Universidad"
-                                {...register("college", { required: true })}
-                                value={selectedCollege}
-                                onChange={(e) =>
-                                    setSelectedCollege(e.target.value)
-                                }
-                            >
-                                {collegeList.map((college) => (
-                                    <option
-                                        key={college._id}
-                                        value={college._id}
-                                    >
-                                        {college.collegeName}
-                                    </option>
-                                ))}
-                            </Select>
-                        </FormControl>
-                        <FormControl color={"white"}>
-                            <FormLabel>Carrera</FormLabel>
-                            <Select
-                                placeholder="Selecciona una carrera"
-                                {...register("career", { required: true })}
-                            >
-                                {careerList
-                                    .filter(
-                                        (career) =>
-                                            career.college === selectedCollege
-                                    )
-                                    .map((career) => (
-                                        <option
-                                            key={career._id}
-                                            value={career._id}
-                                        >
-                                            {career.careerName}
-                                        </option>
-                                    ))}
-                            </Select>
-                        </FormControl>
-                        <FormControl color={"white"}>
+                        <FormControl color={"white"} pb="6">
                             <FormLabel>Descripcion</FormLabel>
                             <Input
                                 type="text"

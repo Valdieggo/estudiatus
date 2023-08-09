@@ -95,14 +95,15 @@ export default function ModalSubjectRequestAdmin({
                         colorScheme="red"
                         mr={3}
                         onClick={handleReject}
-                        disabled={buttonsDisabled}
+                        isDisabled={buttonsDisabled}
                     >
                         Rechazar
                     </Button>
                     <Button
                         colorScheme="green"
                         onClick={handleCreate}
-                        disabled={buttonsDisabled}
+                        isD
+                        isabled={buttonsDisabled}
                     >
                         Crear
                     </Button>
