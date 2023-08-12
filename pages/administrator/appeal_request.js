@@ -57,14 +57,13 @@ export default function appeal_request() {
 const onDelete= async(apid)=>{
   const messageSuccess = "Apelacion eliminada con exito";
   const messageError = "Error el intenta eliminar la apelacion";
-  const response = await axios.delete(`/api/appeal/delete/${apid}`)
-    if(response.status == 204){
+  const response = await axios.delete(`http://localhost:3000/api/appeal/delete/${apid}`)
+    if(response.status == 200){
       showSuccessToast(messageSuccess);
      getAppeal();
       onClose();
     }else{
       showErrorToast(messageError);
-      console.log('watefok')
       onClose();
       
     }

@@ -7,7 +7,7 @@ export default async function deleteOne(req, res) {
     const { id } = req.query;
         try {
                 if (await Appeal.findByIdAndDelete(id)) {
-                    return res.status(204).json({ message: "Appeal deleted" });
+                    return res.status(200).json({ message: "Appeal deleted" });
                 }
                 else {
                     console.log('error');
