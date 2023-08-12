@@ -9,7 +9,7 @@ const PaginationControls = ({ currentPage, totalPages, handlePageChange }) => {
                     onClick={() => handlePageChange(index + 1)}
                     colorScheme={currentPage === index + 1 ? 'cyan' : 'blue'}
                     variant={currentPage === index + 1 ? 'solid' : 'outline'}
-                    mx={1} // Add margin for spacing
+                    mx={1}
                 >
                     {index + 1}
                 </Button>

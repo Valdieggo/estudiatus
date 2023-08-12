@@ -17,10 +17,12 @@ import {
     useColorModeValue
 } from "@chakra-ui/react";
 import { FiChevronDown } from "react-icons/fi";
+import { useRouter } from "next/router";
 
 export default function User() {
     const { data: session, status } = useSession();
-
+    const router = useRouter()
+    const callbackUrl = router.asPath
     if (status === "authenticated") {
         return (
             <Menu>
@@ -57,7 +59,7 @@ export default function User() {
 
                     <MenuDivider />
                     <MenuItem
-                        onClick={() => signOut({ callbackUrl: "/login" })}
+                        onClick={() => signOut({ callbackUrl: callbackUrl })}
                     >
                         Cerrar sesión
                     </MenuItem>

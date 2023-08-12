@@ -38,9 +38,6 @@ export default function Sidebar({ onClose, ...rest }) {
             <SidebarItem icon={FiHome} link={"/college"}>
                 Universidades
             </SidebarItem>
-            <SidebarItem icon={FiTrendingUp} link={"/calendar"}>
-                Calendario
-            </SidebarItem>
             <SidebarItem icon={FiCalendar} link={"/events"}>
                 Eventos
             </SidebarItem>

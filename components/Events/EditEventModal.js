@@ -35,7 +35,7 @@ export default function EditEventModal({ isOpen, onClose, event }) {
 
   const fetchEventDetails = async (eventId) => {
     try {
-      const response = await axios.get(`http://localhost:3000/api/event/getById/${eventId}`);
+      const response = await axios.get(`/api/event/getById/${eventId}`);
       const eventData = response.data.data;
       setEventFields(eventData);
     } catch (error) {
@@ -73,10 +73,9 @@ export default function EditEventModal({ isOpen, onClose, event }) {
         });
         return;
       }
-  
+
       const isAdmin = session?.user.role === 'admin';
-    
-  
+
       if (!isAdmin) {
         toast({
           title: 'Permiso Denegado',
@@ -87,7 +86,7 @@ export default function EditEventModal({ isOpen, onClose, event }) {
         });
         return;
       }
-  
+
       const eventData = {
         eventName: eventName,
         eventDate: eventDate,

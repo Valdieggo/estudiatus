@@ -25,7 +25,7 @@ export default function ModalDeletePost({ isOpen, onClose, onOpen, post, allPost
 
     const isAdmin = session?.user.role === 'admin';
 
-    const toast = useToast();  // Initialize useToast
+    const toast = useToast();
 
     const handleDeletePost = () => {
         if (isAdmin || isCreatorId) {

@@ -27,7 +27,7 @@ export default function DeleteEventModal({
   const handleDeleteEvent = async () => {
     if (isAdmin) {
       axios
-        .delete(`${process.env.NEXT_PUBLIC_URL}:${process.env.PORT}/api/event/delete/${eventId}`)
+        .delete(`/api/event/delete/${eventId}`)
         .then((res) => {
           setAllEvents(allEvents.filter((event) => event.id !== eventId));
 

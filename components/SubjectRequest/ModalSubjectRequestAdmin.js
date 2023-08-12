@@ -14,18 +14,19 @@ import { Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-export default function ModalSubjectRequest({
+export default function ModalSubjectRequestAdmin({
     isOpen,
     onClose,
     onOpen,
     subjectRequestId,
 }) {
     const [subjectRequest, setSubjectRequest] = useState({});
+    const [buttonsDisabled, setButtonsDisabled] = useState(false); // Estado para deshabilitar los botones
 
     const getSubjectRequest = async () => {
         try {
             const response = await axios.get(
-                `http://localhost:3000/api/subject_request/getOne/${subjectRequestId}`
+                `/api/subject_request/getOne/${subjectRequestId}`
             );
             setSubjectRequest(response.data.data);
         } catch (error) {
@@ -33,20 +34,35 @@ export default function ModalSubjectRequest({
         }
     };
 
-    const handleReject = () => {
+    const handleReject = async () => {
         console.log("Rechazar solicitud:", subjectRequestId);
+        await axios.put(`/api/subject_request/update/`, {
+            id: subjectRequestId,
+            status: "Rechazada",
+        });
         onClose();
     };
 
     const handleCreate = async () => {
-        if (subjectRequest) {
-            const response = await axios.post(`/api/subject/create`, {
-                subjectName: subjectRequest.subjectName,
-                career: subjectRequest.careerId,
-                description: subjectRequest.description,
-            });
-            axios.delete(`/api/subject_request/delete/${subjectRequestId}`);
-            onClose();
+        if (subjectRequest && !buttonsDisabled) {
+            // Verifica si los botones ya están deshabilitados
+            try {
+                setButtonsDisabled(true); // Deshabilita los botones
+                const response = await axios.post(`/api/subject/create`, {
+                    subjectName: subjectRequest.subjectName,
+                    career: subjectRequest.careerId,
+                    description: subjectRequest.description,
+                });
+                await axios.put(`/api/subject_request/update/`, {
+                    id: subjectRequestId,
+                    status: "Aceptada",
+                });
+                onClose();
+            } catch (error) {
+                console.error("Error creating subject:", error);
+            } finally {
+                setButtonsDisabled(false); // Habilita los botones nuevamente
+            }
         }
     };
 
@@ -78,11 +94,20 @@ export default function ModalSubjectRequest({
                         </Text>
                     </VStack>
                 </ModalBody>
-                <ModalFooter>
-                    <Button colorScheme="red" mr={3} onClick={handleReject}>
+                <ModalFooter textAlign={"center"}>
+                    <Button
+                        colorScheme="red"
+                        mr={3}
+                        onClick={handleReject}
+                        isDisabled={buttonsDisabled}
+                    >
                         Rechazar
                     </Button>
-                    <Button colorScheme="green" onClick={handleCreate}>
+                    <Button
+                        colorScheme="green"
+                        onClick={handleCreate}
+                        isabled={buttonsDisabled}
+                    >
                         Crear
                     </Button>
                 </ModalFooter>

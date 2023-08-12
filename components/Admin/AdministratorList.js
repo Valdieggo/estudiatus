@@ -7,7 +7,7 @@ const list = [
         link: "/administrator/subject",
     },
     {
-        name: "Moderation",
+        name: "Moderación",
         link: "/administrator/moderation",
     },
     {
@@ -15,19 +15,29 @@ const list = [
         link: "/administrator/appeal_request",
     },
     {
-        name: "Subject Requests",
+        name: "Solicitudes de Asignatura",
         link: "/administrator/subject_request",
     },
 ];
 
-export default function AdministratorList(){
+export default function AdministratorList() {
     if (!isAdmin()) {
         return <></>;
     } else {
         return (
             <>
                 <Divider my="2" />
-                <Text mx="8" my="4" fontWeight="bold" fontSize="xs" letterSpacing="wide" textTransform="uppercase" color="gray.400">Admin</Text>
+                <Text
+                    mx="8"
+                    my="4"
+                    fontWeight="bold"
+                    fontSize="xs"
+                    letterSpacing="wide"
+                    textTransform="uppercase"
+                    color="gray.400"
+                >
+                    Admin
+                </Text>
                 {list.map((item) => (
                     <SidebarItem key={item.name} link={item.link}>
                         {item.name}
@@ -37,4 +47,3 @@ export default function AdministratorList(){
         );
     }
 }
-
