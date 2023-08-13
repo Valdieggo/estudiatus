@@ -38,6 +38,13 @@ export default function appeal_request() {
     onOpen: onOpenUpdate,
     onClose: onCloseUpdate
 } = useDisclosure()
+
+const {
+  isOpen: isOpenDetails,
+  onOpen: onOpenDetails,
+  onClose: onCloseDetails
+} = useDisclosure()
+
   const router=useRouter();
   const [appeal,setAppeals]= useState([])
   const getAppeal = async () => {
@@ -126,9 +133,14 @@ const showErrorToast = (message) => {
 }
 
 //Caso UPDATE
-const onUpdate = async (estado, id) => {
-  const messageSuccess = "Estado actualizado con éxito";
-  const messageError = "Error al intentar actualizar el estado";
+const onUpdate = async (estado, id, idban) => {
+  const messageSuccess = "Estado actualizado con éxito"
+  const messageError = "Error al intentar actualizar el estado"
+  if(estado=='Aceptada'){
+    await axios.put(`/api/ban/update`, {
+      id: idban,
+      status:'inactive'
+    })}
   const response = await axios.put(`/api/appeal/update/${id}`, {status:estado} )
   if(response.status==200){
     showSuccessToast(messageSuccess);
@@ -140,7 +152,7 @@ const onUpdate = async (estado, id) => {
   }
 }
 
-  const handleUpdate = (id) => {
+  const handleUpdate = (id,idban) => {
     return (
         <>
             <Modal
@@ -155,26 +167,59 @@ const onUpdate = async (estado, id) => {
                 <ModalHeader>Cambiar status</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody pb={6}>
-                    <ButtonGroup variant='outline' spacing='6'>
+                      <Text color='red.500' fontSize='xl' as='b'>Cuidado, esta acción es irreversible. Debe estar seguro del cambio de estado</Text>
+                        </ModalBody>
+                        <ModalFooter>
+                        <ButtonGroup variant='outline' spacing='6'>
                       <Button colorScheme='red'
-                      onClick={()=>onUpdate('Rechazada', id)}
+                      onClick={()=>onUpdate('Rechazada', id, idban)}
                       >Rechazada</Button>
                       <Button colorScheme='green'
-                      onClick={()=>onUpdate('Aceptada',id)}
+                      onClick={()=>onUpdate('Aceptada',id, idban)}
                       >Aceptada</Button>
                       <Button colorScheme='blue'
-                      onClick={()=>onUpdate('En proceso',id)}
+                      onClick={()=>onUpdate('En proceso',id,idban)}
                       >En proceso</Button>
                       <Button onClick={onCloseUpdate}
                       >Cancelar</Button>
                     </ButtonGroup>
-                        </ModalBody>
+                        </ModalFooter>
                 </ModalContent>
             </Modal>
         </>
     )
 }
 //Fin caso UPDATE
+
+
+//Modal Ver Detalles
+const onDetails=(text)=>{
+  return(
+    <>
+    <Modal
+    isCentered
+    isOpen={isOpenDetails}
+    onClose={onCloseDetails}
+    motionPreset='slideInBottom'
+    size='xl'
+    >
+      <ModalOverlay/>
+      <ModalContent>
+      <ModalHeader>Detalles</ModalHeader>
+      <ModalCloseButton/>
+      <ModalBody>
+        <Text>{text}</Text>
+      </ModalBody>
+      <ModalFooter>
+        <Button onClick={()=>{onCloseDetails}}>Cerrar</Button>
+      </ModalFooter>
+      </ModalContent>
+    </Modal>
+    </>
+  )
+}
+//Fin modal ver detalles
+
   return (
     <>
       <Layout>
@@ -185,28 +230,40 @@ const onUpdate = async (estado, id) => {
             <Tr>
               <Th>Appeal name</Th>
               <Th>Username</Th>
+              <Th>Ban status</Th>
               <Th>Ban type</Th>
               <Th>Details</Th>
               <Th>Status</Th>
+              <Th>Ver detalles</Th>
               <Th>Cambiar status</Th>
               <Th>Eliminar apelación</Th>
             </Tr>
           </Thead>
           <Tbody>
-            {appeal.appeals?.map((appeal) => (
+            {appeal.appeals?.filter((appeal)=>(appeal.ban.status!='inactive')).filter((appeal)=> appeal.status!='Rechazada').map((appeal) => (
               <Tr key={appeal._id} >
                 <Td>{appeal.name}</Td>
                 <Td>{appeal.appealer.username}</Td>
+                <Td>{appeal.ban.status}</Td>
                 <Td>{appeal.ban.type}</Td>
-                <Td maxWidth='200px'>{appeal.description}</Td>
+                <Td maxWidth='5px'><Text noOfLines={1} >{appeal.description}</Text></Td>
                 <Td>{appeal.status}</Td>
+                {console.log(appeal.status, appeal.appealer.email, appeal.appealer.username)}
+                <Td>
+                  <Button size='xs' onClick={onOpenDetails}>
+                  <Image src={`/eye.svg`} alt={`see more`} width="20px" height="20px" />
+                  </Button>{onDetails(appeal.description)}
+                </Td>
                 <Td> 
-                    <Button size='xs' onClick={onOpenUpdate}>
-                    <Image src={`/edit.svg`} alt={`Edit`} width="20px" height="20px" />
-                    </Button>
-                    {handleUpdate(appeal._id)}
-                  </Td>
-              <Td><Button size='xs' onClick={onOpen}>Eliminar</Button> {handleDelete(appeal._id)} </Td>
+                  <Button size='xs' onClick={onOpenUpdate}>
+                  <Image src={`/edit.svg`} alt={`Edit`} width="20px" height="20px" />
+                  </Button>{handleUpdate(appeal._id, appeal.ban._id)}
+                </Td>
+                <Td>
+                  <Button size='xs' onClick={onOpen}>
+                  <Image src={`/trash.svg`} alt={`delete`} width="20px" height="20px" />
+                  </Button> {handleDelete(appeal._id)} 
+                </Td>
               </Tr>
             ))}
           </Tbody>
