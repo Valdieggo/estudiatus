@@ -87,7 +87,7 @@ const handleDelete=(apid)=>{
       colorScheme='red'
       motionPreset='slideInBottom'
       >
-        
+        <ModalOverlay/>
         <ModalContent background="bg.100" color="white">
           <ModalHeader>Advertencia!</ModalHeader>
           <ModalCloseButton />
