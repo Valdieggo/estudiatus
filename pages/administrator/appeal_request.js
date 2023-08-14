@@ -64,7 +64,7 @@ const {
 const onDelete= async(apid)=>{
   const messageSuccess = "Apelacion eliminada con exito";
   const messageError = "Error el intenta eliminar la apelacion";
-  const response = await axios.delete(`http://localhost:3000/api/appeal/delete/${apid}`)
+  const response = await axios.delete(`${process.env.NEXT_PUBLIC_URL}:${process.env.NEXT_PUBLIC_PORT}/api/appeal/delete/${apid}`)
     if(response.status == 200){
       showSuccessToast(messageSuccess);
      getAppeal();
@@ -137,11 +137,11 @@ const onUpdate = async (estado, id, idban) => {
   const messageSuccess = "Estado actualizado con éxito"
   const messageError = "Error al intentar actualizar el estado"
   if(estado=='Aceptada'){
-    await axios.put(`/api/ban/update`, {
+    await axios.put(`${process.env.NEXT_PUBLIC_URL}:${process.env.NEXT_PUBLIC_PORT}/api/ban/update`, {
       id: idban,
       status:'inactive'
     })}
-  const response = await axios.put(`/api/appeal/update/${id}`, {status:estado} )
+  const response = await axios.put(`${process.env.NEXT_PUBLIC_URL}:${process.env.NEXT_PUBLIC_PORT}/api/appeal/update/${id}`, {status:estado} )
   if(response.status==200){
     showSuccessToast(messageSuccess);
     getAppeal();
@@ -177,10 +177,7 @@ const onUpdate = async (estado, id, idban) => {
                       <Button colorScheme='green'
                       onClick={()=>onUpdate('Aceptada',id, idban)}
                       >Aceptada</Button>
-                      <Button colorScheme='blue'
-                      onClick={()=>onUpdate('En proceso',id,idban)}
-                      >En proceso</Button>
-                      <Button onClick={onCloseUpdate}
+                      <Button onClick={onCloseUpdate} colorScheme='white'
                       >Cancelar</Button>
                     </ButtonGroup>
                         </ModalFooter>
