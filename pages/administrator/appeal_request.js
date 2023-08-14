@@ -88,7 +88,7 @@ const handleDelete=(apid)=>{
       motionPreset='slideInBottom'
       >
         
-        <ModalContent>
+        <ModalContent background="bg.100" color="white">
           <ModalHeader>Advertencia!</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
@@ -163,7 +163,7 @@ const onUpdate = async (estado, id, idban) => {
                 size='xl'
                 >
                 <ModalOverlay />
-                <ModalContent>
+                <ModalContent background="bg.100" color="white">
                 <ModalHeader>Cambiar status</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody pb={6}>
@@ -204,14 +204,14 @@ const onDetails=(text)=>{
     size='xl'
     >
       <ModalOverlay/>
-      <ModalContent>
+      <ModalContent background="bg.100" color="white">
       <ModalHeader>Detalles</ModalHeader>
       <ModalCloseButton/>
       <ModalBody>
         <Text>{text}</Text>
       </ModalBody>
       <ModalFooter>
-        <Button onClick={()=>{onCloseDetails}}>Cerrar</Button>
+        <Button onClick={onCloseDetails}>Cerrar</Button>
       </ModalFooter>
       </ModalContent>
     </Modal>
@@ -248,7 +248,6 @@ const onDetails=(text)=>{
                 <Td>{appeal.ban.type}</Td>
                 <Td maxWidth='5px'><Text noOfLines={1} >{appeal.description}</Text></Td>
                 <Td>{appeal.status}</Td>
-                {console.log(appeal.status, appeal.appealer.email, appeal.appealer.username)}
                 <Td>
                   <Button size='xs' onClick={onOpenDetails}>
                   <Image src={`/eye.svg`} alt={`see more`} width="20px" height="20px" />

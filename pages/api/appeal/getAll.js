@@ -2,6 +2,7 @@ import { connectToDatabase } from "../../../utils/db";
 import Appeal from "../../../models/Appeal";
 import User from "../../../models/Appeal";
 import Ban from "../../../models/Ban";
+import Report from "../../../models/Report";
 
 export default async function getAppeals(req,res){
     await connectToDatabase();
