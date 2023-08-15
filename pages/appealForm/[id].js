@@ -72,7 +72,7 @@ export default function appealForm({ban}){
         const messageError = "Error al enviar la apelacion, intente nuevamente";
         console.log(appeal)
         try{
-        const response= await axios.post('http://localhost:3000/api/appeal/create', appeal)
+        const response= await axios.post(`${process.env.NEXT_PUBLIC_URL}:${process.env.NEXT_PUBLIC_PORT}/api/appeal/create`, appeal)
         console.log(appeal)
             if(response.status==201){
                 showSuccessToast(messageSuccess);
