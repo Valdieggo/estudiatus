@@ -222,15 +222,15 @@ const onDetails=(text)=>{
       <Layout>
       <Container maxW='container.xl' mx="auto">
         <Table variant='simple'>
-          <TableCaption placement='top'>Appeals requests</TableCaption>
+          <TableCaption placement='top'>Solicitudes de apelación</TableCaption>
           <Thead>
             <Tr>
-              <Th>Appeal name</Th>
-              <Th>Username</Th>
-              <Th>Ban status</Th>
-              <Th>Ban type</Th>
-              <Th>Details</Th>
-              <Th>Status</Th>
+              <Th>Motivo de la apelacion</Th>
+              <Th>Nombre de usuario</Th>
+              <Th>Estado del ban</Th>
+              <Th>Tipo de ban</Th>
+              <Th>Detalles</Th>
+              <Th>Estado apelación</Th>
               <Th>Ver detalles</Th>
               <Th>Cambiar status</Th>
               <Th>Eliminar apelación</Th>

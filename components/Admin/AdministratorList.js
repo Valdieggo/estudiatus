@@ -11,7 +11,7 @@ const list = [
         link: "/administrator/moderation",
     },
     {
-        name: "Appeal requests",
+        name: "Solicitud de apleaciones",
         link: "/administrator/appeal_request",
     },
     {
